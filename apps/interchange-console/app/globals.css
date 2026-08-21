@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ── The Interchange — design tokens ─────────────────────────────────────────
+   The console is a SECURE FACILITY, not a dashboard. Members are competitors
+   being asked to trust a shared room, so the surface has to look like the
+   security actually is: dark ground, instrument type, and nothing decorative
+   that isn't reporting real state.
+
+   Ported from the GoldStrike trading vault, rethemed from amber-primary to
+   EMERALD-primary so it reads as the same family as the blueprint's motorway
+   green (#0B5D4E). Amber survives, but demoted to what it should always have
+   meant: attention. Green = verified. Amber = pending. Red = refused.
+
+   Single-theme by intent. A vault does not have a light mode. */
+
+:root {
+  /* Ground — near-black with a faint green bias, so emerald sits IN it
+     rather than on top of it. */
+  --ground: #040605;
+  --ground-raised: #080b0a;
+
+  /* Emerald — verified, granted, contributing */
+  --signal: #10b981;
+  --signal-dim: rgba(16, 185, 129, 0.55);
+  --signal-faint: rgba(16, 185, 129, 0.12);
+  --signal-hairline: rgba(16, 185, 129, 0.18);
+
+  /* Amber — pending, awaiting consent, degraded */
+  --attention: #f59e0b;
+  --attention-dim: rgba(245, 158, 11, 0.55);
+  --attention-faint: rgba(245, 158, 11, 0.08);
+
+  /* Red — refused, revoked, no consent */
+  --refused: #ef4444;
+  --refused-faint: rgba(239, 68, 68, 0.1);
+
+  /* Type on dark — four weights, because one grey is never enough */
+  --text: rgba(255, 255, 255, 0.92);
+  --text-body: rgba(255, 255, 255, 0.62);
+  --text-muted: rgba(255, 255, 255, 0.28);
+  --text-faint: rgba(255, 255, 255, 0.12);
+
+  --hairline: rgba(255, 255, 255, 0.06);
+  --hairline-strong: rgba(255, 255, 255, 0.12);
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-ground-raised: var(--ground-raised);
+  --color-signal: var(--signal);
+  --color-attention: var(--attention);
+  --color-refused: var(--refused);
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+html,
+body {
+  background: var(--ground);
+  color: var(--text);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Instrument label — the uppercase mono used for every piece of chrome.
+   Wide tracking is what makes it read as an instrument rather than as text. */
+.inst {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+/* Keyboard focus must survive on a dark ground. */
+:focus-visible {
+  outline: 1px solid var(--signal-dim);
+  outline-offset: 2px;
+}
+
+/* The cinematic is atmosphere, not information — anyone who has asked for less
+   motion gets the state without the movement. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
