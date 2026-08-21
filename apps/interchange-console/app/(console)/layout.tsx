@@ -14,6 +14,7 @@ import { InterchangeMark } from "@/components/chrome";
 
 const NAV = [
   { href: "/directory", label: "Directory" },
+  { href: "/exposure", label: "Exposure" },
   { href: "/consent", label: "Consent" },
   { href: "/audit", label: "Audit" },
   { href: "/log", label: "Message Log" },

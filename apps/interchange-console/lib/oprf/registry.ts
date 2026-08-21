@@ -56,6 +56,20 @@ function ecosystemKey(): Uint8Array {
   return key;
 }
 
+/**
+ * Derive a token directly, for a holder of the ecosystem key (seeders, fixtures).
+ *
+ * A NODE cannot do this and must go through the blinded exchange — that is the
+ * entire security property. This runs the same blind/evaluate/finalize steps
+ * locally, which yields an identical token to the round trip.
+ */
+export function evaluateDirect(keyHex: string, input: Uint8Array): string {
+  const key = hexToBytes(keyHex);
+  const { blind, blinded } = oprf.blind(input);
+  const evaluated = oprf.blindEvaluate(key, blinded);
+  return bytesToHex(oprf.finalize(input, blind, evaluated));
+}
+
 /** Generate a fresh ecosystem key. Run once, ever, then guard it. */
 export function generateEcosystemKey(): { secretKey: string; publicKey: string } {
   const kp = oprf.generateKeyPair();

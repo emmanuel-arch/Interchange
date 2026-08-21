@@ -12,7 +12,10 @@
     "db:seed": "tsx prisma/seed.ts",
     "keys:dev": "tsx scripts/generate-keys.ts",
     "verify:exchange": "tsx scripts/verify-exchange.ts",
-    "verify:tamper": "tsx scripts/verify-tamper.ts"
+    "verify:tamper": "tsx scripts/verify-tamper.ts",
+    "seed:holdings": "tsx scripts/seed-holdings.ts",
+    "filters:build": "tsx scripts/build-filters.ts",
+    "verify:exposure": "tsx scripts/verify-exposure.ts"
   },
   "dependencies": {
     "@noble/curves": "^2.3.0",

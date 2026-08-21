@@ -38,12 +38,24 @@ export type AuthoriseResult =
 export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult> {
   const { callerId, serviceCode, subjectToken, consentRef } = input;
 
-  const service = await prisma.service.findUnique({ where: { code: serviceCode } });
+  // Every read the gate needs, issued at once. These four were sequential and
+  // cost roughly 260ms end-to-end — most of the exposure query's 400ms budget
+  // spent before the query had even started. They have no data dependency on
+  // each other, so the only reason they were serial was the order they were
+  // written in.
+  //
+  // Fetching the consent up front means one lookup happens on paths that end up
+  // refusing before consent is reached. That is a deliberate trade: one indexed
+  // read by unique key, against four round trips of latency on every call.
+  const [service, caller, consent] = await Promise.all([
+    prisma.service.findUnique({ where: { code: serviceCode } }),
+    prisma.member.findUnique({ where: { id: callerId } }),
+    consentRef ? prisma.consent.findUnique({ where: { ref: consentRef } }) : null,
+  ]);
+
   if (!service) {
     throw new Error(`[gate] Unknown service "${serviceCode}" — it is not in the Directory.`);
   }
-
-  const caller = await prisma.member.findUnique({ where: { id: callerId } });
   if (!caller) {
     throw new Error(`[gate] Unknown caller ${callerId}.`);
   }
@@ -84,10 +96,20 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   // the free tier has to be countable. Only GRANTED calls count: charging a
   // member for a refusal would let one member burn another's allowance by
   // asking about their customers.
-  const subscription = await prisma.subscription.findFirst({
-    where: { memberId: callerId, serviceId: service.id, active: true },
-    select: { freeTierPerDay: true },
-  });
+  const [subscription, usedToday] = await Promise.all([
+    prisma.subscription.findFirst({
+      where: { memberId: callerId, serviceId: service.id, active: true },
+      select: { freeTierPerDay: true },
+    }),
+    prisma.auditEntry.count({
+      where: {
+        callerId,
+        serviceId: service.id,
+        outcome: "GRANTED",
+        at: { gte: new Date(Date.now() - 86_400_000) },
+      },
+    }),
+  ]);
 
   if (!subscription) {
     const reason = `Not subscribed to ${serviceCode}.`;
@@ -96,14 +118,6 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   }
 
   if (subscription.freeTierPerDay > 0) {
-    const usedToday = await prisma.auditEntry.count({
-      where: {
-        callerId,
-        serviceId: service.id,
-        outcome: "GRANTED",
-        at: { gte: new Date(Date.now() - 86_400_000) },
-      },
-    });
     if (usedToday >= subscription.freeTierPerDay) {
       const reason = `Free tier of ${subscription.freeTierPerDay}/day exhausted.`;
       const audit = await record("REFUSED_QUOTA", reason, consentRef ?? null);
@@ -117,8 +131,6 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
     const audit = await record("REFUSED_NO_CONSENT", reason, null);
     return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
   }
-
-  const consent = await prisma.consent.findUnique({ where: { ref: consentRef } });
 
   if (!consent) {
     const reason = "consent_ref is not known to the Registry.";
@@ -165,9 +177,13 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   }
 
   // ── Granted ───────────────────────────────────────────────────────────────
-  await prisma.consentEvent.create({
-    data: { consentId: consent.id, kind: "VALIDATED", actorMemberId: callerId, serviceCode },
-  });
-  const audit = await record("GRANTED", null, consentRef);
+  // Both writes together. They are independent records of the same decision, and
+  // this is the hot path — every successful exposure query pays for it.
+  const [, audit] = await Promise.all([
+    prisma.consentEvent.create({
+      data: { consentId: consent.id, kind: "VALIDATED", actorMemberId: callerId, serviceCode },
+    }),
+    record("GRANTED", null, consentRef),
+  ]);
   return { ok: true, consentId: consent.id, auditId: audit.id };
 }

@@ -25,6 +25,8 @@ Then generate development key material:
 
 ```bash
 npm run keys:dev        # ecosystem OPRF key + a keypair per member
+npm run seed:holdings   # overlapping borrower population (the stand-in book)
+npm run filters:build   # publish each member's Bloom filter
 ```
 
 It prints an `INTERCHANGE_OPRF_KEY` line for `.env` and writes member private
@@ -38,6 +40,7 @@ half, which is the entire point of signing rather than sharing a secret.
 npm run build && npm run start -- --port 3330
 npm run verify:exchange -- http://127.0.0.1:3330   # 19 checks
 npm run verify:tamper                              # 6 checks
+npm run verify:exposure -- http://127.0.0.1:3330    # 15 checks
 ```
 
 `verify:exchange` acts as a member node: it holds a private key, blinds
@@ -56,11 +59,14 @@ consistent, which moves the break downstream instead of hiding it.
 |---|---|
 | `/` | The member gate. `?still=1` renders it settled, with no animation. |
 | `/directory` | Members, their books, contribution recency, the service catalogue. |
+| `/exposure` | Run a live ecosystem exposure query. Dev-fenced. |
 | `/consent` | Consent scopes in borrower wording, the ledger, the event trail. |
 | `/audit` | Every call the gate decided, with latency. |
 | `/log` | The hash-chained message log, re-verified on load. |
 | `POST /api/oprf/evaluate` | Token service. Signed; rate-limited per member. |
 | `POST /api/exchange` | Signed, consented, logged member-to-member call. |
+| `POST /api/node/exposure` | The MEMBER side: answers about its own book, aggregates only. |
+| `GET /api/filters` | Published Bloom filters. Nodes screen locally against these. |
 | `POST /api/consent` | Issue a `consent_ref`. Refuses raw identifiers. |
 | `POST /api/consent/{ref}/revoke` | Borrower withdrawal. Idempotent, prospective. |
 | `POST /api/session` | Console session, by signed request. |
@@ -82,3 +88,15 @@ consistent, which moves the break downstream instead of hiding it.
 - **Key custody.** The ecosystem OPRF key sits in `.env`. It belongs in a KMS or
   HSM, and because rotating it re-tokenises every borrower, it is effectively
   unrotatable once real data exists. Decide custody before launch.
+
+## The MemberHolding stand-in
+
+`MemberHolding` is the one part of Sprint 3 that is **not** faithful to the
+target architecture. In the deployed design that table does not exist: a
+member's node answers exposure by reading its own Serviceconnect book, scoped to
+its EntityID, and nothing about their borrowers is ever centralised.
+
+It exists so the real fan-out path — local Bloom screening, parallel signed
+requests, per-member timeouts, partial results, aggregates-only responses — can
+be exercised before nodes are deployed at members. Everything around it is real.
+Replacing it is the first task when a member node ships.

@@ -300,3 +300,59 @@ model OprfIssuance {
 
   @@index([memberId, at])
 }
+
+// ── Exposure ─────────────────────────────────────────────────────────────────
+
+/// What one member currently holds against one borrower.
+///
+/// ⚠ This table is a STAND-IN. In the deployed architecture it does not exist:
+/// a member's node answers exposure queries by reading their OWN Serviceconnect
+/// book, scoped to their EntityID, and nothing about their borrowers is ever
+/// centralised. It lives here so Sprint 3 can exercise the real fan-out path —
+/// parallel HTTP, per-member timeouts, partial results, signed responses —
+/// before nodes are deployed at members.
+///
+/// Keeping it keyed on subjectToken rather than a borrower id is deliberate:
+/// even the stand-in cannot hold an identity.
+model MemberHolding {
+  id           String @id @default(cuid())
+  memberId     String
+  subjectToken String
+
+  activeLoans       Int      @default(0)
+  outstandingKes    Int      @default(0)
+  /// Collections taxonomy, matching CollectBox LoanCategories.
+  worstBucket       String   @default("due")
+  newestDisbursedAt DateTime?
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([memberId, subjectToken])
+  @@index([subjectToken])
+}
+
+/// A member's published Bloom filter of active-borrower tokens.
+///
+/// This is not only a latency optimisation. Without it, every exposure query
+/// broadcasts to all members that a named token is being evaluated — which
+/// leaks a member's origination pipeline to its competitors. Screening locally
+/// means most members never learn the query happened at all.
+///
+/// Filters are generational: a member publishes a new one every 15 minutes and
+/// the old one stays readable until it is replaced, so a rebuild never leaves
+/// the broker with nothing to screen against.
+model MemberFilter {
+  id         String   @id @default(cuid())
+  memberId   String
+  generation Int
+  /// The bit array.
+  bits       Bytes
+  /// Number of hash functions, and bit length. Needed to interpret `bits`.
+  k          Int
+  m          Int
+  itemCount  Int
+  builtAt    DateTime @default(now())
+
+  @@unique([memberId, generation])
+  @@index([memberId, builtAt])
+}
