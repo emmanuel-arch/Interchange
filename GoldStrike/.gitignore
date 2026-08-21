@@ -1,0 +1,7 @@
+# GoldStrike
+*.pyc
+__pycache__/
+.env
+*.db
+logs/
+*.log

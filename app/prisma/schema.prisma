@@ -1,0 +1,314 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Shared User model (reads from existing BirgenAI users table)
+// Only fields needed for trading platform references
+// ============================================================
+
+model User {
+  id             String  @id @default(cuid())
+  email          String  @unique
+  name           String?
+  hashedPassword String?
+  phone          String? @unique
+  image          String?
+  role           UserRole @default(INDIVIDUAL)
+  tier           UserTier @default(FREE)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tradingProfile TradingProfile?
+
+  @@map("users")
+}
+
+// ============================================================
+// Trading-Specific Models
+// ============================================================
+
+model TradingProfile {
+  id           String          @id @default(cuid())
+  userId       String          @unique
+  tradingRole  TradingRole     @default(INVESTOR)
+  totpSecret   String?
+  totpEnabled  Boolean         @default(false)
+  kycStatus    KYCStatus       @default(PENDING)
+  kycData      Json?
+  isApproved   Boolean         @default(false)
+  telegramId   String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  investorAccount    InvestorAccount?
+  depositRequests    DepositRequest[]
+  withdrawalRequests WithdrawalRequest[]
+  profitPayments     ProfitPayment[]
+
+  @@map("trading_profiles")
+}
+
+model Pool {
+  id           String    @id @default(cuid())
+  name         String
+  description  String?
+  totalCapital Decimal   @db.Decimal(15, 2)
+  currentValue Decimal   @db.Decimal(15, 2)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  investorAccounts InvestorAccount[]
+  trades           Trade[]
+
+  @@map("trading_pools")
+}
+
+model InvestorAccount {
+  id              String   @id @default(cuid())
+  profileId       String   @unique
+  poolId          String
+  startingCapital Decimal  @db.Decimal(15, 2)
+  currentValue    Decimal  @db.Decimal(15, 2)
+  totalReturn     Decimal  @db.Decimal(10, 4) @default(0)
+  profitSharePct  Decimal  @db.Decimal(5, 2) @default(70)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  profile TradingProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  pool    Pool           @relation(fields: [poolId], references: [id])
+
+  @@map("trading_investor_accounts")
+}
+
+model Trade {
+  id         String         @id @default(cuid())
+  ticket     Int            @unique
+  symbol     String         @default("XAUUSD")
+  direction  TradeDirection
+  entryPrice Decimal        @db.Decimal(15, 5)
+  exitPrice  Decimal?       @db.Decimal(15, 5)
+  lotSize    Decimal        @db.Decimal(10, 4)
+  stopLoss   Decimal?       @db.Decimal(15, 5)
+  takeProfit Decimal?       @db.Decimal(15, 5)
+  pnl        Decimal?       @db.Decimal(15, 2)
+  commission Decimal?       @db.Decimal(10, 2)
+  swap       Decimal?       @db.Decimal(10, 2)
+  status     TradeStatus    @default(OPEN)
+  poolId     String?
+  openedAt   DateTime
+  closedAt   DateTime?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  pool Pool? @relation(fields: [poolId], references: [id])
+
+  @@index([status, openedAt])
+  @@index([poolId])
+  @@map("trading_trades")
+}
+
+model EngineHeartbeat {
+  id             String   @id @default(cuid())
+  isOnline       Boolean  @default(false)
+  lastPing       DateTime @default(now())
+  currentSession String?
+  openPositions  Int      @default(0)
+  killSwitch     Boolean  @default(false)
+  dailyPnl       Decimal? @db.Decimal(15, 2)
+  weeklyPnl      Decimal? @db.Decimal(15, 2)
+  metadata       Json?
+  updatedAt      DateTime @updatedAt
+
+  @@map("trading_engine_heartbeat")
+}
+
+model EngineConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  label       String?
+  description String?
+  category    String?  @default("general")
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@map("trading_engine_config")
+}
+
+model BacktestResult {
+  id             String   @id @default(cuid())
+  name           String
+  startDate      DateTime
+  endDate        DateTime
+  initialBalance Decimal  @db.Decimal(15, 2) @default(1000)
+  finalBalance   Decimal  @db.Decimal(15, 2)
+  totalTrades    Int
+  winRate        Decimal  @db.Decimal(5, 2)
+  profitFactor   Decimal  @db.Decimal(10, 4)
+  sharpeRatio    Decimal  @db.Decimal(10, 4)
+  maxDrawdown    Decimal  @db.Decimal(10, 4)
+  monthlyReturns Json
+  equityCurve    Json
+  parameters     Json
+  isPublic       Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@map("trading_backtest_results")
+}
+
+model MonthlyPerformance {
+  id          String   @id @default(cuid())
+  month       String   @unique // "2026-03"
+  returnPct   Decimal  @db.Decimal(10, 4)
+  pnlUSD      Decimal  @db.Decimal(15, 2)
+  totalTrades Int
+  winRate     Decimal  @db.Decimal(5, 2)
+  maxDrawdown Decimal  @db.Decimal(10, 4)
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@map("trading_monthly_performance")
+}
+
+model DepositRequest {
+  id          String        @id @default(cuid())
+  profileId   String
+  amount      Decimal       @db.Decimal(15, 2)
+  method      PaymentMethod @default(MPESA)
+  mpesaRef    String?
+  bankRef     String?
+  phoneNumber String?
+  status      RequestStatus @default(PENDING)
+  adminNote   String?
+  processedAt DateTime?
+  createdAt   DateTime      @default(now())
+
+  profile TradingProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([status])
+  @@map("trading_deposit_requests")
+}
+
+model WithdrawalRequest {
+  id          String        @id @default(cuid())
+  profileId   String
+  amount      Decimal       @db.Decimal(15, 2)
+  method      PaymentMethod @default(MPESA)
+  bankDetails Json?
+  phoneNumber String?
+  status      RequestStatus @default(PENDING)
+  adminNote   String?
+  processedAt DateTime?
+  createdAt   DateTime      @default(now())
+
+  profile TradingProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([status])
+  @@map("trading_withdrawal_requests")
+}
+
+model ProfitPayment {
+  id          String        @id @default(cuid())
+  profileId   String
+  amount      Decimal       @db.Decimal(15, 2)
+  period      String        // "2026-03"
+  profitShare Decimal       @db.Decimal(5, 2)
+  method      PaymentMethod @default(MPESA)
+  status      RequestStatus @default(PENDING)
+  paidAt      DateTime?
+  createdAt   DateTime      @default(now())
+
+  profile TradingProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@map("trading_profit_payments")
+}
+
+model WaitlistEntry {
+  id              String         @id @default(cuid())
+  name            String
+  email           String         @unique
+  phone           String?
+  investmentRange String?
+  message         String?
+  status          WaitlistStatus @default(PENDING)
+  createdAt       DateTime       @default(now())
+
+  @@map("trading_waitlist")
+}
+
+// ============================================================
+// Enums
+// ============================================================
+
+// Shared with BirgenAI (must match existing)
+enum UserRole {
+  INDIVIDUAL
+  ENTERPRISE
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserTier {
+  FREE
+  INDIVIDUAL
+  PREMIUM
+  ENTERPRISE_BASIC
+  ENTERPRISE_PLUS
+  ENTERPRISE_ADVANCED
+}
+
+// Trading-specific enums
+enum TradingRole {
+  SUPER_ADMIN
+  INVESTOR
+  SUBSCRIBER
+}
+
+enum KYCStatus {
+  PENDING
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum TradeDirection {
+  BUY
+  SELL
+}
+
+enum TradeStatus {
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  MPESA
+  BANK_TRANSFER
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum WaitlistStatus {
+  PENDING
+  CONTACTED
+  APPROVED
+  REJECTED
+}
