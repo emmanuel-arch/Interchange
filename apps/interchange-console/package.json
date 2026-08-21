@@ -10,9 +10,13 @@
     "db:dev": "prisma dev -d -n interchange",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
-    "verify:gate": "tsx scripts/verify-gate.ts"
+    "keys:dev": "tsx scripts/generate-keys.ts",
+    "verify:exchange": "tsx scripts/verify-exchange.ts",
+    "verify:tamper": "tsx scripts/verify-tamper.ts"
   },
   "dependencies": {
+    "@noble/curves": "^2.3.0",
+    "@noble/hashes": "^2.3.0",
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "framer-motion": "^13.1.1",

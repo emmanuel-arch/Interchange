@@ -17,6 +17,7 @@ import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { isScope, MANDATORY_SCOPES } from "@/lib/consent/scopes";
+import { isSubjectToken, SUBJECT_TOKEN_HEX_LENGTH } from "@/lib/oprf/node";
 
 /** Consent runs for a year unless the member asks for less. */
 const DEFAULT_TTL_DAYS = 365;
@@ -25,7 +26,7 @@ const CHANNELS = ["PWA", "LMS_CONSOLE", "MEMBER_API", "FIELD_OFFICER"] as const;
 
 function looksLikeRawIdentifier(v: string): boolean {
   const s = v.trim();
-  // Kenyan national IDs are 7–9 digits; MSISDNs 9–13. A real token is 64 hex.
+  // Kenyan national IDs are 7–9 digits; MSISDNs 9–13. A real token is 128 hex.
   if (/^\d{6,13}$/.test(s)) return true;
   if (/^\+?254\d{9}$/.test(s)) return true;
   return false;
@@ -63,9 +64,11 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!/^[0-9a-f]{64}$/i.test(subjectToken)) {
+  if (!isSubjectToken(subjectToken)) {
     return NextResponse.json(
-      { error: "subject_token must be a 64-character hex token." },
+      {
+        error: `subject_token must be a ${SUBJECT_TOKEN_HEX_LENGTH}-character hex OPRF output.`,
+      },
       { status: 400 },
     );
   }

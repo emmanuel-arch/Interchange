@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { PageHeader, Panel, Pill, Empty } from "@/components/chrome";
 import { SCOPES, ALL_SCOPES, MANDATORY_SCOPES, OPTIONAL_SCOPES } from "@/lib/consent/scopes";
-import { tokenPreview } from "@/lib/tokens";
+import { tokenPreview } from "@/lib/oprf/node";
 
 export const dynamic = "force-dynamic";
 

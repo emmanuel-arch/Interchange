@@ -79,7 +79,39 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
     return { ok: false, outcome: "REFUSED_RECIPROCITY", reason, auditId: audit.id };
   }
 
-  // ── 2. Consent must exist ─────────────────────────────────────────────────
+  // ── 2. Quota ──────────────────────────────────────────────────────────────
+  // The commercial model is per-query above a contribution-linked free tier, so
+  // the free tier has to be countable. Only GRANTED calls count: charging a
+  // member for a refusal would let one member burn another's allowance by
+  // asking about their customers.
+  const subscription = await prisma.subscription.findFirst({
+    where: { memberId: callerId, serviceId: service.id, active: true },
+    select: { freeTierPerDay: true },
+  });
+
+  if (!subscription) {
+    const reason = `Not subscribed to ${serviceCode}.`;
+    const audit = await record("REFUSED_QUOTA", reason, consentRef ?? null);
+    return { ok: false, outcome: "REFUSED_QUOTA", reason, auditId: audit.id };
+  }
+
+  if (subscription.freeTierPerDay > 0) {
+    const usedToday = await prisma.auditEntry.count({
+      where: {
+        callerId,
+        serviceId: service.id,
+        outcome: "GRANTED",
+        at: { gte: new Date(Date.now() - 86_400_000) },
+      },
+    });
+    if (usedToday >= subscription.freeTierPerDay) {
+      const reason = `Free tier of ${subscription.freeTierPerDay}/day exhausted.`;
+      const audit = await record("REFUSED_QUOTA", reason, consentRef ?? null);
+      return { ok: false, outcome: "REFUSED_QUOTA", reason, auditId: audit.id };
+    }
+  }
+
+  // ── 3. Consent must exist ─────────────────────────────────────────────────
   if (!consentRef) {
     const reason = "No consent_ref presented.";
     const audit = await record("REFUSED_NO_CONSENT", reason, null);
@@ -121,7 +153,7 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
     return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
   }
 
-  // ── 3. Scope must cover the operation ─────────────────────────────────────
+  // ── 4. Scope must cover the operation ─────────────────────────────────────
   if (!coversScopes(consent.scopes, service.requiredScopes)) {
     const missing = missingScopes(consent.scopes, service.requiredScopes);
     const reason = `Consent does not cover: ${missing.join(", ")}.`;

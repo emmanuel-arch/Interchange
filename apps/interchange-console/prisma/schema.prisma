@@ -57,6 +57,14 @@ model Member {
   /// While set and in the future, this member contributes but cannot query.
   shadowUntil DateTime?
 
+  // ── Identity ───────────────────────────────────────────────────────────────
+  /// Ed25519 public key, hex. Every request this member makes is signed with
+  /// the matching private key, which never leaves their node. This is what
+  /// replaces "the caller told us who they are" — a claim any member could
+  /// forge — with a claim only this member can make.
+  publicKey       String?
+  keyRegisteredAt DateTime?
+
   // ── Provenance ─────────────────────────────────────────────────────────────
   /// Where their book physically lives, e.g. "213.148.17.198,4420".
   sourceHost     String?
@@ -227,4 +235,68 @@ model AuditEntry {
   @@index([subjectToken])
   @@index([at])
   @@index([callerId, at])
+}
+
+// ── Message log ──────────────────────────────────────────────────────────────
+
+/// The append-only, hash-chained record of every exchange.
+///
+/// This is the component that makes non-repudiation real. Each entry carries
+/// the hash of the one before it, so removing or editing any entry breaks every
+/// hash after it — a member can prove what they sent, and just as importantly
+/// can prove what they did NOT send, because a missing entry is detectable
+/// rather than merely absent.
+///
+/// Entries are batch-timestamped against an RFC 3161 authority (blueprint v2
+/// §4.2). Timestamping is asynchronous by design: the exchange does not block
+/// on the TSA being reachable, but a chain that has gone un-timestamped for too
+/// long is a fault worth alerting on.
+model MessageLogEntry {
+  /// Monotonic position in the chain. Assigned under a lock — the chain has one
+  /// writer at a time or it is not a chain.
+  seq      BigInt   @id
+  at       DateTime @default(now())
+
+  /// Hash of the previous entry. The genesis entry carries 64 zeroes.
+  prevHash String
+  /// SHA-256 over prevHash + the canonical payload below.
+  hash     String   @unique
+
+  callerCode   String
+  serviceCode  String
+  subjectToken String
+  consentRef   String?
+  outcome      String
+
+  /// Digest of the request as received, and of the response as sent. The bodies
+  /// themselves are NOT stored — the log proves what was exchanged without
+  /// becoming a second copy of the data it is meant to protect.
+  requestDigest  String
+  responseDigest String?
+
+  /// The caller's signature over the request digest.
+  callerSignature String?
+
+  /// Set when a batch is timestamped. Null means "not yet anchored".
+  timestampedAt    DateTime?
+  timestampBatchId String?
+
+  @@index([at])
+  @@index([callerCode, at])
+  @@index([subjectToken])
+  @@index([timestampedAt])
+}
+
+/// One row per OPRF evaluation, so token issuance can be rate-limited.
+///
+/// This is the control that keeps the OPRF honest. The construction stops a
+/// member computing tokens OFFLINE, but a member could still walk the national
+/// ID space ONLINE by asking the Registry a hundred million times. Counting and
+/// capping issuance is what closes that door.
+model OprfIssuance {
+  id       String   @id @default(cuid())
+  memberId String
+  at       DateTime @default(now())
+
+  @@index([memberId, at])
 }

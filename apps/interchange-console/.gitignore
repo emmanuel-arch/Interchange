@@ -42,3 +42,6 @@ next-env.d.ts
 
 # the template is safe to commit; the real .env is not
 !.env.example
+
+# development key material — never commit
+.member-keys.json

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { PageHeader, Panel, Pill, outcomeTone, Empty } from "@/components/chrome";
-import { tokenPreview } from "@/lib/tokens";
+import { tokenPreview } from "@/lib/oprf/node";
 
 export const dynamic = "force-dynamic";
 

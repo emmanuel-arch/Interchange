@@ -3,15 +3,20 @@ import { InterchangeMark } from "@/components/chrome";
 
 // The console shell. Everything behind the gate lives in this route group.
 //
-// NOT YET AUTHENTICATED — the gate's runAuth() is still a stub, so these routes
-// are reachable directly. Sprint 2 puts a proxy.ts in front of this group
-// (Next 16 renamed middleware → proxy) that resolves the member from their
-// certificate and refuses anything without a session.
+// Behind a session: proxy.ts (Next 16's replacement for middleware.ts) redirects
+// anything in this group to the gate when no session cookie is present. Sessions
+// are established by signed request at /api/session — the same Ed25519 identity
+// that authenticates member-to-member calls.
+//
+// The vault gate's own runAuth() is still a stub and does not yet call it; a
+// browser cannot produce the signature, so a human-facing operator login is
+// still outstanding work.
 
 const NAV = [
   { href: "/directory", label: "Directory" },
   { href: "/consent", label: "Consent" },
   { href: "/audit", label: "Audit" },
+  { href: "/log", label: "Message Log" },
 ];
 
 // A route group adds no path segment, so typegen resolves this layout to "/".
