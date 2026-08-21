@@ -1,0 +1,230 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// The Interchange — Registry schema (Sprint 1).
+//
+// This database is the Registry: who the members are, what they may call, what
+// every borrower has consented to, and what was actually asked. It holds NO
+// borrower record and NO raw identifier. The only identity that ever reaches
+// here is `subjectToken` — the output of the OPRF, which no participant can
+// reverse (blueprint v2 §4.1).
+//
+// Two boundaries this schema exists to enforce:
+//
+//   1. CONSENT. Every call carries a consentRef. The Registry validates it —
+//      exists, not expired, not revoked, and its scopes cover the operation —
+//      before any member answers. No consentRef, no answer. There is no code
+//      path that serves an unconsented query, because AuditEntry.outcome has
+//      nowhere to record one as GRANTED without a Consent to point at.
+//
+//   2. MEMBERSHIP. The `.198` members are SEPARATE LEGAL ENTITIES sharing one
+//      ServiceSuite database, partitioned only by EntityID. That makes
+//      Member.sourceEntityId a security boundary between competitors, not a
+//      query filter — a read that forgets it is a cross-member data leak. The
+//      node scopes every read by it; the caller is never trusted to supply it.
+//
+// Postgres RLS lands in Sprint 2, following the pattern already proven in
+// BirgenAI_LMS (prisma/rls.sql + src/lib/prisma.ts): app-level scoping is the
+// promise, RLS is the guarantee, and this schema is shaped for both.
+// ─────────────────────────────────────────────────────────────────────────────
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Connection URL lives in prisma.config.ts (Prisma 7).
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Members ──────────────────────────────────────────────────────────────────
+
+enum MemberStatus {
+  PROSPECT // identified, not yet onboarded
+  SHADOW // contributing, MAY NOT query — the reciprocity apprenticeship
+  ACTIVE // full member
+  SUSPENDED // stopped contributing, or breached
+}
+
+/// A participating organisation. One row per LEGAL ENTITY, even when several
+/// share a database — see the note on sourceEntityId.
+model Member {
+  id     String       @id @default(cuid())
+  /// X-Road-compatible identifier: KE/LENDER/3005
+  code   String       @unique
+  name   String
+  status MemberStatus @default(PROSPECT)
+
+  joinedAt    DateTime?
+  /// While set and in the future, this member contributes but cannot query.
+  shadowUntil DateTime?
+
+  // ── Provenance ─────────────────────────────────────────────────────────────
+  /// Where their book physically lives, e.g. "213.148.17.198,4420".
+  sourceHost     String?
+  sourceDatabase String?
+  /// THE SECURITY BOUNDARY. Ten separate companies share the .198 Serviceconnect
+  /// database, separated only by this column. Every read the node performs on
+  /// their behalf must be scoped to it.
+  sourceEntityId Int?
+
+  // ── Contribution ───────────────────────────────────────────────────────────
+  // Reciprocity is computed from these fields by the policy engine. It is not a
+  // clause in an agreement — a member who stops contributing stops being able
+  // to query, automatically.
+  lastContributionAt DateTime?
+  borrowers          Int       @default(0)
+  loans              Int       @default(0)
+
+  consents      Consent[]
+  subscriptions Subscription[]
+  callsMade     AuditEntry[]   @relation("caller")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sourceHost, sourceDatabase, sourceEntityId])
+  @@index([status])
+}
+
+// ── Services ─────────────────────────────────────────────────────────────────
+
+enum ServiceKind {
+  QUERY // brokered, real-time — Plane A
+  REPORT // assembled CRB 2.0 artefact
+}
+
+/// Something a member can call. The Directory is this table.
+model Service {
+  id          String      @id @default(cuid())
+  code        String      @unique
+  name        String
+  kind        ServiceKind
+  /// CRB 2.0 report type, where this service is a report (1, 2, 3, 11, 12, 20…).
+  reportType  Int?
+  description String
+  /// Consent scopes a caller must hold before this service will answer.
+  requiredScopes String[]
+  /// False while a service is specified but not yet live.
+  live        Boolean     @default(false)
+
+  subscriptions Subscription[]
+  audits        AuditEntry[]
+
+  @@index([kind])
+}
+
+model Subscription {
+  id        String  @id @default(cuid())
+  memberId  String
+  serviceId String
+  active    Boolean @default(true)
+  /// Free calls per day. The commercial model is per-query ABOVE a
+  /// contribution-linked free tier, so this is derived from contribution
+  /// volume rather than negotiated per member.
+  freeTierPerDay Int @default(0)
+
+  member  Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, serviceId])
+}
+
+// ── Consent ──────────────────────────────────────────────────────────────────
+
+enum ConsentChannel {
+  PWA // borrower self-served through the Micro-Eazy portal
+  LMS_CONSOLE // captured by staff in the lending console
+  MEMBER_API // a bridged member POSTed it from their own onboarding
+  FIELD_OFFICER
+}
+
+enum ConsentEventKind {
+  CAPTURED
+  VALIDATED // a call presented this ref and it passed
+  REFUSED_SCOPE // presented, but the scope did not cover the operation
+  REFUSED_REVOKED // presented after the borrower withdrew
+  REVOKED // the borrower withdrew
+  EXPIRED
+}
+
+/// One borrower's standing permission. The evidence a regulator would ask for.
+model Consent {
+  id  String @id @default(cuid())
+  /// The opaque handle callers quote. Not guessable, not meaningful.
+  ref String @unique
+
+  /// OPRF output. NEVER a national ID, NEVER an MSISDN. If a raw identifier can
+  /// reach this column, the tokenisation boundary has been breached upstream.
+  subjectToken String
+
+  /// The member who captured it — the controller for this consent.
+  memberId String
+
+  scopes         String[]
+  /// Which version of the wording they actually agreed to. Without this the
+  /// consent is unprovable, because nobody can say what was on the screen.
+  wordingVersion String
+  capturedVia    ConsentChannel
+
+  capturedAt DateTime  @default(now())
+  expiresAt  DateTime
+  revokedAt  DateTime?
+
+  /// Channel, device, IP, OTP reference — whatever proves an affirmative act.
+  evidence Json?
+
+  member Member         @relation(fields: [memberId], references: [id], onDelete: Restrict)
+  events ConsentEvent[]
+
+  @@index([subjectToken])
+  @@index([memberId])
+  @@index([expiresAt])
+}
+
+model ConsentEvent {
+  id            String           @id @default(cuid())
+  consentId     String
+  kind          ConsentEventKind
+  at            DateTime         @default(now())
+  /// Which member triggered this event, when it was not the capturing member.
+  actorMemberId String?
+  serviceCode   String?
+  detail        String?
+
+  consent Consent @relation(fields: [consentId], references: [id], onDelete: Cascade)
+
+  @@index([consentId, at])
+}
+
+// ── Audit ────────────────────────────────────────────────────────────────────
+
+enum CallOutcome {
+  GRANTED
+  REFUSED_NO_CONSENT
+  REFUSED_SCOPE
+  REFUSED_RECIPROCITY // caller is in SHADOW, or has stopped contributing
+  REFUSED_QUOTA
+  ERROR
+}
+
+/// Every call, answered or refused. This is what lets a member prove what they
+/// did and did not send, and what lets a borrower be shown who asked about them.
+model AuditEntry {
+  id           String      @id @default(cuid())
+  at           DateTime    @default(now())
+  callerId     String
+  serviceId    String
+  subjectToken String
+  consentRef   String?
+  outcome      CallOutcome
+  latencyMs    Int?
+  /// How many member nodes actually answered a fan-out.
+  respondents  Int?
+  detail       String?
+
+  caller  Member  @relation("caller", fields: [callerId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([subjectToken])
+  @@index([at])
+  @@index([callerId, at])
+}
