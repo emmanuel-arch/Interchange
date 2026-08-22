@@ -43,6 +43,9 @@ npm run verify:exchange -- http://127.0.0.1:3330   # 19 checks
 npm run verify:tamper                              # 6 checks
 npm run verify:exposure -- http://127.0.0.1:3330    # 15 checks
 npm run verify:learning                            # 17 checks
+npm run train                                      # champion + challenger
+npm run verify:scoring                             # 21 checks
+npm run verify:onboarding -- http://127.0.0.1:3330  # 18 checks
 ```
 
 `verify:exchange` acts as a member node: it holds a private key, blinds
@@ -63,6 +66,8 @@ consistent, which moves the break downstream instead of hiding it.
 | `/directory` | Members, their books, contribution recency, the service catalogue. |
 | `/exposure` | Run a live ecosystem exposure query. Dev-fenced. |
 | `/learning` | Loop coverage, selection bias, feature drift, the registry. |
+| `/score` | Model registry, promotion, reason codes, the AI tool manifest. |
+| `/governance` | Applications, shadow period, decision record, operating entity. |
 | `/consent` | Consent scopes in borrower wording, the ledger, the event trail. |
 | `/audit` | Every call the gate decided, with latency. |
 | `/log` | The hash-chained message log, re-verified on load. |
@@ -71,6 +76,8 @@ consistent, which moves the break downstream instead of hiding it.
 | `POST /api/node/exposure` | The MEMBER side: answers about its own book, aggregates only. |
 | `GET /api/filters` | Published Bloom filters. Nodes screen locally against these. |
 | `POST /api/consent` | Issue a `consent_ref`. Refuses raw identifiers. |
+| `POST /api/onboard` | A lender applies to join. Grants nothing. |
+| `POST /api/onboard/{id}/key` | Register a public key by signing with it. |
 | `POST /api/consent/{ref}/revoke` | Borrower withdrawal. Idempotent, prospective. |
 | `POST /api/session` | Console session, by signed request. |
 | `GET /api/log/verify` | Public chain verification — evidence, not assertion. |
@@ -125,3 +132,34 @@ them, which happens to be the part that cannot be recovered later:
 The orchestration is deliberately plain functions rather than Dagster assets, so
 wrapping them later is mechanical. The label policy is the hard part, and it is
 here.
+
+## On the reported AUC
+
+The champion scores barely better than chance on the seeded data, and the
+console says so in amber rather than hiding it. Two things are worth separating:
+
+- **The trainer works.** On a planted separable dataset it reaches AUC 1.000 and
+  puts its weight on the signal rather than the noise, and its reason-code
+  contributions sum *exactly* to the logit. That is checked in
+  `verify:scoring`, first, deliberately — because a broken trainer and a weak
+  dataset produce the same number, and reporting an AUC without separating them
+  proves nothing.
+- **The fixture is weak on purpose.** Outcomes are generated with heavy noise
+  around a latent risk factor, and the strongest real predictors — the 38 M-Pesa
+  cashflow features — are not wired yet.
+
+Chasing a flattering number on synthetic data would be exactly the self-deception
+the point-in-time and out-of-time work exists to prevent.
+
+## Model choices worth knowing
+
+The **logistic scorecard is the champion**, not the tree ensemble. Its
+contributions are exact rather than approximated, its monotonicity can be
+inspected by reading a coefficient, and on a few hundred rows trees memorise.
+
+**Monotonic constraints are enforced by projection**, not hoped for. Without
+them the ecosystem features — active lenders, active loans and outstanding
+balance move together above 0.9 correlation — flipped coefficient signs freely:
+an unconstrained fit put a negative weight on worst-days-past-due while
+defaulters demonstrably had *higher* DPD. That model would have told a borrower
+their arrears history helped them.

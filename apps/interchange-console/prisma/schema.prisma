@@ -489,3 +489,65 @@ model ShadowScore {
   @@unique([decisionId, modelVersionId])
   @@index([modelVersionId])
 }
+
+// ── Onboarding & governance ──────────────────────────────────────────────────
+
+/// A prospective member's application to join.
+///
+/// Self-service on purpose. The founding cohort was admitted by hand, which is
+/// fine for three and impossible for thirty — and a network that only its
+/// operator can add members to is not a network, it is a customer list.
+model MemberApplication {
+  id           String   @id @default(cuid())
+  submittedAt  DateTime @default(now())
+
+  organisation String
+  contactName  String
+  contactEmail String
+  /// Where their book lives, so the node can be placed.
+  sourceHost     String?
+  sourceDatabase String?
+  sourceEntityId Int?
+
+  /// Self-declared, verified during the shadow period against what they
+  /// actually publish. A claim is not evidence.
+  claimedBorrowers Int @default(0)
+  claimedLoans     Int @default(0)
+
+  /// Ed25519 public key, hex. Registered by signing the application WITH it,
+  /// which proves possession of the private half rather than merely knowledge
+  /// of a string someone could have copied.
+  publicKey String?
+
+  /// SUBMITTED · KEY_REGISTERED · ADMITTED · REJECTED · WITHDRAWN
+  status       String  @default("SUBMITTED")
+  decidedAt    DateTime?
+  decidedBy    String?
+  decisionNote String?
+
+  /// Set when admission creates the Member row.
+  memberId String?
+
+  @@index([status, submittedAt])
+}
+
+/// An admission, suspension or readmission, and who decided it.
+///
+/// BirgenAI operates the Interchange while also selling lending software to some
+/// members. A competitor will name that conflict in the first meeting, and the
+/// answer cannot be "trust us" — it has to be a record of who decided what, on
+/// what grounds, visible to every member.
+model GovernanceAction {
+  id        String   @id @default(cuid())
+  at        DateTime @default(now())
+  /// ADMIT · REJECT · SUSPEND · REINSTATE · PROMOTE_FROM_SHADOW
+  action    String
+  memberCode String?
+  applicationId String?
+  /// The governing body member or operator who decided.
+  decidedBy String
+  rationale String
+
+  @@index([at])
+  @@index([memberCode])
+}

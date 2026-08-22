@@ -20,6 +20,7 @@ const NAV = [
   { href: "/score", label: "Score" },
   { href: "/learning", label: "Learning" },
   { href: "/log", label: "Message Log" },
+  { href: "/governance", label: "Governance" },
 ];
 
 // A route group adds no path segment, so typegen resolves this layout to "/".
