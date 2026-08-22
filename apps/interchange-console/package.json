@@ -15,7 +15,9 @@
     "verify:tamper": "tsx scripts/verify-tamper.ts",
     "seed:holdings": "tsx scripts/seed-holdings.ts",
     "filters:build": "tsx scripts/build-filters.ts",
-    "verify:exposure": "tsx scripts/verify-exposure.ts"
+    "verify:exposure": "tsx scripts/verify-exposure.ts",
+    "seed:ledger": "tsx scripts/seed-ledger.ts",
+    "verify:learning": "tsx scripts/verify-learning.ts"
   },
   "dependencies": {
     "@noble/curves": "^2.3.0",

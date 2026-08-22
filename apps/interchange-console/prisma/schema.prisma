@@ -356,3 +356,80 @@ model MemberFilter {
   @@unique([memberId, generation])
   @@index([memberId, builtAt])
 }
+
+// ── Plane B: the learning loop ───────────────────────────────────────────────
+
+/// A bitemporal ledger event. The substrate the feature store computes over.
+///
+/// TWO TIMESTAMPS, AND THE DIFFERENCE BETWEEN THEM IS THE WHOLE POINT:
+///
+///   `at`         when the thing HAPPENED (valid time)
+///   `recordedAt` when the ecosystem LEARNED it (transaction time)
+///
+/// A naive feature store filters on `at <= asOf` and quietly leaks. Consider an
+/// arrears event that occurred on day 5 but was only reported on day 20: a
+/// vector computed as-of day 10 must NOT contain it, because on day 10 nobody
+/// knew. Filtering on `at` alone includes it, the backtest looks superb, and the
+/// model collapses in production — because at scoring time that fact does not
+/// exist yet.
+///
+/// Late-arriving data is the norm in lending, not the exception. Members report
+/// in batches, collections update days later, bureau data lags weeks. Any store
+/// that is not bitemporal is silently training on the future.
+model LedgerEvent {
+  id           String   @id @default(cuid())
+  memberId     String
+  subjectToken String
+
+  at         DateTime
+  recordedAt DateTime @default(now())
+
+  /// DISBURSED · REPAYMENT · ARREARS · CLOSED · APPLICATION · DECLINE
+  kind        String
+  amountKes   Int?
+  daysPastDue Int?
+
+  @@index([subjectToken, recordedAt])
+  @@index([subjectToken, at])
+  @@index([memberId, recordedAt])
+}
+
+/// A credit decision, with the exact feature vector that produced it.
+///
+/// Written SYNCHRONOUSLY at decision time. This is not an optimisation — a
+/// vector reconstructed later is a different vector, because the underlying
+/// facts have since changed and late-arriving data has landed. If this row is
+/// not written when the decision is made, that training example is not delayed,
+/// it is GONE. The nightly backfill in emmanuel-arch/BirgenAI has been failing
+/// since it was added, which is exactly this loss, repeated every night.
+model Decision {
+  id           String   @id @default(cuid())
+  at           DateTime @default(now())
+  memberId     String
+  subjectToken String
+
+  /// APPROVED · DECLINED
+  outcome   String
+  amountKes Int?
+
+  /// The vector as it stood at `at`. Frozen, never recomputed.
+  features          Json
+  featureSetVersion String
+  modelVersion      String
+  score             Int?
+
+  /// Set once the performance window closes.
+  /// REPAID · DEFAULTED · IMMATURE
+  label       String?
+  labelledAt  DateTime?
+  /// OWN_BOOK — we lent and observed the outcome ourselves.
+  /// ECOSYSTEM — we DECLINED, another member lent, and we observed theirs.
+  ///             This is reject inference with ground truth instead of a guess.
+  labelSource String?
+  labelMemberCode String?
+
+  @@index([memberId, at])
+  @@index([subjectToken])
+  @@index([label])
+  @@index([outcome, label])
+}

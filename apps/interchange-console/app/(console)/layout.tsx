@@ -17,6 +17,7 @@ const NAV = [
   { href: "/exposure", label: "Exposure" },
   { href: "/consent", label: "Consent" },
   { href: "/audit", label: "Audit" },
+  { href: "/learning", label: "Learning" },
   { href: "/log", label: "Message Log" },
 ];
 

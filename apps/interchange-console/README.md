@@ -27,6 +27,7 @@ Then generate development key material:
 npm run keys:dev        # ecosystem OPRF key + a keypair per member
 npm run seed:holdings   # overlapping borrower population (the stand-in book)
 npm run filters:build   # publish each member's Bloom filter
+npm run seed:ledger     # bitemporal ledger + decision snapshots
 ```
 
 It prints an `INTERCHANGE_OPRF_KEY` line for `.env` and writes member private
@@ -41,6 +42,7 @@ npm run build && npm run start -- --port 3330
 npm run verify:exchange -- http://127.0.0.1:3330   # 19 checks
 npm run verify:tamper                              # 6 checks
 npm run verify:exposure -- http://127.0.0.1:3330    # 15 checks
+npm run verify:learning                            # 17 checks
 ```
 
 `verify:exchange` acts as a member node: it holds a private key, blinds
@@ -60,6 +62,7 @@ consistent, which moves the break downstream instead of hiding it.
 | `/` | The member gate. `?still=1` renders it settled, with no animation. |
 | `/directory` | Members, their books, contribution recency, the service catalogue. |
 | `/exposure` | Run a live ecosystem exposure query. Dev-fenced. |
+| `/learning` | Loop coverage, selection bias, feature drift, the registry. |
 | `/consent` | Consent scopes in borrower wording, the ledger, the event trail. |
 | `/audit` | Every call the gate decided, with latency. |
 | `/log` | The hash-chained message log, re-verified on load. |
@@ -100,3 +103,25 @@ It exists so the real fan-out path — local Bloom screening, parallel signed
 requests, per-member timeouts, partial results, aggregates-only responses — can
 be exercised before nodes are deployed at members. Everything around it is real.
 Replacing it is the first task when a member node ships.
+
+## Plane B: what is real and what is not
+
+Redpanda, Iceberg, R2 and Dagster are **not running here** — no container runtime
+is available on this machine. What is built is everything that does not depend on
+them, which happens to be the part that cannot be recovered later:
+
+- **Bitemporal ledger.** `LedgerEvent` carries both `at` (when it happened) and
+  `recordedAt` (when we learned it). The feature store filters on `recordedAt`,
+  which is what stops late-arriving data leaking into earlier vectors. Half the
+  arrears in the fixture are deliberately reported late so the leakage test has
+  something real to catch.
+- **Decision snapshots.** The feature vector is frozen at decision time, never
+  recomputed. A vector rebuilt later is a different vector.
+- **Reject inference.** Applicants one member declined, who borrowed from
+  another, carry observed labels — not imputed ones.
+- **Feature registry.** One definition per feature, used by training and serving.
+- **PSI drift monitoring.**
+
+The orchestration is deliberately plain functions rather than Dagster assets, so
+wrapping them later is mechanical. The label policy is the hard part, and it is
+here.
