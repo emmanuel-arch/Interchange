@@ -433,3 +433,59 @@ model Decision {
   @@index([label])
   @@index([outcome, label])
 }
+
+// ── Scoring ──────────────────────────────────────────────────────────────────
+
+/// A trained model. Versioned, with the metrics it earned on held-out data.
+///
+/// Promotion is a status change on a row, not a deploy. That matters: a model
+/// that can only be rolled back by shipping code will not be rolled back at
+/// 2am when its reason codes start looking wrong.
+model ModelVersion {
+  id        String   @id @default(cuid())
+  version   String   @unique
+  algorithm String
+  trainedAt DateTime @default(now())
+
+  /// The feature set this was trained against. A model scored with a different
+  /// feature set version is scoring on inputs it never saw.
+  featureSetVersion String
+
+  /// Learned parameters — coefficients, or the tree ensemble.
+  params  Json
+  /// AUC, KS, Gini, sample sizes, base rate.
+  metrics Json
+
+  /// CHAMPION — decides. CHALLENGER — shadow-scores only. RETIRED.
+  status String @default("CHALLENGER")
+
+  trainedOnRows Int
+  trainStart    DateTime
+  trainEnd      DateTime
+  testStart     DateTime
+  testEnd       DateTime
+
+  shadowScores ShadowScore[]
+
+  @@index([status])
+}
+
+/// A challenger's opinion on a decision the champion already made.
+///
+/// Challengers score live traffic without deciding anything. Promotion happens
+/// only when a challenger beats the champion on a held-out window it has never
+/// been trained on — never on backtest alone, because a backtest is a claim
+/// about the past and a shadow score is a claim about now.
+model ShadowScore {
+  id             String   @id @default(cuid())
+  decisionId     String
+  modelVersionId String
+  score          Int
+  probability    Float
+  at             DateTime @default(now())
+
+  modelVersion ModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
+
+  @@unique([decisionId, modelVersionId])
+  @@index([modelVersionId])
+}

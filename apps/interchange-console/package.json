@@ -17,7 +17,9 @@
     "filters:build": "tsx scripts/build-filters.ts",
     "verify:exposure": "tsx scripts/verify-exposure.ts",
     "seed:ledger": "tsx scripts/seed-ledger.ts",
-    "verify:learning": "tsx scripts/verify-learning.ts"
+    "verify:learning": "tsx scripts/verify-learning.ts",
+    "train": "tsx scripts/train-models.ts",
+    "verify:scoring": "tsx scripts/verify-scoring.ts"
   },
   "dependencies": {
     "@noble/curves": "^2.3.0",

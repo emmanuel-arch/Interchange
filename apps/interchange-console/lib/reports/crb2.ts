@@ -15,6 +15,7 @@
 // block mean opposite things to a credit decision.
 // ─────────────────────────────────────────────────────────────────────────────
 import type { ExposureResult } from "@/lib/exposure/broker";
+import type { Scored } from "@/lib/scoring/registry";
 
 export const REPORT_TYPE = {
   IDENTITY_VERIFICATION: 1,
@@ -126,6 +127,35 @@ export function identityVerification(subjectToken: string): Envelope {
     data: {
       reason:
         "The KYC evidence block is produced during LMS onboarding and is not yet published to the Interchange.",
+    },
+  };
+}
+
+/** Report 3 — Interchange Score. Metropol calls its equivalent Metro Score. */
+export function interchangeScore(s: Scored, partial = false): Envelope {
+  return {
+    api_code: 200,
+    api_code_description: "SUCCESS",
+    report_type: REPORT_TYPE.INTERCHANGE_SCORE,
+    subject_token: "",
+    generated_at: new Date().toISOString(),
+    blocks: { ecosystem_exposure: "present", repayment_behaviour: "present" },
+    partial,
+    data: {
+      score: s.score,
+      score_range: "300-850",
+      probability_of_default: Number(s.probability.toFixed(4)),
+      model_version: s.modelVersion,
+      feature_set_version: s.featureSetVersion,
+      // Reason codes are not decoration. A lender has to be able to tell a
+      // declined borrower WHY, and "the model said so" is not an answer a
+      // regulator accepts.
+      reason_codes: s.reasons.map((r, i) => ({
+        rank: i + 1,
+        factor: r.explanation,
+        direction: r.direction,
+        family: r.family,
+      })),
     },
   };
 }

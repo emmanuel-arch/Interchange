@@ -71,8 +71,22 @@ async function main() {
   type Pending = { token: string; memberId: string; at: Date; outcome: "APPROVED" | "DECLINED" };
   const pendingDecisions: Pending[] = [];
 
-  for (let i = 0; i < 300; i++) {
+  for (let i = 0; i < 1400; i++) {
     const token = tokenFor(String(40_000_000 + i * 13));
+
+    // ── Latent risk ────────────────────────────────────────────────────────
+    // Each borrower has an unobserved riskiness that drives THREE things: how
+    // much prior stacking and arrears they accumulate, whether the existing
+    // credit policy approves them, and whether they ultimately default.
+    //
+    // This is the confounding structure real lending has, and the fixture needs
+    // it or the whole exercise is circular. An earlier version drew defaults
+    // from a bare rnd(), which meant the decision-time features carried no
+    // information about the outcome — the model correctly found nothing
+    // (AUC 0.48), and the reject-inference gap was hardcoded rather than
+    // emergent. Signal has to be IN the data-generating process for a test of
+    // whether the pipeline finds signal to mean anything.
+    const latentRisk = rnd(); // 0 = safest, 1 = riskiest
 
     // Everyone applies somewhere between 30 and 400 days ago.
     const firstAppDaysAgo = between(30, 400);
@@ -85,8 +99,9 @@ async function main() {
     // are all zeros — every feature would be degenerate, PSI would be
     // meaningless, and the fixture would prove nothing about a store whose whole
     // job is summarising prior history.
-    if (rnd() < 0.45) {
-      const priorLenders = between(1, 4);
+    if (rnd() < 0.30 + 0.45 * latentRisk) {
+      // Riskier borrowers stack with more lenders before they get here.
+      const priorLenders = 1 + Math.floor(latentRisk * 3.5);
       for (let p = 0; p < priorLenders; p++) {
         const lender = members[between(0, members.length)];
         // Strictly BEFORE the application, so it is legitimately knowable.
@@ -102,7 +117,7 @@ async function main() {
           kind: "DISBURSED", amountKes: priorAmt, daysPastDue: null,
         });
         // Some prior loans went bad, some closed cleanly.
-        if (rnd() < 0.3) {
+        if (rnd() < 0.10 + 0.55 * latentRisk) {
           const badAt = new Date(priorAt.getTime() + between(25, 80) * DAY);
           const lag = rnd() < 0.5 ? between(3, 30) : 0;
           if (lag > 0) lateArrivals++;
@@ -131,8 +146,10 @@ async function main() {
       kind: "APPLICATION", amountKes: null, daysPastDue: null,
     });
 
-    // 65% approved by the member they applied to.
-    const approved = rnd() < 0.65;
+    // The existing credit policy screens risk IMPERFECTLY — which is exactly
+    // why reject inference has anything to recover. A perfect policy would leave
+    // no good borrowers among the declined and no signal to find.
+    const approved = rnd() < 0.9 - 0.6 * latentRisk;
     pendingDecisions.push({ token, memberId: primary.id, at: applyAt, outcome: approved ? "APPROVED" : "DECLINED" });
 
     if (approved) {
@@ -143,8 +160,8 @@ async function main() {
         kind: "DISBURSED", amountKes: amount, daysPastDue: null,
       });
 
-      // Bad outcome ~22% of the time.
-      if (rnd() < 0.22) {
+      // Default probability rises with latent risk.
+      if (rnd() < 0.05 + 0.45 * latentRisk) {
         const dpd = between(30, 160);
         const arrearsAt = new Date(disbursedAt.getTime() + between(20, 70) * DAY);
         // HALF of all arrears are reported LATE — days to weeks after the fact.
@@ -193,9 +210,11 @@ async function main() {
             kind: "DISBURSED", amountKes: amount, daysPastDue: null,
           });
 
-          // Rejects default noticeably more often — 38% against 22%. That gap is
-          // exactly the signal a model trained only on approvals cannot see.
-          if (rnd() < 0.38) {
+          // NOTE: the same risk function as approvals. The higher observed default
+          // rate among rejects is not hardcoded — it EMERGES because the policy
+          // declined the riskier applicants in the first place. That is what makes
+          // the measured gap meaningful rather than assumed.
+          if (rnd() < 0.05 + 0.45 * latentRisk) {
             const arrearsAt = new Date(otherAt.getTime() + between(20, 70) * DAY);
             if (arrearsAt.getTime() < now) {
               events.push({

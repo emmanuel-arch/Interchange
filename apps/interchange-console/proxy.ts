@@ -20,7 +20,7 @@ import { NextResponse, type NextRequest } from "next/server";
 export const SESSION_COOKIE = "interchange_session";
 
 /** Console routes. Everything else is either public or signature-authenticated. */
-const PROTECTED = ["/directory", "/exposure", "/consent", "/audit", "/learning", "/log"];
+const PROTECTED = ["/directory", "/exposure", "/consent", "/audit", "/score", "/learning", "/log"];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -41,5 +41,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/directory/:path*", "/exposure/:path*", "/consent/:path*", "/audit/:path*", "/learning/:path*", "/log/:path*"],
+  matcher: ["/directory/:path*", "/exposure/:path*", "/consent/:path*", "/audit/:path*", "/score/:path*", "/learning/:path*", "/log/:path*"],
 };
