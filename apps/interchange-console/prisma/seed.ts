@@ -13,13 +13,16 @@
 // boundary — sharing a database does not make them one member.
 // ─────────────────────────────────────────────────────────────────────────────
 import "dotenv/config";
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
 import { MANDATORY_SCOPES } from "../lib/consent/scopes";
-
-const prisma = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
-});
+// THE SHARED CLIENT, not a second one built here.
+//
+// This file used to construct its own: `new PrismaClient({ adapter: new
+// PrismaPg({ connectionString: process.env.DATABASE_URL! }) })`. That works and
+// it quietly opts out of the TLS guard in lib/prisma.ts — node-postgres speaks
+// plaintext when the URL carries no `sslmode`, so seeding a hosted Registry sent
+// the founding cohort across the internet in the clear. A second construction
+// site is a second security posture; there should only be one.
+import { prisma } from "../lib/prisma";
 
 const SHARED_198 = { host: "213.148.17.198,4420", db: "Serviceconnect" };
 

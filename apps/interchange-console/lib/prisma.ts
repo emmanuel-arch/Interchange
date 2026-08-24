@@ -41,12 +41,51 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
+/**
+ * Is this a database on this machine, or one across the public internet?
+ *
+ * Local development runs PGlite on 127.0.0.1 and speaks no TLS at all; anything
+ * else is a hop the Registry's data should never make in the clear.
+ */
+function isLocal(connectionString: string): boolean {
+  try {
+    const host = new URL(connectionString).hostname.toLowerCase();
+    return host === "localhost" || host === "127.0.0.1" || host === "::1" || host.endsWith(".localhost");
+  } catch {
+    return false; // unparseable ⇒ treat as remote, which is the safe direction
+  }
+}
+
 function createClient(): PrismaClient {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
     throw new Error("[prisma] DATABASE_URL is not set.");
   }
-  return new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
+
+  // ── TLS IS NOT LEFT TO THE CONNECTION STRING ───────────────────────────────
+  // node-postgres defaults to NO ENCRYPTION when the URL carries no `sslmode`,
+  // and it does so silently — it connects, it works, and every row crosses the
+  // internet in the clear. Against Supabase's pooler both of these connect and
+  // exactly one of them is encrypted:
+  //
+  //     …pooler.supabase.com:6543/postgres?pgbouncer=true                 ← PLAINTEXT
+  //     …pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=no-verify ← TLSv1.3
+  //
+  // For a Registry holding consent records and the audit trail of competing
+  // lenders, a config typo must not be the thing standing between those two
+  // outcomes. So TLS is set HERE, from the code, for every non-local host, and
+  // the URL cannot downgrade it.
+  //
+  // `rejectUnauthorized: false` is deliberate and is the ceiling rather than the
+  // goal. Supabase's pooler presents a chain signed by their own CA, so full
+  // verification fails with SELF_SIGNED_CERT_IN_CHAIN unless that CA is pinned.
+  // This encrypts the wire — which is what stops passive interception — without
+  // authenticating the peer. To close the remaining gap, download Supabase's CA
+  // (Project Settings → Database → SSL certificate), ship it with the app, and
+  // swap this for { ca: readFileSync(...), rejectUnauthorized: true }.
+  const ssl = isLocal(connectionString) ? undefined : { rejectUnauthorized: false };
+
+  return new PrismaClient({ adapter: new PrismaPg({ connectionString, ssl }) });
 }
 
 /**
