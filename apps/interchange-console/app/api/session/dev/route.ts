@@ -1,7 +1,9 @@
 // GET /api/session/dev — local development console access.
 //
-// A browser cannot produce the Ed25519 signature /api/session requires, so
-// without this there is no way to look at the console during development.
+// A browser cannot produce the Ed25519 signature /api/session requires, and the
+// access-code door (/api/session/code) needs an Operator row to exist. This is
+// the escape hatch for neither being true yet — opening the console as a member
+// with no credential at all.
 //
 // FENCED THREE WAYS, because a route that hands out sessions is exactly the kind
 // of convenience that escapes into production:
@@ -12,7 +14,10 @@
 // If you are reading this in a deployed environment, it should be returning 404.
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { SESSION_COOKIE } from "@/proxy";
+import { effectiveRights } from "@/lib/rights";
+import { mintSession, SESSION_COOKIE, SESSION_TTL_SECONDS, sessionCookieOptions } from "@/lib/session";
+
+export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   const enabled =
@@ -29,20 +34,27 @@ export async function GET(request: Request) {
 
   const member = await prisma.member.findUnique({ where: { code } });
   if (!member) {
-    return NextResponse.json({ error: `Unknown member "${code}".` }, { status: 404 });
+    return NextResponse.json({ error: 'Unknown member "' + code + '".' }, { status: 404 });
   }
 
   // Only ever redirect within this app — an open redirect on a route that also
   // sets a session cookie would be a genuinely nasty combination.
   const target = next.startsWith("/") && !next.startsWith("//") ? next : "/directory";
+  const rights = effectiveRights("MEMBER_ADMIN", []);
 
   const response = NextResponse.redirect(new URL(target, url.origin));
-  response.cookies.set(SESSION_COOKIE, member.code, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: false,
-    path: "/",
-    maxAge: 60 * 60 * 8,
+  response.cookies.set({
+    name: SESSION_COOKIE,
+    value: mintSession({
+      sub: member.code,
+      kind: "member",
+      name: member.name,
+      role: "MEMBER_ADMIN",
+      member: member.code,
+      rights,
+    }),
+    ...sessionCookieOptions(),
+    maxAge: SESSION_TTL_SECONDS,
   });
   return response;
 }

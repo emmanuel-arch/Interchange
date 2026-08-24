@@ -16,15 +16,20 @@
 //   · The footer lists the six connected systems, because inheriting their
 //     trust is the whole reason we launch on this domain.
 //
-// AUTH IS NOT WIRED. The timeout in runAuth() is the ported placeholder from the
-// trading console and grants access to anyone. It stays until the Registry lands
-// in Sprint 2. Do not put this in front of a member until it is real.
+// AUTH IS NOW WIRED (Sprint 2). The ported placeholder — a setTimeout that
+// granted access to anyone — is gone. The PIN pad posts to /api/session/code,
+// which verifies the code against a scrypt hash, applies lockout, and mints an
+// HMAC-signed session; the certificate field posts to /api/session, which wants
+// an Ed25519 signature from the member's node and says so plainly when it does
+// not get one. Both surface the SERVER's message rather than inventing one, so
+// the screen can never claim an access the session does not carry.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Shield, ShieldCheck, Lock, Unlock, Fingerprint,
+  Shield, ShieldCheck, ShieldAlert, Lock, Unlock, Fingerprint,
   KeyRound, Radio, Cpu, Server, Terminal, ArrowLeft, ChevronRight,
 } from "lucide-react";
 
@@ -35,7 +40,7 @@ function randomHex(len: number): string {
 }
 
 type Method = "certificate" | "access-code";
-type AuthState = "idle" | "authenticating" | "granted";
+type AuthState = "idle" | "authenticating" | "granted" | "denied";
 
 const CONNECTED_SYSTEMS = [
   "Lending", "Portal", "ConnectDesk", "Analytics", "PeopleHub", "Ledgerly",
@@ -52,12 +57,14 @@ const STILL_HEX = "7F3A9C21E4B806D5A17C4E92FB380D6C";
  * it, framer-motion ships its `initial` styles as opacity:0 in the HTML, and
  * anyone whose JS is slow or blocked sees a black screen on a login page.
  */
-export default function MemberGate({ still = false }: { still?: boolean }) {
+export default function MemberGate({ still = false, next = "/directory" }: { still?: boolean; next?: string }) {
+  const router = useRouter();
   const [method, setMethod] = useState<Method | null>(null);
   const [memberId, setMemberId] = useState("");
   const [pin, setPin] = useState<string[]>(["", "", "", ""]);
   const [activeDigit, setActiveDigit] = useState(0);
   const [authState, setAuthState] = useState<AuthState>("idle");
+  const [error, setError] = useState<string | null>(null);
   const [hexStream, setHexStream] = useState(still ? STILL_HEX : "");
   const [columns, setColumns] = useState<[string, string]>(
     still ? [STILL_HEX.repeat(19), STILL_HEX.repeat(19)] : ["", ""],
@@ -88,38 +95,89 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
     }
   }, [method]);
 
-  // TODO(sprint-2): present the member certificate to the Registry, verify
-  // against the member registry, mint a scoped session. Until then this grants
-  // unconditionally.
-  const runAuth = () => {
+  /**
+   * Hand the whole outcome to the server.
+   *
+   * `granted` is set ONLY on a 2xx that actually carried a Set-Cookie, and the
+   * navigation that follows is a hard one (router.refresh via push + refresh) so
+   * proxy.ts re-evaluates with the new cookie. An optimistic client-side "granted"
+   * that the server had not agreed to would put the cinematic and the session out
+   * of step — the unlock animation playing over a redirect back to this screen.
+   */
+  const submit = async (endpoint: string, init: RequestInit) => {
     setAuthState("authenticating");
-    setTimeout(() => setAuthState("granted"), 2000);
+    setError(null);
+    try {
+      const res = await fetch(endpoint, init);
+      const data = await res.json().catch(() => ({}) as Record<string, unknown>);
+
+      if (!res.ok) {
+        setAuthState("denied");
+        setError(
+          (typeof data.message === "string" && data.message) ||
+            "That did not authenticate. Try again.",
+        );
+        return;
+      }
+
+      setAuthState("granted");
+      const target = typeof data.next === "string" ? data.next : next;
+      // Let the unlock land before navigating — the cinematic is the feedback.
+      setTimeout(() => {
+        router.push(target);
+        router.refresh();
+      }, 650);
+    } catch {
+      setAuthState("denied");
+      setError("The Registry could not be reached.");
+    }
   };
 
   const handleCertificate = () => {
-    if (!memberId.trim() || authState !== "idle") return;
-    runAuth();
+    if (!memberId.trim() || busy) return;
+    // Unsigned by construction — a browser holds no member key. The Registry
+    // refuses it and says why, which is the honest answer to "let me in with a
+    // certificate I do not have".
+    void submit("/api/session", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-interchange-member": memberId.trim() },
+      body: "{}",
+    });
+  };
+
+  const submitPin = (code: string) => {
+    void submit("/api/session/code", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ code, next }),
+    });
   };
 
   const handleDigitChange = (index: number, value: string) => {
-    if (authState !== "idle" || !/^\d?$/.test(value)) return;
-    const next = [...pin];
-    next[index] = value;
-    setPin(next);
+    if (authState === "authenticating" || authState === "granted" || !/^\d?$/.test(value)) return;
+    // Typing again after a refusal clears it, rather than leaving a stale error
+    // sitting under a code the operator has already started replacing.
+    if (authState === "denied") {
+      setAuthState("idle");
+      setError(null);
+    }
+    const digits = [...pin];
+    digits[index] = value;
+    setPin(digits);
     if (value && index < 3) {
       setActiveDigit(index + 1);
       setTimeout(() => pinRefs.current[index + 1]?.focus(), 0);
     }
-    if (next.every((d) => d !== "")) setTimeout(runAuth, 300);
+    if (digits.every((d) => d !== "")) setTimeout(() => submitPin(digits.join("")), 250);
   };
 
   const handleDigitKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (authState !== "idle") return;
+    if (authState === "authenticating" || authState === "granted") return;
     if (e.key === "Backspace" && !pin[index] && index > 0) {
       setActiveDigit(index - 1);
-      const next = [...pin];
-      next[index - 1] = "";
-      setPin(next);
+      const digits = [...pin];
+      digits[index - 1] = "";
+      setPin(digits);
       setTimeout(() => pinRefs.current[index - 1]?.focus(), 0);
     }
   };
@@ -127,10 +185,22 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
   const reset = () => {
     setMethod(null);
     setAuthState("idle");
+    setError(null);
     setMemberId("");
     setPin(["", "", "", ""]);
     setActiveDigit(0);
   };
+
+  /**
+   * "In flight or already through" — the only states in which the inputs lock.
+   *
+   * A refusal must NOT lock them: the previous version disabled on
+   * `authState !== "idle"`, so any non-idle state was a dead end that only the
+   * Back button could escape. An operator who mistypes one digit should be able
+   * to simply type it again.
+   */
+  const busy = authState === "authenticating" || authState === "granted";
+  const denied = authState === "denied";
 
   return (
     <div className="fixed inset-0 flex flex-col select-none overflow-hidden bg-[#040605]">
@@ -333,7 +403,9 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                           ? "bg-emerald-500/10 border-2 border-emerald-500/40"
                           : authState === "authenticating"
                             ? "bg-amber-500/5 border-2 border-amber-500/25"
-                            : "bg-emerald-500/5 border-2 border-emerald-500/15"
+                            : denied
+                              ? "bg-red-500/5 border-2 border-red-500/30"
+                              : "bg-emerald-500/5 border-2 border-emerald-500/15"
                       }`}
                     >
                       {authState === "authenticating" && (
@@ -355,22 +427,34 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                         >
                           <Fingerprint className="w-6 h-6 text-amber-400" />
                         </motion.div>
+                      ) : denied ? (
+                        <ShieldAlert className="w-6 h-6 text-red-400/80" />
                       ) : (
                         <Lock className="w-6 h-6 text-emerald-500/70" />
                       )}
                     </div>
                   </div>
 
-                  <div className="text-center mb-5" aria-live="polite">
-                    <span className="inst text-[9px] text-white/30">
+                  {/* aria-live so a refusal is announced, not merely coloured. */}
+                  <div className="text-center mb-5 min-h-[2.5rem]" aria-live="polite">
+                    <span className={`inst text-[9px] ${denied ? "text-red-400/70" : "text-white/30"}`}>
                       {authState === "granted"
                         ? "Access Granted"
                         : authState === "authenticating"
-                          ? "Verifying Certificate…"
-                          : method === "certificate"
-                            ? "Enter Member Identifier"
-                            : "Enter Access Code"}
+                          ? method === "certificate"
+                            ? "Verifying Certificate…"
+                            : "Verifying Access Code…"
+                          : denied
+                            ? "Access Refused"
+                            : method === "certificate"
+                              ? "Enter Member Identifier"
+                              : "Enter Access Code"}
                     </span>
+                    {error && (
+                      <p className="mt-2 px-2 font-mono text-[9px] leading-relaxed text-red-400/60">
+                        {error}
+                      </p>
+                    )}
                   </div>
 
                   {method === "certificate" ? (
@@ -395,7 +479,7 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                           value={memberId}
                           onChange={(e) => setMemberId(e.target.value)}
                           onKeyDown={(e) => e.key === "Enter" && handleCertificate()}
-                          disabled={authState !== "idle"}
+                          disabled={busy}
                           placeholder="KE/LENDER/0000"
                           className="flex-1 bg-transparent font-mono text-sm text-white/80 placeholder:text-white/15 outline-none tracking-[0.1em]"
                           autoComplete="off"
@@ -406,9 +490,9 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                       <motion.button
                         type="button"
                         onClick={handleCertificate}
-                        disabled={authState !== "idle" || !memberId.trim()}
-                        whileHover={{ scale: authState === "idle" && memberId ? 1.02 : 1 }}
-                        whileTap={{ scale: authState === "idle" && memberId ? 0.98 : 1 }}
+                        disabled={busy || !memberId.trim()}
+                        whileHover={{ scale: !busy && memberId ? 1.02 : 1 }}
+                        whileTap={{ scale: !busy && memberId ? 0.98 : 1 }}
                         className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg border font-mono text-[10px] uppercase tracking-[0.3em] transition-all duration-300 ${
                           authState === "granted"
                             ? "border-emerald-500/35 bg-emerald-500/10 text-emerald-400"
@@ -453,7 +537,7 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                             onChange={(e) => handleDigitChange(i, e.target.value)}
                             onKeyDown={(e) => handleDigitKeyDown(i, e)}
                             onFocus={() => setActiveDigit(i)}
-                            disabled={authState !== "idle"}
+                            disabled={busy}
                             className={`w-14 h-16 rounded-xl border text-center font-mono text-2xl text-white/85 bg-black/25 outline-none transition-all duration-300 ${
                               authState === "granted"
                                 ? "border-emerald-500/35 bg-emerald-950/20"
@@ -464,7 +548,7 @@ export default function MemberGate({ still = false }: { still?: boolean }) {
                                     : "border-white/[0.07]"
                             }`}
                           />
-                          {activeDigit === i && authState === "idle" && !digit && (
+                          {activeDigit === i && !busy && !digit && (
                             <motion.div
                               aria-hidden
                               className="absolute bottom-2 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-emerald-500/50 rounded-full"

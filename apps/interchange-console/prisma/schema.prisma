@@ -551,3 +551,86 @@ model GovernanceAction {
   @@index([at])
   @@index([memberCode])
 }
+
+// ── Operators ────────────────────────────────────────────────────────────────
+//
+// WHO IS SITTING AT THE CONSOLE, as distinct from WHICH MEMBER they act for.
+//
+// Sprint 1 conflated the two: a session cookie held a member code, and the gate
+// granted it to anyone who typed four digits. That is two separate holes — the
+// console had no notion of a person, and the cookie was an unsigned string a
+// browser could simply set. Both are closed here.
+//
+// A SUPER_ADMIN has `memberId = null` on purpose. Every other operator is scoped
+// to exactly one member and can never read across the boundary that
+// Member.sourceEntityId exists to defend; the platform operator sits ABOVE that
+// boundary, which is precisely why the role is separate and separately audited.
+//
+// ⚠ ACCESS CODES ARE LOW-ENTROPY BY DESIGN — the gate asks for four digits, so
+// there are 10,000 of them. The hash is therefore not the control that matters:
+// LOCKOUT is. See lib/operator.ts, which locks an operator after
+// MAX_FAILED_ATTEMPTS and refuses code login entirely in production unless it
+// has been explicitly, deliberately enabled.
+
+enum OperatorRole {
+  SUPER_ADMIN // BirgenAI platform operator — every right, above every member
+  MEMBER_ADMIN // administers one member: keys, subscriptions, its own operators
+  ANALYST // queries and reads on behalf of one member
+  AUDITOR // read-only; audit, log and governance surfaces
+}
+
+enum OperatorStatus {
+  ACTIVE
+  DISABLED
+}
+
+/// A human who may open the console.
+model Operator {
+  id   String       @id @default(cuid())
+  name String
+  role OperatorRole @default(ANALYST)
+
+  /// Null ⇒ platform operator, not scoped to any single member.
+  memberId String?
+
+  /// scrypt(code, codeSalt). The plaintext code is never stored, never logged
+  /// and never returned by any route.
+  codeHash String
+  codeSalt String
+
+  /// Grants BEYOND the role's defaults. "*" means every right there is and is
+  /// only ever set on SUPER_ADMIN. See lib/rights.ts.
+  rights String[] @default([])
+
+  status OperatorStatus @default(ACTIVE)
+
+  // ── Lockout — the control that actually protects a four-digit code ─────────
+  failedAttempts Int       @default(0)
+  lockedUntil    DateTime?
+  lastLoginAt    DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([memberId])
+}
+
+/// Every console sign-in attempt, successful or not.
+///
+/// Separate from AuditEntry, which records EXCHANGE calls. Conflating "someone
+/// opened the console" with "a member queried a borrower" would make both
+/// harder to read, and only one of them is a data-protection event.
+model OperatorAudit {
+  id         String   @id @default(cuid())
+  at         DateTime @default(now())
+  operatorId String?
+  /// SIGN_IN · SIGN_IN_REFUSED · LOCKED · SIGN_OUT · CODE_ROTATED · CREATED
+  action     String
+  /// Never the code, never a hash of it — just why it failed.
+  detail     String?
+  ip         String?
+
+  @@index([at])
+  @@index([operatorId, at])
+}
