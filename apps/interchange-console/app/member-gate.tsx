@@ -204,6 +204,55 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
 
   return (
     <div className="fixed inset-0 flex flex-col select-none overflow-hidden bg-[#040605]">
+      {/* ── Aurora ───────────────────────────────────────────────────────────
+          Four slow blooms drifting behind everything else.
+
+          ── WHY THIS SCREEN NEEDED COLOUR ─────────────────────────────────────
+          The gate was already the most animated door in the estate — the sweep,
+          the token columns, the pulsing security row — and it still read flat,
+          because all of it was one hue of emerald on near-black. Motion without
+          depth looks like a screensaver; what makes a dark screen feel like a
+          PLACE is a light source somewhere off-frame that the eye can locate.
+
+          So: cyan (#0891b2 — the Interchange's own accent in the suite launcher,
+          so the tile you clicked and the room you arrive in are the same colour)
+          against the emerald the security chrome already uses. Two hues, far
+          apart, at opacity that never competes with the vault card.
+
+          The durations are deliberately long and mutually PRIME-ish (23/29/31/37s)
+          so the four never resynchronise into a visible pulse. A loop you can
+          count is a loop you start watching instead of signing in.
+
+          `still` kills it outright, along with every other enter animation, so
+          the screenshot path and the no-JS path both render a legible page. */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[
+          { c: "#0891b2", x: "78%", y: "12%", s: 620, o: 0.22, d: 23 },
+          { c: "#10b981", x: "18%", y: "82%", s: 560, o: 0.16, d: 29 },
+          { c: "#0e7490", x: "8%", y: "10%", s: 480, o: 0.14, d: 31 },
+          { c: "#22d3ee", x: "88%", y: "88%", s: 440, o: 0.10, d: 37 },
+        ].map((b, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: b.x, top: b.y, width: b.s, height: b.s,
+              marginLeft: -b.s / 2, marginTop: -b.s / 2,
+              background: b.c, opacity: b.o, filter: "blur(150px)",
+            }}
+            animate={still ? undefined : { x: [0, 34, -22, 0], y: [0, -26, 20, 0], scale: [1, 1.09, 0.95, 1] }}
+            transition={{ duration: b.d, repeat: Infinity, ease: "easeInOut" }}
+          />
+        ))}
+        {/* A vignette pulls the eye back to the middle, where the vault is. The
+            blooms are what make the room; this is what stops them being the
+            subject. */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(115% 85% at 50% 45%, transparent 34%, rgba(4,6,5,0.80) 100%)" }}
+        />
+      </div>
+
       {/* Facility grid */}
       <div
         aria-hidden
