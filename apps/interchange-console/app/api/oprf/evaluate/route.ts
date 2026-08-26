@@ -14,6 +14,7 @@ import {
   blindEvaluate,
   assertIssuanceWithinLimit,
   IssuanceLimitExceeded,
+  type IssuanceKind,
 } from "@/lib/oprf/registry";
 
 export async function POST(request: Request) {
@@ -55,26 +56,52 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Body must be JSON." }, { status: 400 });
   }
 
-  const blinded = String(body.blinded ?? "");
-  if (!/^[0-9a-f]{64}$/i.test(blinded)) {
+  // One element or many. A node ingesting its own book has thousands of
+  // borrowers to tokenise, and one HTTP round trip each turns a ten-second job
+  // into a ten-minute one — so the batch form exists. It is metered by ELEMENT,
+  // not by request, so batching buys speed and never allowance.
+  const batched = Array.isArray(body.blinded);
+  const blindedList: string[] = batched
+    ? (body.blinded as unknown[]).map(String)
+    : [String(body.blinded ?? "")];
+
+  if (blindedList.length === 0) {
+    return NextResponse.json({ error: "blinded must not be empty." }, { status: 400 });
+  }
+  if (blindedList.length > MAX_BATCH) {
     return NextResponse.json(
-      { error: "blinded must be a 64-character hex ristretto255 point." },
+      { error: "BATCH_TOO_LARGE", message: `At most ${MAX_BATCH} elements per request.`, max: MAX_BATCH },
+      { status: 413 },
+    );
+  }
+  const malformed = blindedList.findIndex((b) => !/^[0-9a-f]{64}$/i.test(b));
+  if (malformed >= 0) {
+    return NextResponse.json(
+      {
+        error: `blinded[${malformed}] must be a 64-character hex ristretto255 point.`,
+      },
       { status: 400 },
     );
   }
 
-  let quota: { used: number; limit: number };
+  // INGEST is a separate allowance from SERVING — see lib/oprf/registry.ts. It
+  // is asked for explicitly so the audit records which allowance was spent; a
+  // member cannot obtain it by simply sending a large batch.
+  const kind: IssuanceKind = body.purpose === "ingest" ? "INGEST" : "SERVING";
+
+  let quota: { used: number; limit: number; kind: IssuanceKind };
   try {
-    quota = await assertIssuanceWithinLimit(member!.id);
+    quota = await assertIssuanceWithinLimit(member!.id, blindedList.length, kind);
   } catch (e) {
     if (e instanceof IssuanceLimitExceeded) {
       return NextResponse.json(
         {
           error: "ISSUANCE_LIMIT",
           message:
-            "Daily token issuance limit reached. This cap is what stops the ecosystem " +
-            "key being used to enumerate the national ID space.",
+            `Daily ${e.kind.toLowerCase()} token issuance limit reached. This cap is what stops ` +
+            "the ecosystem key being used to enumerate the national ID space.",
           limit: e.limit,
+          kind: e.kind,
         },
         { status: 429 },
       );
@@ -83,8 +110,11 @@ export async function POST(request: Request) {
   }
 
   try {
+    const evaluated = blindedList.map(blindEvaluate);
     return NextResponse.json({
-      evaluated: blindEvaluate(blinded),
+      // Shape mirrors the request: one in, one out; many in, many out. A caller
+      // that sent a scalar should not have to unwrap an array it did not ask for.
+      evaluated: batched ? evaluated : evaluated[0],
       issuance: quota,
     });
   } catch (e) {
@@ -94,3 +124,14 @@ export async function POST(request: Request) {
     );
   }
 }
+
+/**
+ * Ceiling on one batch.
+ *
+ * Not a security control — the issuance cap is that. This bounds the CPU one
+ * request can occupy: each element is a ristretto255 scalar multiplication, and
+ * Next serves this on the same event loop as every live exposure query. Ten
+ * thousand of them in one request would stall the p95 the whole product is
+ * measured on.
+ */
+const MAX_BATCH = 2_000;

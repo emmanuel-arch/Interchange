@@ -82,6 +82,15 @@ model Member {
   borrowers          Int       @default(0)
   loans              Int       @default(0)
 
+  /// The MemberHolding generation currently being served for this member.
+  ///
+  /// 0 means this member has never published a book, which is NOT the same as
+  /// "holds nothing" — /api/node/exposure must answer `unpublished` rather than
+  /// `has_exposure: false`, or a member who has simply not been ingested yet
+  /// would silently clear every borrower they lend to.
+  holdingGeneration  Int       @default(0)
+  holdingsPublishedAt DateTime?
+
   consents      Consent[]
   subscriptions Subscription[]
   callsMade     AuditEntry[]   @relation("caller")
@@ -287,16 +296,32 @@ model MessageLogEntry {
   @@index([timestampedAt])
 }
 
-/// One row per OPRF evaluation, so token issuance can be rate-limited.
+/// One row per OPRF evaluation REQUEST, so token issuance can be rate-limited.
 ///
 /// This is the control that keeps the OPRF honest. The construction stops a
 /// member computing tokens OFFLINE, but a member could still walk the national
 /// ID space ONLINE by asking the Registry a hundred million times. Counting and
 /// capping issuance is what closes that door.
+///
+/// `count` exists because a node ingesting its own book evaluates in BATCHES —
+/// Axe's live entity carries fourteen thousand open loans, and one row per
+/// element would write fourteen thousand rows to answer one request. The cap is
+/// enforced on SUM(count), never on the row count, so batching cannot be used to
+/// slip past it.
 model OprfIssuance {
   id       String   @id @default(cuid())
   memberId String
   at       DateTime @default(now())
+  /// Elements evaluated in this request.
+  count    Int      @default(1)
+  /// SERVING for a live decision, INGEST for a node tokenising its own book.
+  ///
+  /// The two are not the same risk and must not share one allowance. A serving
+  /// call is about a borrower who is in front of somebody; an ingest walks a
+  /// whole book, which is the shape an enumeration attack also has. Separating
+  /// them means the serving cap can stay strict while ingest is granted
+  /// deliberately, sized to a declared book, and visible in the audit.
+  kind     String   @default("SERVING")
 
   @@index([memberId, at])
 }
@@ -325,10 +350,22 @@ model MemberHolding {
   worstBucket       String   @default("due")
   newestDisbursedAt DateTime?
 
+  /// Which publication these rows belong to.
+  ///
+  /// A node publishes its whole book in chunks — Axe's live entity is fourteen
+  /// thousand rows — and the obvious implementation, "delete then insert", opens
+  /// a window in which the member truthfully appears to hold NOTHING. An exposure
+  /// query landing in that window returns "no exposure found" for a borrower who
+  /// is three loans deep, which is the single most dangerous answer this service
+  /// can give. So chunks are written under a NEW generation and become visible
+  /// only when Member.holdingGeneration is advanced, in one statement, at the end.
+  generation Int @default(1)
+
   updatedAt DateTime @updatedAt
 
-  @@unique([memberId, subjectToken])
+  @@unique([memberId, subjectToken, generation])
   @@index([subjectToken])
+  @@index([memberId, generation])
 }
 
 /// A member's published Bloom filter of active-borrower tokens.

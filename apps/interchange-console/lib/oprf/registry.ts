@@ -26,8 +26,27 @@ import { prisma } from "@/lib/prisma";
 
 const { oprf } = ristretto255_oprf;
 
-/** Default daily issuance cap per member. Deliberately low — see the note above. */
+/** Default daily issuance cap per member, for SERVING. Deliberately low — see above. */
 export const DEFAULT_DAILY_ISSUANCE = 5_000;
+
+/**
+ * The separate allowance a node spends tokenising ITS OWN book.
+ *
+ * Why this is a second number rather than a bigger first one: the serving cap
+ * exists because a member asking about ten thousand strangers is indistinguishable
+ * from enumeration. A member tokenising their own borrowers is a different act —
+ * but the Registry CANNOT VERIFY THE DIFFERENCE, because by construction it never
+ * sees the identifiers. So it is not verified, it is GRANTED: an operator sets it
+ * from the member's declared book size, it is spent visibly under kind=INGEST, and
+ * an ingest that suddenly wants five times the member's book size shows up in the
+ * audit as exactly that.
+ *
+ * Sized for the founding cohort's largest live entity with headroom for a full
+ * re-tokenisation: Axe - Boresha carries ~14k open loans, Micromart Africa ~59k.
+ */
+export const DEFAULT_DAILY_INGEST = 250_000;
+
+export type IssuanceKind = "SERVING" | "INGEST";
 
 function hexToBytes(hex: string): Uint8Array {
   const clean = hex.trim().toLowerCase();
@@ -77,27 +96,48 @@ export function generateEcosystemKey(): { secretKey: string; publicKey: string }
 }
 
 export class IssuanceLimitExceeded extends Error {
-  constructor(public readonly limit: number) {
-    super(`OPRF issuance limit of ${limit}/day exceeded.`);
+  constructor(
+    public readonly limit: number,
+    public readonly kind: IssuanceKind,
+  ) {
+    super(`OPRF ${kind.toLowerCase()} issuance limit of ${limit}/day exceeded.`);
   }
 }
 
+/** The cap for one kind, env-overridable so an operator can grant a member more. */
+export function issuanceLimitFor(kind: IssuanceKind): number {
+  const raw =
+    kind === "INGEST" ? process.env.INTERCHANGE_DAILY_INGEST : process.env.INTERCHANGE_DAILY_ISSUANCE;
+  const n = raw != null ? Number(raw) : NaN;
+  if (Number.isInteger(n) && n > 0) return n;
+  return kind === "INGEST" ? DEFAULT_DAILY_INGEST : DEFAULT_DAILY_ISSUANCE;
+}
+
 /**
- * Count this member's evaluations in the last 24h and refuse past the cap.
+ * Sum this member's evaluations of one kind in the last 24h and refuse past the cap.
  *
- * Recorded BEFORE evaluating, so a crash mid-request costs the member a slot
- * rather than giving them a free one. Under-counting an enumeration attempt is
+ * Recorded BEFORE evaluating, so a crash mid-request costs the member the slots
+ * rather than giving them away free. Under-counting an enumeration attempt is
  * worse than over-counting a legitimate call.
+ *
+ * The check is on SUM(count), not on the number of rows — otherwise a member
+ * could ask for the whole national ID space in one batch and spend a single slot.
  */
 export async function assertIssuanceWithinLimit(
   memberId: string,
-  limit = DEFAULT_DAILY_ISSUANCE,
-): Promise<{ used: number; limit: number }> {
+  elements = 1,
+  kind: IssuanceKind = "SERVING",
+  limit = issuanceLimitFor(kind),
+): Promise<{ used: number; limit: number; kind: IssuanceKind }> {
   const since = new Date(Date.now() - 86_400_000);
-  const used = await prisma.oprfIssuance.count({ where: { memberId, at: { gte: since } } });
-  if (used >= limit) throw new IssuanceLimitExceeded(limit);
-  await prisma.oprfIssuance.create({ data: { memberId } });
-  return { used: used + 1, limit };
+  const agg = await prisma.oprfIssuance.aggregate({
+    where: { memberId, kind, at: { gte: since } },
+    _sum: { count: true },
+  });
+  const used = agg._sum.count ?? 0;
+  if (used + elements > limit) throw new IssuanceLimitExceeded(limit, kind);
+  await prisma.oprfIssuance.create({ data: { memberId, count: elements, kind } });
+  return { used: used + elements, limit, kind };
 }
 
 /**

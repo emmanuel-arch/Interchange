@@ -25,7 +25,9 @@
     "verify:learning": "tsx scripts/verify-learning.ts",
     "train": "tsx scripts/train-models.ts",
     "verify:scoring": "tsx scripts/verify-scoring.ts",
-    "verify:onboarding": "tsx scripts/verify-onboarding.ts"
+    "verify:onboarding": "tsx scripts/verify-onboarding.ts",
+    "registry:status": "tsx scripts/registry-status.ts",
+    "member:register": "tsx scripts/register-member.ts"
   },
   "dependencies": {
     "@noble/curves": "^2.3.0",

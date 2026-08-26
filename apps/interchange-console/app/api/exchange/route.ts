@@ -102,8 +102,19 @@ export async function POST(request: Request) {
     ? {
         authorised: true as const,
         service: serviceCode,
-        // Sprint 3 replaces this with the real fan-out result.
-        result: { pending_exposure_engine: true },
+        // ── WHY THERE IS NO RESULT HERE ──────────────────────────────────────
+        // This endpoint authorises; it does not answer. The fan-out runs in the
+        // CALLING member's node, against filters it downloaded earlier, so no
+        // third party — including the Registry — learns which token is being
+        // evaluated. Returning the exposure from here would mean the Registry
+        // performing the query, which is the one placement the privacy argument
+        // in lib/exposure/broker.ts rules out.
+        //
+        // The caller takes this grant and runs queryExposure() itself. What it
+        // gets back from here is permission and a receipt, which is the whole
+        // job: the audit row and the log entry are written before any node is
+        // contacted.
+        result: { authorised_for: "node-side fan-out", broker: "caller" },
         audit_id: decision.auditId,
         latency_ms: latencyMs,
       }

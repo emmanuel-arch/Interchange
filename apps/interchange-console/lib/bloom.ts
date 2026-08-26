@@ -47,7 +47,27 @@ function positions(token: string, { m, k }: BloomParams): number[] {
   const d = createHash("sha256").update(token, "utf8").digest();
   // Two 32-bit halves, read unsigned.
   const h1 = d.readUInt32BE(0);
-  const h2 = d.readUInt32BE(4) | 1; // odd, so it strides the whole space
+
+  // ── THE `>>> 0` IS LOad-BEARING ──────────────────────────────────────────
+  // `| 1` makes the stride odd so it walks the whole space — but JavaScript's
+  // bitwise operators return a SIGNED Int32, so every h2 at or above 2^31 came
+  // back NEGATIVE. That is roughly half of all tokens.
+  //
+  // A negative stride sent (h1 + i·h2) % m negative, and `bits[negative >>> 3]`
+  // indexes far outside the array: on write it silently did nothing, on read it
+  // yielded undefined, and `undefined & mask` is 0. The filter therefore
+  // reported NOT PRESENT for tokens it had been built from — a FALSE NEGATIVE,
+  // in the one structure chosen precisely because it cannot produce them.
+  //
+  // Measured before the fix: 837 of 2,000 tokens, 42%. In production that is a
+  // borrower with live exposure at another lender being screened out of the
+  // fan-out, so the member holding them is never asked and the query returns
+  // "no other lender is reporting a loan to you". Nothing logs an error.
+  //
+  // `>>> 0` coerces back to unsigned and leaves the low bit — and therefore the
+  // oddness — untouched.
+  const h2 = (d.readUInt32BE(4) | 1) >>> 0;
+
   const out: number[] = [];
   for (let i = 0; i < k; i++) {
     // Modulo in float space would lose precision past 2^32; keep it in ints.

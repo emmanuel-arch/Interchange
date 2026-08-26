@@ -73,12 +73,39 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Unknown member_code "${memberCode}".` }, { status: 404 });
   }
 
+  // ── "I have not published" is not "they owe me nothing" ───────────────────
+  // A member who has never run an ingest holds no rows, and answering
+  // has_exposure: false would clear every borrower they actually lend to. The
+  // broker counts this as a NON-RESPONSE, which marks the whole result partial —
+  // the lender is told the answer is incomplete rather than told a lie.
+  if (member.holdingGeneration === 0) {
+    return NextResponse.json(
+      {
+        member_code: member.code,
+        error: "BOOK_NOT_PUBLISHED",
+        message:
+          "This member has not published a book yet. Absence of holdings is not evidence of absence of exposure.",
+      },
+      { status: 503 },
+    );
+  }
+
   const holding = await prisma.memberHolding.findUnique({
-    where: { memberId_subjectToken: { memberId: member.id, subjectToken } },
+    where: {
+      memberId_subjectToken_generation: {
+        memberId: member.id,
+        subjectToken,
+        generation: member.holdingGeneration,
+      },
+    },
   });
 
   if (!holding || holding.activeLoans === 0) {
-    return NextResponse.json({ member_code: member.code, has_exposure: false });
+    return NextResponse.json({
+      member_code: member.code,
+      has_exposure: false,
+      as_of: member.holdingsPublishedAt,
+    });
   }
 
   return NextResponse.json({
@@ -88,6 +115,8 @@ export async function POST(request: Request) {
     outstanding_band: band(holding.outstandingKes),
     worst_bucket: holding.worstBucket,
     newest_disbursement: holding.newestDisbursedAt,
+    /** When this member's book was last ingested — how stale this answer may be. */
+    as_of: member.holdingsPublishedAt,
     // The lender's own name is disclosed only when the borrower consented to it
     // (identity.disclose). The broker decides; the node just reports whether it
     // is permitted to be named.

@@ -14,7 +14,7 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { build, saturation } from "../lib/bloom";
+import { build, saturation, mightContain } from "../lib/bloom";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
@@ -26,7 +26,7 @@ const TARGET_FPR = 0.01;
 async function main() {
   const members = await prisma.member.findMany({
     where: { status: { in: ["ACTIVE", "SHADOW"] } },
-    select: { id: true, code: true },
+    select: { id: true, code: true, holdingGeneration: true },
     orderBy: { code: "asc" },
   });
 
@@ -34,13 +34,36 @@ async function main() {
   console.log("─".repeat(64));
 
   for (const m of members) {
+    // Only the generation currently being SERVED. Holdings from a superseded
+    // publication are still on disk until the swap cleans them up, and a filter
+    // built across both would advertise borrowers this member no longer holds.
+    if (m.holdingGeneration === 0) {
+      console.log(`${m.code.padEnd(20)} ${"—".padStart(6)} ${"(no book published)".padStart(30)}`);
+      continue;
+    }
+
     const holdings = await prisma.memberHolding.findMany({
-      where: { memberId: m.id, activeLoans: { gt: 0 } },
+      where: { memberId: m.id, generation: m.holdingGeneration, activeLoans: { gt: 0 } },
       select: { subjectToken: true },
     });
     const tokens = holdings.map((h) => h.subjectToken);
 
     const { bits, params, itemCount } = build(tokens, TARGET_FPR);
+
+    // ── SELF-CHECK ──────────────────────────────────────────────────────────
+    // A Bloom filter must never report absent for something it was built from.
+    // That property is the entire reason this structure was chosen over a cache
+    // or a sample, and it held right up until a signed-integer stride broke it
+    // for 42% of tokens without raising anything. Verifying it here costs one
+    // pass over the tokens and converts a silent, invisible wrong answer into a
+    // loud refusal to publish.
+    const missing = tokens.filter((t) => !mightContain(bits, params, t));
+    if (missing.length > 0) {
+      throw new Error(
+        `[bloom] ${m.code}: filter reports ${missing.length} of ${tokens.length} of its OWN tokens as absent. ` +
+          `Refusing to publish — this would screen real lenders out of the fan-out.`,
+      );
+    }
 
     const last = await prisma.memberFilter.findFirst({
       where: { memberId: m.id },
