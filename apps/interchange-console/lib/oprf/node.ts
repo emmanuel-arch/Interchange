@@ -41,9 +41,54 @@ function hexToBytes(hex: string): Uint8Array {
   return Uint8Array.from(hex.trim().toLowerCase().match(/.{2}/g)!.map((b) => parseInt(b, 16)));
 }
 
+/**
+ * A Kenyan national ID, reduced to the digits that identify the person.
+ *
+ * ⚠ THIS MUST MATCH THE NODE. `Borrowers.NationalID` in Serviceconnect is free
+ * text and holds what a loan officer typed — "12345678", "1234-5678",
+ * "12 345 678", "1234567/8". `canonicalIdentifier` deliberately does not touch
+ * punctuation, because it is the wire format and changing it would fork every
+ * token already issued. So normalisation happens in front of it, on both sides.
+ *
+ * When the two sides disagreed, the same borrower tokenised one way during an
+ * ingest and another way while a query was served, and the two never matched.
+ * Nothing logged an error: the exposure query simply answered "no other lender
+ * is reporting a loan to you" about somebody three lenders deep.
+ *
+ * Mirrored in connected-suite/src/lib/interchange/oprf.ts. Change both.
+ */
+export function normaliseNationalId(raw: unknown): string | null {
+  const s = String(raw ?? "").trim();
+  if (!s) return null;
+  const digits = s.replace(/\D/g, "");
+  if (digits.length < 6 || digits.length > 9) return null;
+  if (/^0+$/.test(digits)) return null;
+  return digits;
+}
+
+export class UnusableIdentifier extends Error {
+  constructor(kind: IdentifierKind) {
+    super(`Not a usable ${kind} — it cannot be tokenised.`);
+    this.name = "UnusableIdentifier";
+  }
+}
+
+/**
+ * Pre-normalise, then canonicalise. Every path that derives a token goes through
+ * here so ingest and serving cannot drift apart. Idempotent.
+ */
+export function identifierInput(kind: IdentifierKind, raw: string): string {
+  if (kind === "national_id") {
+    const clean = normaliseNationalId(raw);
+    if (!clean) throw new UnusableIdentifier(kind);
+    return canonicalIdentifier(kind, clean);
+  }
+  return canonicalIdentifier(kind, raw);
+}
+
 /** Step 1 — blind locally. `blind` is a secret; it never leaves the node. */
 export function blind(kind: IdentifierKind, raw: string) {
-  const input = new TextEncoder().encode(canonicalIdentifier(kind, raw));
+  const input = new TextEncoder().encode(identifierInput(kind, raw));
   const { blind: blindScalar, blinded } = oprf.blind(input);
   return { input, blind: blindScalar, blindedHex: bytesToHex(blinded) };
 }

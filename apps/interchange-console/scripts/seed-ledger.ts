@@ -17,7 +17,7 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { canonicalIdentifier } from "../lib/oprf/node";
+import { identifierInput } from "../lib/oprf/node";
 import { evaluateDirect } from "../lib/oprf/registry";
 import { computeFrom } from "../lib/features/store";
 import { FEATURE_SET_VERSION } from "../lib/features/definitions";
@@ -65,7 +65,7 @@ async function main() {
   const tokenFor = (id: string) =>
     evaluateDirect(
       process.env.INTERCHANGE_OPRF_KEY!,
-      new TextEncoder().encode(canonicalIdentifier("national_id", id)),
+      new TextEncoder().encode(identifierInput("national_id", id)),
     );
 
   type Pending = { token: string; memberId: string; at: Date; outcome: "APPROVED" | "DECLINED" };

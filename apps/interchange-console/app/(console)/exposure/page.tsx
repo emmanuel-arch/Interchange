@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { PageHeader, Panel, Pill, Empty } from "@/components/chrome";
-import { canonicalIdentifier, tokenPreview } from "@/lib/oprf/node";
+import { identifierInput, tokenPreview } from "@/lib/oprf/node";
 import { evaluateDirect } from "@/lib/oprf/registry";
 import { fetchFilters, queryExposure, type ExposureResult } from "@/lib/exposure/broker";
 import { ecosystemExposure } from "@/lib/reports/crb2";
@@ -30,10 +30,10 @@ const BUCKET_TONE: Record<string, "ok" | "pending" | "bad"> = {
 async function runQuery(nationalId: string): Promise<{ result: ExposureResult; token: string } | { error: string }> {
   try {
     const keys = JSON.parse(readFileSync(".member-keys.json", "utf8")) as Record<string, { secretKey: string }>;
-    const input = new TextEncoder().encode(canonicalIdentifier("national_id", nationalId));
+    const input = new TextEncoder().encode(identifierInput("national_id", nationalId));
     const token = evaluateDirect(process.env.INTERCHANGE_OPRF_KEY!, input);
 
-    const base = process.env.INTERCHANGE_SELF_URL ?? "http://127.0.0.1:3000";
+    const base = process.env.INTERCHANGE_SELF_URL ?? "http://127.0.0.1:3341";
     const [filters, members] = await Promise.all([
       fetchFilters(base),
       prisma.member.findMany({ where: { status: { in: ["ACTIVE", "SHADOW"] } }, select: { code: true } }),

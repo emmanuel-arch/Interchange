@@ -12,14 +12,14 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import "dotenv/config";
 import { readFileSync } from "fs";
-import { canonicalIdentifier, tokenPreview } from "../lib/oprf/node";
+import { identifierInput, tokenPreview } from "../lib/oprf/node";
 import { evaluateDirect } from "../lib/oprf/registry";
 import { signRequest } from "../lib/signing";
 import { MANDATORY_SCOPES } from "../lib/consent/scopes";
 import { fetchFilters, screen, queryExposure } from "../lib/exposure/broker";
 import { ecosystemExposure, delinquencyStatus } from "../lib/reports/crb2";
 
-const BASE = process.argv[2] ?? "http://127.0.0.1:3340";
+const BASE = process.argv[2] ?? "http://127.0.0.1:3341";
 const KEYS: Record<string, { secretKey: string }> = JSON.parse(
   readFileSync(".member-keys.json", "utf8"),
 );
@@ -33,7 +33,7 @@ function check(name: string, ok: boolean, detail: string) {
 }
 
 function tokenFor(nationalId: string): string {
-  const input = new TextEncoder().encode(canonicalIdentifier("national_id", nationalId));
+  const input = new TextEncoder().encode(identifierInput("national_id", nationalId));
   return evaluateDirect(process.env.INTERCHANGE_OPRF_KEY!, input);
 }
 

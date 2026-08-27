@@ -20,7 +20,7 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { canonicalIdentifier } from "../lib/oprf/node";
+import { identifierInput } from "../lib/oprf/node";
 import { evaluateDirect } from "../lib/oprf/registry";
 
 const prisma = new PrismaClient({
@@ -33,7 +33,7 @@ const prisma = new PrismaClient({
  * the blinded round trip and a local blind/evaluate/finalize yield the same token.
  */
 function tokenFor(nationalId: string): string {
-  const input = new TextEncoder().encode(canonicalIdentifier("national_id", nationalId));
+  const input = new TextEncoder().encode(identifierInput("national_id", nationalId));
   return evaluateDirect(process.env.INTERCHANGE_OPRF_KEY!, input);
 }
 
