@@ -65,6 +65,8 @@ consistent, which moves the break downstream instead of hiding it.
 | `/` | The member gate. `?still=1` renders it settled, with no animation. |
 | `/directory` | Members, their books, contribution recency, the service catalogue. |
 | `/exposure` | Run a live ecosystem exposure query. Dev-fenced. |
+| `/reports` | The report catalogue, what each costs, and a live preview. |
+| `POST /api/v1/report` | **The member-facing report endpoint.** JSON, HTML or PDF. |
 | `/learning` | Loop coverage, selection bias, feature drift, the registry. |
 | `/score` | Model registry, promotion, reason codes, the AI tool manifest. |
 | `/governance` | Applications, shadow period, decision record, operating entity. |
@@ -81,6 +83,36 @@ consistent, which moves the break downstream instead of hiding it.
 | `POST /api/consent/{ref}/revoke` | Borrower withdrawal. Idempotent, prospective. |
 | `POST /api/session` | Console session, by signed request. |
 | `GET /api/log/verify` | Public chain verification — evidence, not assertion. |
+
+## The report kit
+
+`lib/reports/` is the document system every Interchange artefact is built from.
+It is deliberately layered so a new report type costs a function rather than a
+stylesheet:
+
+| File | What it owns |
+|---|---|
+| `theme.ts` | Colour, type, page geometry, money and date formatting. Every palette was run through the data-viz validator against this paper surface before it was written down — the numbers are recorded in the file. |
+| `charts.ts` | Hand-rolled inline SVG: score dial, trend line, composition bar, bar list, PPI ladder, activity strip, sparkline. No charting library, because a PDF is rendered by a headless browser with a virtual clock and anything that lays itself out after first paint renders as a blank box. |
+| `shell.ts` | The block renderer, the stylesheet and the report masthead. Documents are described as blocks; only this file writes HTML. |
+| `briefing.ts` | The same system with a masthead for documents that have no borrower. |
+| `bureau.ts` | Metropol's thirteen entitled report types folded into one canonical file. Carries the fixes for four production faults found on a live pull. |
+| `documents.ts` | Editorial judgement: which sections each report type is made of. |
+| `catalogue.ts` | What the Interchange sells, and the commercial model. |
+| `source.ts` | Where bureau data comes from — the contract holder's node, or a captured replay. |
+| `render.ts` | HTML → PDF through whatever headless Chromium the host has, plus the font verification that catches a silent fallback to Times. |
+
+```bash
+npm run report:build -- --raw <dir-of-bureau-json> --out <file.pdf>
+npm run verify:reports -- http://127.0.0.1:3341   # 17 checks, four of them attacks
+npm run brief                                      # the launch brief
+```
+
+**The font trap is real and silent.** WOFF2 `@font-face` does not decode in the
+headless build here: the page renders, no error appears, and the PDF quietly
+falls back to Times New Roman. The kit embeds WOFF v1 and every render is
+verified by reading the PDF's own `/BaseFont` names back out. Never judge a
+generated document by how the HTML looked in a browser.
 
 ## What is deliberately NOT here yet
 

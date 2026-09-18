@@ -14,6 +14,7 @@
 import { prisma } from "@/lib/prisma";
 import { coversScopes, missingScopes } from "./scopes";
 import type { CallOutcome } from "@prisma/client";
+import type { IxCodeKey } from "@/lib/codes/interchange";
 
 export type AuthoriseInput = {
   /** The member making the call. Resolved from their certificate — NEVER from the request body. */
@@ -25,7 +26,7 @@ export type AuthoriseInput = {
 
 export type AuthoriseResult =
   | { ok: true; consentId: string; auditId: string }
-  | { ok: false; outcome: Exclude<CallOutcome, "GRANTED">; reason: string; auditId: string };
+  | { ok: false; outcome: Exclude<CallOutcome, "GRANTED">; code: IxCodeKey; reason: string; auditId: string };
 
 /**
  * Decide whether this call may proceed, and record the decision.
@@ -88,7 +89,8 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
         ? "Member is in the shadow period: contributing, not yet querying."
         : `Member status is ${caller.status}.`;
     const audit = await record("REFUSED_RECIPROCITY", reason, consentRef ?? null);
-    return { ok: false, outcome: "REFUSED_RECIPROCITY", reason, auditId: audit.id };
+    const code: IxCodeKey = caller.status === "SHADOW" || inShadow ? "IX201" : caller.status === "SUSPENDED" ? "IX202" : "IX005";
+    return { ok: false, outcome: "REFUSED_RECIPROCITY", code, reason, auditId: audit.id };
   }
 
   // ── 2. Quota ──────────────────────────────────────────────────────────────
@@ -114,14 +116,14 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   if (!subscription) {
     const reason = `Not subscribed to ${serviceCode}.`;
     const audit = await record("REFUSED_QUOTA", reason, consentRef ?? null);
-    return { ok: false, outcome: "REFUSED_QUOTA", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_QUOTA", code: "IX303", reason, auditId: audit.id };
   }
 
   if (subscription.freeTierPerDay > 0) {
     if (usedToday >= subscription.freeTierPerDay) {
       const reason = `Free tier of ${subscription.freeTierPerDay}/day exhausted.`;
       const audit = await record("REFUSED_QUOTA", reason, consentRef ?? null);
-      return { ok: false, outcome: "REFUSED_QUOTA", reason, auditId: audit.id };
+      return { ok: false, outcome: "REFUSED_QUOTA", code: "IX302", reason, auditId: audit.id };
     }
   }
 
@@ -129,13 +131,13 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   if (!consentRef) {
     const reason = "No consent_ref presented.";
     const audit = await record("REFUSED_NO_CONSENT", reason, null);
-    return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_NO_CONSENT", code: "IX101", reason, auditId: audit.id };
   }
 
   if (!consent) {
     const reason = "consent_ref is not known to the Registry.";
     const audit = await record("REFUSED_NO_CONSENT", reason, consentRef);
-    return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_NO_CONSENT", code: "IX101", reason, auditId: audit.id };
   }
 
   // The ref must belong to the person being asked about. Without this check a
@@ -144,7 +146,7 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
   if (consent.subjectToken !== subjectToken) {
     const reason = "consent_ref belongs to a different subject.";
     const audit = await record("REFUSED_NO_CONSENT", reason, consentRef);
-    return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_NO_CONSENT", code: "IX104", reason, auditId: audit.id };
   }
 
   if (consent.revokedAt) {
@@ -153,7 +155,7 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
       data: { consentId: consent.id, kind: "REFUSED_REVOKED", actorMemberId: callerId, serviceCode, detail: reason },
     });
     const audit = await record("REFUSED_NO_CONSENT", reason, consentRef);
-    return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_NO_CONSENT", code: "IX102", reason, auditId: audit.id };
   }
 
   if (consent.expiresAt <= new Date()) {
@@ -162,7 +164,7 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
       data: { consentId: consent.id, kind: "EXPIRED", actorMemberId: callerId, serviceCode, detail: reason },
     });
     const audit = await record("REFUSED_NO_CONSENT", reason, consentRef);
-    return { ok: false, outcome: "REFUSED_NO_CONSENT", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_NO_CONSENT", code: "IX102", reason, auditId: audit.id };
   }
 
   // ── 4. Scope must cover the operation ─────────────────────────────────────
@@ -173,7 +175,7 @@ export async function authorise(input: AuthoriseInput): Promise<AuthoriseResult>
       data: { consentId: consent.id, kind: "REFUSED_SCOPE", actorMemberId: callerId, serviceCode, detail: reason },
     });
     const audit = await record("REFUSED_SCOPE", reason, consentRef);
-    return { ok: false, outcome: "REFUSED_SCOPE", reason, auditId: audit.id };
+    return { ok: false, outcome: "REFUSED_SCOPE", code: "IX103", reason, auditId: audit.id };
   }
 
   // ── Granted ───────────────────────────────────────────────────────────────

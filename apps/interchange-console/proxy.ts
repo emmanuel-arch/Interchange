@@ -46,7 +46,7 @@ export function proxy(request: NextRequest) {
     // Send them to the gate, remembering where they were going, so signing in
     // lands them on the page they asked for rather than dumping them at the root.
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/signin";
     url.searchParams.set("next", pathname);
     const redirect = NextResponse.redirect(url);
     // Clear a cookie that failed verification — expired, tampered, or minted
@@ -71,15 +71,65 @@ export function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// THE MATCHER, AND THE ONE WAY THIS FILE CAN LIE.
+//
+// Next.js requires `config.matcher` to be a static literal — it is read at build
+// time and cannot be computed. So this list is hand-maintained while PROTECTED
+// above is derived from ROUTE_RIGHTS, and the two can drift.
+//
+// They did. `/policy` was added to ROUTE_RIGHTS and not to this array, and the
+// result was a console page that rendered to anyone who typed the URL: the
+// proxy never ran, because a path outside the matcher never reaches it. A gate
+// that is missing is worse than a gate that refuses, because nothing complains.
+//
+// The assertion below is the fix, not the added line. It runs at module load —
+// which on Next means at build — and fails loudly the next time somebody adds a
+// gated route and forgets this array.
+// ─────────────────────────────────────────────────────────────────────────────
+const MATCHER = [
+  "/directory/:path*",
+  "/exposure/:path*",
+  "/reports/:path*",
+  "/consent/:path*",
+  "/audit/:path*",
+  "/score/:path*",
+  "/learning/:path*",
+  "/log/:path*",
+  "/governance/:path*",
+  "/policy/:path*",
+] as const;
+
+{
+  const matched = new Set(MATCHER.map((m) => m.replace("/:path*", "")));
+  const unguarded = PROTECTED.filter((p) => !matched.has(p));
+  if (unguarded.length) {
+    throw new Error(
+      `proxy.ts: ${unguarded.join(", ")} ${unguarded.length === 1 ? "is" : "are"} in ROUTE_RIGHTS but not in the ` +
+        `matcher, so the gate never runs for ${unguarded.length === 1 ? "it" : "them"}. Add ` +
+        `${unguarded.map((p) => `"${p}/:path*"`).join(", ")} to MATCHER.`,
+    );
+  }
+  const orphaned = [...matched].filter((m) => !PROTECTED.includes(m));
+  if (orphaned.length) {
+    throw new Error(
+      `proxy.ts: ${orphaned.join(", ")} ${orphaned.length === 1 ? "is" : "are"} in the matcher but not in ` +
+        `ROUTE_RIGHTS, so the proxy runs and then waves ${orphaned.length === 1 ? "it" : "them"} through.`,
+    );
+  }
+}
+
 export const config = {
   matcher: [
     "/directory/:path*",
     "/exposure/:path*",
+    "/reports/:path*",
     "/consent/:path*",
     "/audit/:path*",
     "/score/:path*",
     "/learning/:path*",
     "/log/:path*",
     "/governance/:path*",
+    "/policy/:path*",
   ],
 };

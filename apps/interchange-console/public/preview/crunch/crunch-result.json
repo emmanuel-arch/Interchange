@@ -1,0 +1,882 @@
+{
+  "provenance": {
+    "statement": "synthetic",
+    "engine": "production statement engine (parser, classifier, features, audit, scorecard)",
+    "note": "The transactions are invented for this demo. Everything computed from them is the engine's real output.",
+    "builtAt": "2026-09-17T15:06:08.131Z"
+  },
+  "nameCheck": {
+    "statementName": "AMANI JABALI MWENDA",
+    "expectedName": "AMANI JABALI MWENDA",
+    "matched": true,
+    "overridden": false
+  },
+  "transactionCount": 651,
+  "paidIn": 389210,
+  "paidOut": 335682,
+  "creditScore": {
+    "modelVersion": "thinfile-scorecard-v1",
+    "score": 822,
+    "maxScore": 900,
+    "pd": 0.023,
+    "pdPercent": "2.3%",
+    "band": "Excellent",
+    "tone": "good",
+    "decision": "APPROVE",
+    "reasonCodes": [
+      {
+        "code": "INC",
+        "factor": "Income level",
+        "points": 70,
+        "direction": "up",
+        "detail": "Average income KES 59,538/mo."
+      },
+      {
+        "code": "STB",
+        "factor": "Income stability",
+        "points": 50,
+        "direction": "up",
+        "detail": "Income volatility 0.11."
+      },
+      {
+        "code": "AFF",
+        "factor": "Disposable income",
+        "points": 46,
+        "direction": "up",
+        "detail": "Keeps ~18% of income (KES 10,464/mo)."
+      },
+      {
+        "code": "REG",
+        "factor": "Earning consistency",
+        "points": 40,
+        "direction": "up",
+        "detail": "Earned in 100% of months."
+      }
+    ],
+    "breakdown": [
+      {
+        "code": "AFF",
+        "factor": "Disposable income",
+        "points": 46
+      },
+      {
+        "code": "INC",
+        "factor": "Income level",
+        "points": 70
+      },
+      {
+        "code": "STB",
+        "factor": "Income stability",
+        "points": 50
+      },
+      {
+        "code": "REG",
+        "factor": "Earning consistency",
+        "points": 40
+      },
+      {
+        "code": "GMB",
+        "factor": "Gambling exposure",
+        "points": -34
+      },
+      {
+        "code": "DEP",
+        "factor": "Loan dependency",
+        "points": 0
+      },
+      {
+        "code": "BAL",
+        "factor": "Balance cushion",
+        "points": 30
+      },
+      {
+        "code": "TRD",
+        "factor": "Balance trend",
+        "points": 20
+      },
+      {
+        "code": "RPY",
+        "factor": "Loan repayment",
+        "points": 0
+      }
+    ]
+  },
+  "features": {
+    "monthsCovered": 6,
+    "periodStart": "2026-03",
+    "periodEnd": "2026-08",
+    "txnCount": 651,
+    "totalIncome": 357230,
+    "avgMonthlyIncome": 59538,
+    "totalExpense": 294448,
+    "avgMonthlyExpense": 49075,
+    "avgMonthlyNet": 10464,
+    "incomeVolatility": 0.11,
+    "avgBalance": 37678,
+    "minBalance": 1781,
+    "closingBalance": 66649,
+    "balanceTrend": 64868,
+    "incomeMonthsRatio": 1,
+    "businessInflowCount": 9,
+    "tillPaybillCount": 117,
+    "gamblingOutflow": 16475,
+    "gamblingRatio": 0.049,
+    "loanInflow": 31980,
+    "loanRepayOutflow": 25755,
+    "loanEventCount": 16,
+    "loanDependencyRatio": 0.082,
+    "airtimeSpend": 4562
+  },
+  "monthly": [
+    {
+      "month": "2026-03",
+      "income": 54214,
+      "expense": 45253,
+      "net": 8961,
+      "gambling": 2897
+    },
+    {
+      "month": "2026-04",
+      "income": 67728,
+      "expense": 51270,
+      "net": 16458,
+      "gambling": 3303
+    },
+    {
+      "month": "2026-05",
+      "income": 56192,
+      "expense": 45133,
+      "net": 11059,
+      "gambling": 1953
+    },
+    {
+      "month": "2026-06",
+      "income": 64440,
+      "expense": 56571,
+      "net": 7869,
+      "gambling": 3115
+    },
+    {
+      "month": "2026-07",
+      "income": 65597,
+      "expense": 48780,
+      "net": 16817,
+      "gambling": 3092
+    },
+    {
+      "month": "2026-08",
+      "income": 49059,
+      "expense": 47441,
+      "net": 1618,
+      "gambling": 2115
+    }
+  ],
+  "affordability": {
+    "score": 72,
+    "band": "Low risk",
+    "recommendedMaxInstallment": 3453,
+    "reasons": [
+      {
+        "factor": "Positive monthly cashflow",
+        "direction": "positive",
+        "detail": "Keeps ~KES 10,464 after spending each month."
+      },
+      {
+        "factor": "Stable income",
+        "direction": "positive",
+        "detail": "Monthly income is consistent (volatility 0.11)."
+      },
+      {
+        "factor": "Earns every month",
+        "direction": "positive",
+        "detail": "Received income in 100% of months."
+      },
+      {
+        "factor": "Gambling activity",
+        "direction": "negative",
+        "detail": "5% of outflow goes to betting (KES 16,475)."
+      },
+      {
+        "factor": "Maintains a balance",
+        "direction": "positive",
+        "detail": "Average balance ~KES 37,678."
+      }
+    ]
+  },
+  "categories": [
+    {
+      "category": "business_in",
+      "count": 355,
+      "amount": 340234,
+      "inAmt": 340234,
+      "outAmt": 0
+    },
+    {
+      "category": "till",
+      "count": 102,
+      "amount": 132657,
+      "inAmt": 0,
+      "outAmt": 132657
+    },
+    {
+      "category": "send_money",
+      "count": 50,
+      "amount": 42628,
+      "inAmt": 0,
+      "outAmt": 42628
+    },
+    {
+      "category": "gambling",
+      "count": 41,
+      "amount": 16475,
+      "inAmt": 0,
+      "outAmt": 16475
+    },
+    {
+      "category": "airtime",
+      "count": 32,
+      "amount": 4562,
+      "inAmt": 0,
+      "outAmt": 4562
+    },
+    {
+      "category": "loan_in",
+      "count": 16,
+      "amount": 31980,
+      "inAmt": 31980,
+      "outAmt": 0
+    },
+    {
+      "category": "paybill",
+      "count": 15,
+      "amount": 72138,
+      "inAmt": 0,
+      "outAmt": 72138
+    },
+    {
+      "category": "loan_repay",
+      "count": 15,
+      "amount": 25755,
+      "inAmt": 0,
+      "outAmt": 25755
+    },
+    {
+      "category": "withdraw",
+      "count": 14,
+      "amount": 25988,
+      "inAmt": 0,
+      "outAmt": 25988
+    },
+    {
+      "category": "income_received",
+      "count": 9,
+      "amount": 16996,
+      "inAmt": 16996,
+      "outAmt": 0
+    },
+    {
+      "category": "charge",
+      "count": 2,
+      "amount": 15479,
+      "inAmt": 0,
+      "outAmt": 15479
+    }
+  ],
+  "sample": [
+    {
+      "date": "2026-08-27",
+      "details": "Merchant Payment to 534476 - MAMA NGINA GREENGRO",
+      "direction": "out",
+      "amount": 1801,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-27",
+      "details": "Customer Transfer to - 2547******418 PETER OTIEN",
+      "direction": "out",
+      "amount": 237,
+      "category": "send_money"
+    },
+    {
+      "date": "2026-08-27",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 750,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-27",
+      "details": "Airtime Purchase",
+      "direction": "out",
+      "amount": 172,
+      "category": "airtime"
+    },
+    {
+      "date": "2026-08-27",
+      "details": "OD Loan Repayment to 232323 - M-PESA Overdraw",
+      "direction": "out",
+      "amount": 1085,
+      "category": "loan_repay"
+    },
+    {
+      "date": "2026-08-26",
+      "details": "Merchant Payment to 565116 - JUJA BUTCHERY",
+      "direction": "out",
+      "amount": 1096,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-26",
+      "details": "OverDraft of Credit Party",
+      "direction": "in",
+      "amount": 1074,
+      "category": "loan_in"
+    },
+    {
+      "date": "2026-08-25",
+      "details": "Merchant Payment to 594675 - MAMA NGINA GREENGRO",
+      "direction": "out",
+      "amount": 1260,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-25",
+      "details": "Merchant Customer Payment from 2547******640 BRI",
+      "direction": "in",
+      "amount": 442,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-25",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 1279,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-24",
+      "details": "Merchant Payment to 510941 - MAMA NGINA GREENGRO",
+      "direction": "out",
+      "amount": 1754,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-23",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 1283,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-23",
+      "details": "Merchant Customer Payment from 2547******902 GRA",
+      "direction": "in",
+      "amount": 1543,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-23",
+      "details": "Merchant Customer Payment from 2547******418 PET",
+      "direction": "in",
+      "amount": 290,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-23",
+      "details": "Merchant Payment to 564672 - JUJA BUTCHERY",
+      "direction": "out",
+      "amount": 650,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-23",
+      "details": "M-Shwari Loan Repayment",
+      "direction": "out",
+      "amount": 4754,
+      "category": "loan_repay"
+    },
+    {
+      "date": "2026-08-22",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 979,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-22",
+      "details": "Merchant Payment to 548659 - QUICKMART KASARANI",
+      "direction": "out",
+      "amount": 1595,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-22",
+      "details": "Merchant Customer Payment from 2547******902 GRA",
+      "direction": "in",
+      "amount": 570,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-22",
+      "details": "Pay Bill to 290290 - BETIKA Acc. 07******",
+      "direction": "out",
+      "amount": 152,
+      "category": "gambling"
+    },
+    {
+      "date": "2026-08-21",
+      "details": "Merchant Customer Payment from 2547******640 BRI",
+      "direction": "in",
+      "amount": 994,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-21",
+      "details": "Merchant Customer Payment from 2547******155 JOH",
+      "direction": "in",
+      "amount": 1376,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-21",
+      "details": "Merchant Customer Payment from 2547******155 JOH",
+      "direction": "in",
+      "amount": 492,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-21",
+      "details": "Pay Bill to 290290 - BETIKA Acc. 07******",
+      "direction": "out",
+      "amount": 644,
+      "category": "gambling"
+    },
+    {
+      "date": "2026-08-21",
+      "details": "Airtime Purchase",
+      "direction": "out",
+      "amount": 54,
+      "category": "airtime"
+    },
+    {
+      "date": "2026-08-20",
+      "details": "OD Loan Repayment to 232323 - M-PESA Overdraw",
+      "direction": "out",
+      "amount": 1402,
+      "category": "loan_repay"
+    },
+    {
+      "date": "2026-08-20",
+      "details": "Merchant Customer Payment from 2547******640 BRI",
+      "direction": "in",
+      "amount": 863,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-19",
+      "details": "OverDraft of Credit Party",
+      "direction": "in",
+      "amount": 1388,
+      "category": "loan_in"
+    },
+    {
+      "date": "2026-08-19",
+      "details": "Customer Withdrawal At Agent Till 376758 - JUJA ",
+      "direction": "out",
+      "amount": 2265,
+      "category": "withdraw"
+    },
+    {
+      "date": "2026-08-19",
+      "details": "Merchant Customer Payment from 2547******155 JOH",
+      "direction": "in",
+      "amount": 701,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-19",
+      "details": "Merchant Customer Payment from 2547******902 GRA",
+      "direction": "in",
+      "amount": 1040,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-19",
+      "details": "Merchant Customer Payment from 2547******902 GRA",
+      "direction": "in",
+      "amount": 581,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-18",
+      "details": "Merchant Payment to 535676 - NAIVAS SUPERMARKET ",
+      "direction": "out",
+      "amount": 1290,
+      "category": "till"
+    },
+    {
+      "date": "2026-08-18",
+      "details": "Merchant Customer Payment from 2547******640 BRI",
+      "direction": "in",
+      "amount": 1636,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-18",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 663,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-17",
+      "details": "Customer Withdrawal At Agent Till 358027 - JUJA ",
+      "direction": "out",
+      "amount": 2350,
+      "category": "withdraw"
+    },
+    {
+      "date": "2026-08-17",
+      "details": "Merchant Customer Payment from 2547******902 GRA",
+      "direction": "in",
+      "amount": 1074,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-17",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 765,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-17",
+      "details": "Merchant Customer Payment from 2547******377 MER",
+      "direction": "in",
+      "amount": 654,
+      "category": "business_in"
+    },
+    {
+      "date": "2026-08-16",
+      "details": "Merchant Customer Payment from 2547******640 BRI",
+      "direction": "in",
+      "amount": 1351,
+      "category": "business_in"
+    }
+  ],
+  "report": {
+    "generatedAt": "2026-09-17T15:06:08.130Z",
+    "period": {
+      "start": "2026-03",
+      "end": "2026-08",
+      "months": 6,
+      "txns": 651
+    },
+    "score": {
+      "value": 683,
+      "band": "Fair",
+      "drivers": [
+        {
+          "factor": "Cashflow affordability",
+          "direction": "up",
+          "points": 360,
+          "detail": "Low risk — score 72/100."
+        },
+        {
+          "factor": "Earns every month",
+          "direction": "up",
+          "points": 40,
+          "detail": "Income in 100% of months."
+        },
+        {
+          "factor": "Stable income",
+          "direction": "up",
+          "points": 30,
+          "detail": "Low volatility (0.11)."
+        },
+        {
+          "factor": "Balance growing",
+          "direction": "up",
+          "points": 20,
+          "detail": "Closing balance above opening."
+        },
+        {
+          "factor": "Betting activity",
+          "direction": "down",
+          "points": -17,
+          "detail": "5% of outflow to betting."
+        }
+      ]
+    },
+    "affordability": {
+      "score": 72,
+      "band": "Low risk",
+      "recommendedMaxInstallment": 3453,
+      "reasons": [
+        {
+          "factor": "Positive monthly cashflow",
+          "direction": "positive",
+          "detail": "Keeps ~KES 10,464 after spending each month."
+        },
+        {
+          "factor": "Stable income",
+          "direction": "positive",
+          "detail": "Monthly income is consistent (volatility 0.11)."
+        },
+        {
+          "factor": "Earns every month",
+          "direction": "positive",
+          "detail": "Received income in 100% of months."
+        },
+        {
+          "factor": "Gambling activity",
+          "direction": "negative",
+          "detail": "5% of outflow goes to betting (KES 16,475)."
+        },
+        {
+          "factor": "Maintains a balance",
+          "direction": "positive",
+          "detail": "Average balance ~KES 37,678."
+        }
+      ]
+    },
+    "features": {
+      "monthsCovered": 6,
+      "periodStart": "2026-03",
+      "periodEnd": "2026-08",
+      "txnCount": 651,
+      "totalIncome": 357230,
+      "avgMonthlyIncome": 59538,
+      "totalExpense": 294448,
+      "avgMonthlyExpense": 49075,
+      "avgMonthlyNet": 10464,
+      "incomeVolatility": 0.11,
+      "avgBalance": 37678,
+      "minBalance": 1781,
+      "closingBalance": 66649,
+      "balanceTrend": 64868,
+      "incomeMonthsRatio": 1,
+      "businessInflowCount": 9,
+      "tillPaybillCount": 117,
+      "gamblingOutflow": 16475,
+      "gamblingRatio": 0.049,
+      "loanInflow": 31980,
+      "loanRepayOutflow": 25755,
+      "loanEventCount": 16,
+      "loanDependencyRatio": 0.082,
+      "airtimeSpend": 4562
+    },
+    "monthly": [
+      {
+        "month": "2026-03",
+        "income": 54214,
+        "expense": 45253,
+        "net": 8961,
+        "gambling": 2897
+      },
+      {
+        "month": "2026-04",
+        "income": 67728,
+        "expense": 51270,
+        "net": 16458,
+        "gambling": 3303
+      },
+      {
+        "month": "2026-05",
+        "income": 56192,
+        "expense": 45133,
+        "net": 11059,
+        "gambling": 1953
+      },
+      {
+        "month": "2026-06",
+        "income": 64440,
+        "expense": 56571,
+        "net": 7869,
+        "gambling": 3115
+      },
+      {
+        "month": "2026-07",
+        "income": 65597,
+        "expense": 48780,
+        "net": 16817,
+        "gambling": 3092
+      },
+      {
+        "month": "2026-08",
+        "income": 49059,
+        "expense": 47441,
+        "net": 1618,
+        "gambling": 2115
+      }
+    ],
+    "spendByCategory": [
+      {
+        "category": "Groceries",
+        "amount": 120240,
+        "count": 89,
+        "share": 0.358
+      },
+      {
+        "category": "Rent & Housing",
+        "amount": 57000,
+        "count": 6,
+        "share": 0.17
+      },
+      {
+        "category": "Transfers",
+        "amount": 42628,
+        "count": 50,
+        "share": 0.127
+      },
+      {
+        "category": "Financial & Loans",
+        "amount": 34251,
+        "count": 18,
+        "share": 0.102
+      },
+      {
+        "category": "Cash / ATM",
+        "amount": 25988,
+        "count": 14,
+        "share": 0.077
+      },
+      {
+        "category": "Betting",
+        "amount": 16475,
+        "count": 41,
+        "share": 0.049
+      },
+      {
+        "category": "Education",
+        "amount": 15479,
+        "count": 2,
+        "share": 0.046
+      },
+      {
+        "category": "Fuel",
+        "amount": 12417,
+        "count": 13,
+        "share": 0.037
+      },
+      {
+        "category": "Utilities",
+        "amount": 6642,
+        "count": 6,
+        "share": 0.02
+      },
+      {
+        "category": "Airtime & Data",
+        "amount": 4562,
+        "count": 32,
+        "share": 0.014
+      }
+    ],
+    "topMerchants": [
+      {
+        "name": "Sunrise Apartments Acc. Rent",
+        "category": "Rent & Housing",
+        "amount": 57000,
+        "count": 6
+      },
+      {
+        "name": "Mama Ngina Greengrocers",
+        "category": "Groceries",
+        "amount": 38177,
+        "count": 26
+      },
+      {
+        "name": "Naivas Supermarket Thika Rd",
+        "category": "Groceries",
+        "amount": 31688,
+        "count": 23
+      },
+      {
+        "name": "Juja Butchery",
+        "category": "Groceries",
+        "amount": 27412,
+        "count": 21
+      },
+      {
+        "name": "Quickmart Kasarani",
+        "category": "Groceries",
+        "amount": 22963,
+        "count": 19
+      },
+      {
+        "name": "Betika Acc. 07******",
+        "category": "Betting",
+        "amount": 16475,
+        "count": 41
+      },
+      {
+        "name": "Rubis Energy Juja",
+        "category": "Fuel",
+        "amount": 12417,
+        "count": 13
+      },
+      {
+        "name": "Tala Kenya Acc. Loan",
+        "category": "Financial & Loans",
+        "amount": 8496,
+        "count": 3
+      },
+      {
+        "name": "Kplc Prepaid Acc. ***",
+        "category": "Utilities",
+        "amount": 6642,
+        "count": 6
+      }
+    ],
+    "loanBehaviour": {
+      "lenders": [
+        {
+          "name": "M-Shwari",
+          "borrowed": 14076,
+          "repaid": 15132,
+          "events": 6
+        },
+        {
+          "name": "Fuliza",
+          "borrowed": 10516,
+          "repaid": 10623,
+          "events": 24
+        },
+        {
+          "name": "Tala",
+          "borrowed": 7388,
+          "repaid": 0,
+          "events": 1
+        }
+      ],
+      "repaymentCadence": "weekly",
+      "activeExposureEstimate": 6225,
+      "fulizaReliant": false
+    },
+    "lifestyle": {
+      "tags": [
+        "Supermarket regular",
+        "Active bettor",
+        "Pays school fees"
+      ],
+      "narrative": "Over 6 months, this customer received ~KES 59,538/mo and spent ~KES 49,075/mo, keeping ~KES 10,464 on average. Their biggest discretionary category is Betting. They are already servicing 3 lenders (M-Shwari, Fuliza, Tala). 5% of outflow goes to betting."
+    },
+    "highlights": [
+      {
+        "tone": "positive",
+        "label": "Affordable instalment",
+        "detail": "Comfortably services ~KES 3,453/mo."
+      },
+      {
+        "tone": "negative",
+        "label": "3 existing lender(s)",
+        "detail": "M-Shwari, Fuliza, Tala."
+      },
+      {
+        "tone": "positive",
+        "label": "Reliable earner",
+        "detail": "Steady income every month."
+      }
+    ]
+  }
+}

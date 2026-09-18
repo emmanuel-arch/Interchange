@@ -101,7 +101,7 @@ async function main() {
   // ── Authorise then query ────────────────────────────────────────────────
   console.log("\n  \x1b[2mExposure — authorise, fan out, aggregate\x1b[0m");
 
-  const consent = await plain("/api/consent", {
+  const consent = await post("/api/consent", {
     subject_token: demo, member_code: CALLER, scopes: MANDATORY_SCOPES, captured_via: "PWA",
   });
   const ref = String(consent.json.consent_ref ?? "");

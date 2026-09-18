@@ -45,3 +45,6 @@ next-env.d.ts
 
 # development key material — never commit
 .member-keys.json
+
+.vercel
+.env*

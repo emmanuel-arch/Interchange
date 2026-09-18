@@ -2,7 +2,7 @@
 // Promote a member out of the shadow period.
 //
 //   npx tsx scripts/promote-member.ts                    # show all candidates
-//   npx tsx scripts/promote-member.ts KE/LENDER/AXE-3003 --by "Faith Birgen"
+//   npx tsx scripts/promote-member.ts KE/LENDER/AXE-3003 --by "Faith Birgen" [--why "<rationale>"]
 //
 // SHADOW means contributing but not yet querying. Promotion is not a courtesy —
 // it is the policy engine confirming that reciprocity has actually been met:
@@ -29,6 +29,7 @@ function arg(name: string): string | undefined {
 async function main() {
   const code = process.argv.slice(2).find((a) => !a.startsWith("--"));
   const decidedBy = arg("by") ?? "operator";
+  const why = arg("why");
 
   const checks = await promotionCandidates();
 
@@ -47,7 +48,7 @@ async function main() {
     return;
   }
 
-  const member = await promote(code, decidedBy);
+  const member = await promote(code, decidedBy, why);
   console.log(
     `\n  ${G("✓")} ${member.code} — ${member.name} is now ${member.status}` +
       `\n    ${D(`It may now query the network as well as contribute to it. Recorded against "${decidedBy}".`)}\n`,

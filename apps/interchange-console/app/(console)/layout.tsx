@@ -15,12 +15,14 @@ import { InterchangeMark } from "@/components/chrome";
 const NAV = [
   { href: "/directory", label: "Directory" },
   { href: "/exposure", label: "Exposure" },
+  { href: "/reports", label: "Reports" },
   { href: "/consent", label: "Consent" },
   { href: "/audit", label: "Audit" },
   { href: "/score", label: "Score" },
   { href: "/learning", label: "Learning" },
   { href: "/log", label: "Message Log" },
   { href: "/governance", label: "Governance" },
+  { href: "/policy", label: "Crunch settings" },
 ];
 
 // A route group adds no path segment, so typegen resolves this layout to "/".
@@ -39,10 +41,8 @@ export default function ConsoleLayout({ children }: LayoutProps<"/">) {
 
       <header className="relative z-10 border-b border-white/[0.07] shrink-0">
         <div className="mx-auto max-w-[1180px] px-6 flex items-center justify-between h-14 gap-6">
-          <Link href="/directory" className="flex items-center gap-2.5 shrink-0 group">
-            <span className="w-8 h-8 rounded-full border border-emerald-500/25 bg-emerald-500/5 flex items-center justify-center">
-              <InterchangeMark />
-            </span>
+          <Link href="/directory" className="flex items-center gap-3 shrink-0 group">
+            <InterchangeMark className="w-7 h-7 transition-transform duration-300 group-hover:scale-105" />
             <span className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-white/80 group-hover:text-white transition-colors">
               Interchange
             </span>

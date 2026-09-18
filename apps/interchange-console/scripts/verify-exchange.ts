@@ -127,7 +127,15 @@ async function main() {
   // ── Signing ─────────────────────────────────────────────────────────────
   console.log("\n  \x1b[2mSigning — identity proved, not claimed\x1b[0m");
 
-  const consent = await plain("/api/consent", {
+  const unsignedConsent = await plain("/api/consent", {
+    subject_token: a1.token,
+    member_code: MICROMART,
+    scopes: MANDATORY_SCOPES,
+    captured_via: "PWA",
+  });
+  check("an unsigned consent is refused", unsignedConsent.status === 401, `${unsignedConsent.status} ${String(unsignedConsent.json.api_code ?? "")}`);
+
+  const consent = await signed(MICROMART, "/api/consent", {
     subject_token: a1.token,
     member_code: MICROMART,
     scopes: MANDATORY_SCOPES,
@@ -135,6 +143,14 @@ async function main() {
   });
   const ref = String(consent.json.consent_ref ?? "");
   check("consent issues against an OPRF token", consent.status === 201, `${consent.status}`);
+
+  const inAnotherName = await signed(NJB, "/api/consent", {
+    subject_token: a1.token,
+    member_code: MICROMART,
+    scopes: MANDATORY_SCOPES,
+    captured_via: "PWA",
+  });
+  check("a member cannot record consent in another member's name", inAnotherName.status === 403, `${inAnotherName.status}`);
 
   const forged = generateMemberKeyPair();
   const impersonation = await signed(
@@ -190,7 +206,7 @@ async function main() {
   check("caller receives a log receipt", !!seq && !!hash, `seq ${seq} hash ${hash?.slice(0, 12)}…`);
 
   // Second member, same borrower — this is the two-member exchange.
-  const njbConsent = await plain("/api/consent", {
+  const njbConsent = await signed(NJB, "/api/consent", {
     subject_token: a1.token,
     member_code: NJB,
     scopes: MANDATORY_SCOPES,

@@ -58,6 +58,28 @@ export function entryHash(prevHash: string, seq: bigint, at: Date, e: AppendInpu
   return createHash("sha256").update(prevHash).update(payload(seq, at, e)).digest("hex");
 }
 
+/**
+ * How long an append may wait for a connection, and for its own transaction.
+ *
+ * Prisma's defaults are 2s to acquire a connection and 5s to run, which are
+ * sized for a quiet database. They are not sized for THIS one: a member node
+ * running its ingest pushes sixty thousand rows through the same pooler, and
+ * under that load an exchange failed with P2028 — "unable to start a
+ * transaction in the given time" — and returned 500 to the member.
+ *
+ * That is the wrong failure. The call was authorised, the answer was computed,
+ * and the only thing that did not happen was writing the receipt. Waiting a few
+ * more seconds for a busy pooler is strictly better than telling a member their
+ * consented, paid-for query failed, so the budgets are raised deliberately
+ * rather than left at a default that was never chosen.
+ *
+ * It is a mitigation, not a fix. The real answer is that the Registry's
+ * database should not be competing with a bulk ingest at all — see the
+ * deployment note in the launch brief.
+ */
+const APPEND_MAX_WAIT_MS = 15_000;
+const APPEND_TIMEOUT_MS = 20_000;
+
 export async function append(e: AppendInput) {
   return prisma.$transaction(async (tx) => {
     // Held until the transaction ends. Every appender queues behind it.
@@ -89,7 +111,7 @@ export async function append(e: AppendInput) {
         callerSignature: e.callerSignature ?? null,
       },
     });
-  });
+  }, { maxWait: APPEND_MAX_WAIT_MS, timeout: APPEND_TIMEOUT_MS });
 }
 
 export type VerifyReport = {

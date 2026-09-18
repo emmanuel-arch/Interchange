@@ -1,0 +1,66 @@
+{
+  "has_error": false,
+  "api_code": null,
+  "api_code_description": null,
+  "api_version": "v1",
+  "reference": "IX-69RQ-JBKC-20260918",
+  "report": {
+    "type": 2,
+    "name": "Delinquency Status",
+    "product": "bureau_direct"
+  },
+  "report_date": "2026-09-18 14:17:45 EAT",
+  "requested_by": {
+    "person": "Sample Analyst",
+    "organisation": "Sample Lender Limited",
+    "member_code": "KE/LENDER/SAMPLE"
+  },
+  "subject": {
+    "identity_type": {
+      "code": "001",
+      "label": "National ID"
+    },
+    "identity_number": "880000088"
+  },
+  "provenance": {
+    "provider": "Metropol Credit Reference Bureau",
+    "bureau_report_types": [
+      2
+    ],
+    "bureau_transaction_ids": [
+      "07b8de7d-377a-4146-a818-3bb85687b00c"
+    ],
+    "responses": [
+      {
+        "report_type": 2,
+        "sha256": "44dde58b5e1ddb223557140e067b09b8f9d0ddac0a3534bc5cee37e08aa9d51d",
+        "capture": "unwrapped"
+      }
+    ],
+    "interchange_role": "Retrieved, kept unchanged, and presented. The Interchange is not a credit reference bureau."
+  },
+  "data": {
+    "delinquency": {
+      "code": "004",
+      "label": "Currently delinquent",
+      "meaning": "At least one account is non-performing right now."
+    }
+  },
+  "reading": {},
+  "notices": {
+    "regulation_40_1": "Disclaimer: According to the Banking (Credit Reference Bureau Regulations, 2020 Regulation 40 (1), A customer's credit score shall not be used solely to deny the customer a loan, credit facility, or any other financial service. However, it shall be used as one of the factors to inform the decision-making when determining the customer's application for a loan, credit facility, or any other financial service.",
+    "bureau_disclaimer": [
+      "The information provided in this report is for the purposes of decision making as stipulated in the Banking (Credit Reference Bureau) Regulations, 2020 only.",
+      "It is not in any way METROPOL CREDIT REFERENCE BUREAU's opinion of the financial capability, solvency, integrity or intentions of any persons mentioned herein.",
+      "It therefore cannot be used to inform any level of decision making, positive or adverse, on any and all persons mentioned herein, whether regarding current or potential credit lines.",
+      "All parties given access to this information are bound to keep any and all information,whether intentionally or accidentally accessed, strictly confidential.",
+      "METROPOL CREDIT REFERENCE BUREAU does not warrant or guarantee any use of the information contained herein."
+    ],
+    "interchange": "The credit information in this document was supplied by Metropol Credit Reference Bureau, a credit reference bureau licensed by the Central Bank of Kenya. The Interchange did not create, alter or verify that information. The Interchange is a technology intermediary: it is not a credit reference bureau and it gives no credit opinion. It retrieves the bureau's response, keeps it unchanged (the original response and its SHA-256 fingerprint are held under the reference on this document), and presents it in a form a lending decision can use. Where this document shows totals, orderings, charts or flags, they are marked as the Interchange's reading of the bureau's data and are not the bureau's statement. Questions or disputes about the underlying data must be raised with Metropol Credit Reference Bureau, which holds the record. This document is confidential to the requesting organisation and may be used only for the purposes permitted by the Banking (Credit Reference Bureau) Regulations, 2020."
+  },
+  "verify": {
+    "url": "https://interchange.servicesuitecloud.com/verify/IX-69RQ-JBKC-20260918",
+    "content_sha256": "3a12270f60885014644722769aa54aef118c068a3355b5c54f2dff4592f8a34f"
+  },
+  "sample": true
+}

@@ -29,6 +29,16 @@ export const RIGHTS = {
   "exposure:query": "Run an exposure check across members",
   "exposure:read": "See exposure results and history",
 
+  // Reports — the catalogue, and buying one
+  //
+  // `reports:run` is separate from `reports:read` because running a
+  // bureau-backed report SPENDS MONEY on the contract holder's account. Seeing
+  // what a report costs and committing a member to that cost are different
+  // permissions, and an analyst who may do the first is not automatically
+  // trusted with the second.
+  "reports:read": "See the report catalogue and past report calls",
+  "reports:run": "Request a report, including billable bureau reports",
+
   // Consent — the gate everything else depends on
   "consent:read": "See consent records and their events",
   "consent:capture": "Capture a consent on a borrower's behalf",
@@ -49,6 +59,15 @@ export const RIGHTS = {
   // Message log — the hash chain
   "log:read": "Read the message log",
   "log:verify": "Re-verify the hash chain and timestamps",
+
+  // Crunch policy — how this member's statements are read
+  //
+  // `policy:write` is separated from `policy:read` because these settings move
+  // the instalment ceiling on every report this member produces. Seeing which
+  // debt-service cap was applied is an analyst's job; changing it is a credit
+  // decision, and it belongs with whoever answers for the book.
+  "policy:read": "See the crunch policy a member's reports were produced on",
+  "policy:write": "Change income basis, affordability method and score weights",
 
   // Governance — admission and suspension
   "governance:read": "See governance actions and applications",
@@ -86,6 +105,8 @@ export const ROLE_RIGHTS: Record<string, readonly string[]> = {
     "directory:read",
     "exposure:query",
     "exposure:read",
+    "reports:read",
+    "reports:run",
     "consent:read",
     "consent:capture",
     "consent:revoke",
@@ -99,12 +120,16 @@ export const ROLE_RIGHTS: Record<string, readonly string[]> = {
     "governance:read",
     "member:key:rotate",
     "operator:manage",
+    "policy:read",
+    "policy:write",
   ],
 
   ANALYST: [
     "directory:read",
     "exposure:query",
     "exposure:read",
+    "reports:read",
+    "reports:run",
     "consent:read",
     "consent:capture",
     "audit:read",
@@ -113,16 +138,21 @@ export const ROLE_RIGHTS: Record<string, readonly string[]> = {
     "learning:read",
     "log:read",
     "governance:read",
+    "policy:read",
   ],
 
   AUDITOR: [
     "directory:read",
+    "reports:read",
     "consent:read",
     "audit:read",
     "audit:export",
     "log:read",
     "log:verify",
     "governance:read",
+    // An auditor has to be able to answer "on what settings was this number
+    // produced" without being able to change the answer.
+    "policy:read",
   ],
 };
 
@@ -160,12 +190,14 @@ export function expandForDisplay(rights: readonly string[]): Right[] {
 export const ROUTE_RIGHTS: Record<string, Right> = {
   "/directory": "directory:read",
   "/exposure": "exposure:read",
+  "/reports": "reports:read",
   "/consent": "consent:read",
   "/audit": "audit:read",
   "/score": "score:read",
   "/learning": "learning:read",
   "/log": "log:read",
   "/governance": "governance:read",
+  "/policy": "policy:read",
 };
 
 /** The right that admits a pathname, or null when the path is not gated. */

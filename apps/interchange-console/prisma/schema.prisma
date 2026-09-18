@@ -671,3 +671,42 @@ model OperatorAudit {
   @@index([at])
   @@index([operatorId, at])
 }
+
+/// How one member's M-PESA statements are read.
+///
+/// ── WHY THIS IS A TABLE AND NOT A CONSTANT ──────────────────────────────────
+/// "Average monthly income" and "what they can afford" are not facts; they are
+/// four defensible definitions apiece, and the choice moves the answer by a
+/// factor of two. A microfinance lender writing working capital to traders reads
+/// turnover; a salary-advance lender reads classified income. Both are right for
+/// their own book, and the lender carrying the loss is the one entitled to
+/// decide. See lib/statement/policy.ts for the shape.
+///
+/// ── WHY THE WHOLE POLICY IS ONE JSON COLUMN ─────────────────────────────────
+/// Because it is read as a unit, written as a unit and, above all, PRINTED as a
+/// unit: every Cashflow & Affordability report reproduces the settings it was
+/// produced on, so a number can be defended a year later. Normalising twelve
+/// score weights into rows would buy queries nobody runs and cost the one
+/// guarantee that matters — that the settings stored are exactly the settings
+/// the document shows. `normalisePolicy()` validates and clamps on the way in,
+/// so an unknown or out-of-range value can never reach a report.
+model MemberPolicy {
+  id String @id @default(cuid())
+
+  /// The member's X-Road code, e.g. KE/LENDER/3002. "default" is the
+  /// Interchange's own, which every member starts from.
+  memberCode String @unique
+
+  /// What this member calls it, printed on every report they produce.
+  label String
+
+  /// A CrunchPolicy, validated by normalisePolicy() before it is written.
+  settings Json
+
+  /// Who changed it last. Printed on the report's method page beside the date,
+  /// because "the system said so" is not an answer a credit committee accepts.
+  updatedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

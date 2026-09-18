@@ -1,0 +1,61 @@
+{
+  "api_code": null,
+  "api_code_description": null,
+  "bio_nationality": [
+    "KENYA"
+  ],
+  "date_of_being": [
+    "1990-06-14"
+  ],
+  "email": [],
+  "employment": [],
+  "gender": [
+    "M"
+  ],
+  "has_error": false,
+  "identity_number": "880000088",
+  "identity_type": "National ID",
+  "identity_type_id": "001",
+  "identity_website": [],
+  "marital_status": [
+    "M"
+  ],
+  "names": [
+    "Jabali Mwenda Amani",
+    "Amani Jabali Mwenda",
+    "AMANI JABALI MWENDA",
+    "AMANI JABALI MWENDA",
+    "AMANI  MWENDA"
+  ],
+  "phone": [
+    "254799000123"
+  ],
+  "physical_address": [
+    {
+      "address": "NAIROBI",
+      "country": "Kenya",
+      "plot_number": null,
+      "town": "KITENGELA"
+    },
+    {
+      "address": "KAJIADO",
+      "country": "Kenya",
+      "plot_number": null,
+      "town": "KITENGELA"
+    }
+  ],
+  "postal_address": [
+    {
+      "code": "0",
+      "country": "Kenya",
+      "number": "NAIROBI",
+      "town": "KITENGELA"
+    },
+    {
+      "code": "0",
+      "country": "Kenya",
+      "number": "KAJIADO",
+      "town": "KITENGELA"
+    }
+  ]
+}

@@ -1,0 +1,643 @@
+{
+  "generatedAt": "2026-09-18T11:28:42.813Z",
+  "person": {
+    "name": "AMANI JABALI MWENDA",
+    "idNumber": "880000088"
+  },
+  "requestedBy": {
+    "person": "Sample Analyst",
+    "organisation": "Sample Lender Limited",
+    "memberCode": "KE/LENDER/SAMPLE"
+  },
+  "leakScan": {
+    "files": 54,
+    "leaks": 0
+  },
+  "catalogue": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    22
+  ],
+  "products": [
+    {
+      "type": 1,
+      "name": "Identity Verification",
+      "answers": "Whether the ID exists and who it belongs to.",
+      "contains": [
+        "Registered names",
+        "Date of birth",
+        "Gender",
+        "Citizenship",
+        "ID serial",
+        "Deceased marker"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-VZCR-QDQW-20260918",
+      "reportDate": "2026-09-18 14:17:45 EAT",
+      "contentDigest": "78ff5e8a704bb1eaae33f205098b1d4f0f7a8cfed770ba89f2a093b14d7b6f39",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-1/identity-verification-IX-VZCR-QDQW-20260918.html",
+          "bytes": 794946,
+          "sha256": "dd30046464a61fb4fe17b7a52122411dc3137d2b5a85d0f4af0d696c0cce67e8"
+        },
+        "json": {
+          "path": "/preview/samples/report-1/identity-verification-IX-VZCR-QDQW-20260918.json",
+          "bytes": 3965,
+          "sha256": "3b8a58dc9e832399055c9962dbafea612f3070c06845ba1ffd669946be7b5182"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-1/identity-verification-IX-VZCR-QDQW-20260918.metropol-1.json",
+          "bytes": 1796,
+          "sha256": "c43dbe9d1c8eca02698262e06173864402b607c6291096dbc9d7d082f22b85d1"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-1/identity-verification-IX-VZCR-QDQW-20260918.pdf",
+          "bytes": 217585,
+          "sha256": "efce6ab039698415daded64975fe1c8993b258a0e8d38a4e5455a6b08a41857d",
+          "pages": 2
+        },
+        "thumb": {
+          "path": "/preview/samples/report-1/identity-verification-IX-VZCR-QDQW-20260918.png",
+          "bytes": 187946,
+          "sha256": "921cdad5aaff048cf221ce5eae769a49ca9b36cc98756d580797b018854b2465"
+        }
+      }
+    },
+    {
+      "type": 2,
+      "name": "Delinquency Status",
+      "answers": "Whether the person is in default now, or has been.",
+      "contains": [
+        "Delinquency code",
+        "Summary line",
+        "Loan amount asked about"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-69RQ-JBKC-20260918",
+      "reportDate": "2026-09-18 14:17:45 EAT",
+      "contentDigest": "3a12270f60885014644722769aa54aef118c068a3355b5c54f2dff4592f8a34f",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-2/delinquency-status-IX-69RQ-JBKC-20260918.html",
+          "bytes": 794820,
+          "sha256": "0941adf70830dab69e7dae26ec930a09bbf0bbca71a48b81a0b202b0010654cc"
+        },
+        "json": {
+          "path": "/preview/samples/report-2/delinquency-status-IX-69RQ-JBKC-20260918.json",
+          "bytes": 3790,
+          "sha256": "bc0c49b8c1b92340234e4a4d82bc894411870d2c1bfc1be6a650b57101beb92a"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-2/delinquency-status-IX-69RQ-JBKC-20260918.metropol-2.json",
+          "bytes": 296,
+          "sha256": "a5c771274d35dbe9df11088b1d6e78babf7217dc5c30eec680d4840740e152da"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-2/delinquency-status-IX-69RQ-JBKC-20260918.pdf",
+          "bytes": 231523,
+          "sha256": "e544d2898bf32e1fc612ca5842d078e923d35ac4ae2dfb48ab0ae355c91800d8",
+          "pages": 2
+        },
+        "thumb": {
+          "path": "/preview/samples/report-2/delinquency-status-IX-69RQ-JBKC-20260918.png",
+          "bytes": 160708,
+          "sha256": "615e9fa2d720908f7fb3dab97a9f9183e9e98aa5ad285399567cbc7c6ea13827"
+        }
+      }
+    },
+    {
+      "type": 3,
+      "name": "Metro / Mobile Score",
+      "answers": "The bureau's score for the person, or the mobile-lending variant.",
+      "contains": [
+        "Score",
+        "Date calculated",
+        "Category"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-F4BH-HGJA-20260915",
+      "reportDate": "2026-09-15 16:00:03 EAT",
+      "contentDigest": "e606d3cff9c0bcb6d2c8061ff8f7034a47da84e97e6db1d3e363e157c5bae783",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-3/metro-mobile-score-IX-F4BH-HGJA-20260915.html",
+          "bytes": 794968,
+          "sha256": "370510c96445aba3e84e84dc8ba32e74a9bb9a5744ee27ba461fe0d8446db2bc"
+        },
+        "json": {
+          "path": "/preview/samples/report-3/metro-mobile-score-IX-F4BH-HGJA-20260915.json",
+          "bytes": 3878,
+          "sha256": "0035113032587c656c2bdb11abbc36028cfd9fc75ec85e51a9cfdff30d012b2f"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-3/metro-mobile-score-IX-F4BH-HGJA-20260915.metropol-3.json",
+          "bytes": 257,
+          "sha256": "b7455ddf696a924437b783ebcf799601eccfd369806e7fafb387f1c65a2fa39b"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-3/metro-mobile-score-IX-F4BH-HGJA-20260915.pdf",
+          "bytes": 225132,
+          "sha256": "9d9ce8985ebb0cad000f31e8777cb56363a19001ca89ece02285e7c88ea31238",
+          "pages": 2
+        },
+        "thumb": {
+          "path": "/preview/samples/report-3/metro-mobile-score-IX-F4BH-HGJA-20260915.png",
+          "bytes": 188108,
+          "sha256": "7618d6ee59d17cc863cf702c2d1b065d8194a60e25fc7196a3fd129255c88fd2"
+        }
+      }
+    },
+    {
+      "type": 4,
+      "name": "PDF Credit Report",
+      "answers": "The bureau's own printed credit report.",
+      "contains": [
+        "Base64 PDF",
+        "Bureau reference number"
+      ],
+      "entitled": true,
+      "status": "described"
+    },
+    {
+      "type": 5,
+      "name": "JSON Credit Report",
+      "answers": "The full credit file as structured data.",
+      "contains": [
+        "Accounts",
+        "Sector split",
+        "Enquiry windows",
+        "Payment performance index",
+        "Reported names"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-0XS5-D8QF-20260918",
+      "reportDate": "2026-09-18 14:17:46 EAT",
+      "contentDigest": "df7fbcb207ad0821128035aff4ac74d37beb2ece362b0934579b2f671aea69a7",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918.html",
+          "bytes": 851102,
+          "sha256": "4da628608a88f27e9416092427d8e7ac66a90ae2cb32d20a5ad37dee4a33d553"
+        },
+        "json": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918.json",
+          "bytes": 47430,
+          "sha256": "4d981e2b21f1586ef63222269c3568d834b1d9ce2f08d39af44b5f1ed20109c1"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918.metropol-5.json",
+          "bytes": 27069,
+          "sha256": "f5359482cc865c29aecaaa5ed6299907bbcfc0c7e99ae220fc8afbd1c02a5162"
+        },
+        "csv": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918.pdf",
+          "bytes": 476785,
+          "sha256": "71d630040384cceb39f196ab9ccc1d3b6d138d8038d6fbf6f6319190129fc453",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-5/json-credit-report-IX-0XS5-D8QF-20260918.png",
+          "bytes": 173959,
+          "sha256": "f708c813d7ad0d3884fe4ea248f6722f81bc17e1a3905cbe501f70eb27e69d18"
+        }
+      }
+    },
+    {
+      "type": 6,
+      "name": "Identity Scrub",
+      "answers": "Every contact and address trace lenders have reported.",
+      "contains": [
+        "Name spellings",
+        "Phones",
+        "Emails",
+        "Postal and physical addresses",
+        "Employers"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-RY5M-4736-20260918",
+      "reportDate": "2026-09-18 14:17:46 EAT",
+      "contentDigest": "3e3ba06bbb3176dfb3d87797317e6aed553cc81b4b676eef18049f7377740561",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-6/identity-scrub-IX-RY5M-4736-20260918.html",
+          "bytes": 795787,
+          "sha256": "9d80bf378ea67f9763387209636a7b1be1cba0013038812a0c663676c19632dc"
+        },
+        "json": {
+          "path": "/preview/samples/report-6/identity-scrub-IX-RY5M-4736-20260918.json",
+          "bytes": 4407,
+          "sha256": "48c68e47a67cfe3aae11b839c643db0798c15b6ff33a137f73bf6f7402543f8e"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-6/identity-scrub-IX-RY5M-4736-20260918.metropol-6.json",
+          "bytes": 1079,
+          "sha256": "ce10b54fdd89b192d0716973d0969ad029f11aeb2b496ac262df0eb7ad63f258"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-6/identity-scrub-IX-RY5M-4736-20260918.pdf",
+          "bytes": 233402,
+          "sha256": "86f4a77b23b92a8ace121b96536aa91052a18e0f6e7e6c4e08a8d3a31bab3363",
+          "pages": 2
+        },
+        "thumb": {
+          "path": "/preview/samples/report-6/identity-scrub-IX-RY5M-4736-20260918.png",
+          "bytes": 148707,
+          "sha256": "cef3e329a66e63ede5bd9bebd2f74a6bd1ae2b8fbed947581a87ade887c3bee5"
+        }
+      }
+    },
+    {
+      "type": 8,
+      "name": "Credit Info",
+      "answers": "Every credit account on file, with the headline score.",
+      "contains": [
+        "Accounts",
+        "Sector split",
+        "Enquiry windows",
+        "Score",
+        "Fraud and guarantor flags"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "wire",
+      "reference": "IX-8T22-GGFC-20260915",
+      "reportDate": "2026-09-15 16:15:59 EAT",
+      "contentDigest": "602fb6f5488aceacca3e0461be2c5b2f61069371ad9071bf0799cb0343ded18a",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915.html",
+          "bytes": 846161,
+          "sha256": "64448a6f21bc70e63dcc98e10efc40c132042a77334f7a1c4f1f839f9fe7c1d7"
+        },
+        "json": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915.json",
+          "bytes": 47271,
+          "sha256": "d954c75dc696371a2daa2522dd8c972d969ca2412f467c6807e49ec991f2b41b"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915.metropol-8.json",
+          "bytes": 26783,
+          "sha256": "78d0daa3fd4aba8883109e7ccf522c7f48cdd30dc328369233af41b28d19eb32"
+        },
+        "csv": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915.pdf",
+          "bytes": 467741,
+          "sha256": "2c0bf8a982510d7aaed52997e22ae78efca90be9931d5b6c7aeeaccb2dde7b8d",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-8/credit-info-IX-8T22-GGFC-20260915.png",
+          "bytes": 169964,
+          "sha256": "4dc7c458fa3207cda16654e0cb5059c17d98fcf7007360e7f5091dff12128f0b"
+        }
+      }
+    },
+    {
+      "type": 10,
+      "name": "Enhanced Credit Info",
+      "answers": "Credit Info plus who guarantees the person and who holds a stake in them.",
+      "contains": [
+        "Everything in report 8",
+        "Guarantors",
+        "Stakeholders"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-FP2F-N41K-20260918",
+      "reportDate": "2026-09-18 14:17:47 EAT",
+      "contentDigest": "602fb6f5488aceacca3e0461be2c5b2f61069371ad9071bf0799cb0343ded18a",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918.html",
+          "bytes": 846032,
+          "sha256": "61efac318a6de471e8ec61b6f48348f8d0795a51a586bca553854dddf51b2462"
+        },
+        "json": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918.json",
+          "bytes": 47288,
+          "sha256": "b94120445b020f5aebbf9b9e25fbaced753bccce2be5adf068b32d528483530e"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918.metropol-10.json",
+          "bytes": 26825,
+          "sha256": "95d24cc04fad0e4cd0405ec9de6a6a77514b2a7f409433c467218dd116bca16c"
+        },
+        "csv": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918.pdf",
+          "bytes": 467469,
+          "sha256": "2f18e8d24dc909f751243de25f95a16df63581243dab322964a61ef5befd8f00",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-10/enhanced-credit-info-IX-FP2F-N41K-20260918.png",
+          "bytes": 171662,
+          "sha256": "3f5ee8f771d7f2af60eb89d2f0c0ac5647ac2e74fe847dc3b4380f7ca8b26daa"
+        }
+      }
+    },
+    {
+      "type": 11,
+      "name": "Credit Info with Income Estimate",
+      "answers": "Credit Info plus the bureau's modelled monthly income.",
+      "contains": [
+        "Everything in report 8",
+        "Estimated income",
+        "Phones on file"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-8JTS-NC74-20260915",
+      "reportDate": "2026-09-15 16:00:03 EAT",
+      "contentDigest": "b3098ab6f8a1f7e340136e5bfc8c234b3b0fea91f806d7d52de69697b0206d56",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915.html",
+          "bytes": 846800,
+          "sha256": "e3487adb883dc20533fca259c1ff99791c468c983c9af4fd89d14247499fd74a"
+        },
+        "json": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915.json",
+          "bytes": 47333,
+          "sha256": "d7387dd06bb48c457614ceaa857d9f2d30275a71bda008a276e38d96b295fd77"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915.metropol-11.json",
+          "bytes": 26891,
+          "sha256": "0f4f26083073264f1160d87d8ec2cf44a4d53990e773dabe74788d859590b07e"
+        },
+        "csv": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915.pdf",
+          "bytes": 470229,
+          "sha256": "38b2bf3660a737ab6da9bba638f64b73775051dda22c207900aa359e7c8c50e0",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-11/credit-info-with-income-estimate-IX-8JTS-NC74-20260915.png",
+          "bytes": 173273,
+          "sha256": "996a45b062c86a79edc0410754cfd44cf152c574117a49ab80fa0fbbd9915611"
+        }
+      }
+    },
+    {
+      "type": 12,
+      "name": "Full Enhanced Credit Info",
+      "answers": "The complete picture: identity, traces, accounts and a year of score history.",
+      "contains": [
+        "Identity verification",
+        "Identity scrub",
+        "Accounts",
+        "12-month score and PPI trend",
+        "Guarantors",
+        "Stakeholders"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-ZNJ0-VHMJ-20260915",
+      "reportDate": "2026-09-15 16:00:03 EAT",
+      "contentDigest": "a73244f2b1cdb9390f73bb795369803a9927dcfdf1637b23a794902537039d5e",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915.html",
+          "bytes": 857563,
+          "sha256": "41e165a0423fb282cc40af9fafd8eeb10344b7236436d82e6f4082e57a89459a"
+        },
+        "json": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915.json",
+          "bytes": 49478,
+          "sha256": "93ccea0e0a74490f2cc29095ab029c05dd111f1f034b1de773da90b80de518d1"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915.metropol-12.json",
+          "bytes": 30643,
+          "sha256": "ae29119b89e1c5ffd5749d53784139d2e0d33037f194948083fbd226ac1f8572"
+        },
+        "csv": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915.pdf",
+          "bytes": 492490,
+          "sha256": "5e83b6344a1972a77dbf1388efd0bb324871cde51eaf411979ea16aa23406123",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-12/full-enhanced-credit-info-IX-ZNJ0-VHMJ-20260915.png",
+          "bytes": 177290,
+          "sha256": "9f53247650164ad765d70d206109d5e760151a5d700326ce4d9bc64b537e57ef"
+        }
+      }
+    },
+    {
+      "type": 13,
+      "name": "Minified Credit Info",
+      "answers": "One line: worst arrears, whether non-performing, total owed.",
+      "contains": [
+        "Days in arrears",
+        "NPL flag",
+        "Negative history flag",
+        "Outstanding balance"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-1BTC-CZY6-20260918",
+      "reportDate": "2026-09-18 14:17:47 EAT",
+      "contentDigest": "a6fe29ea21d6d1d0d377e790d58b959445bb907813da8dce966c47777e784680",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-13/minified-credit-info-IX-1BTC-CZY6-20260918.html",
+          "bytes": 804246,
+          "sha256": "84c1f00d151ec71c15556d7886b8d80029102054fa1a87b9e9d2d70186356897"
+        },
+        "json": {
+          "path": "/preview/samples/report-13/minified-credit-info-IX-1BTC-CZY6-20260918.json",
+          "bytes": 3693,
+          "sha256": "790ca2865ce2bd8d7525c43fb440975e94d9dc34af06b676281f3a76d5c11610"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-13/minified-credit-info-IX-1BTC-CZY6-20260918.metropol-13.json",
+          "bytes": 229,
+          "sha256": "483d4206bc33c7742c936cb7e24acd3a8065836082f7531a9296703b91f36955"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-13/minified-credit-info-IX-1BTC-CZY6-20260918.pdf",
+          "bytes": 264197,
+          "sha256": "a6949ed78af599b5647d7c1af965afcae4fd777b09a33fa35d2cd72a5c869c98",
+          "pages": 5
+        },
+        "thumb": {
+          "path": "/preview/samples/report-13/minified-credit-info-IX-1BTC-CZY6-20260918.png",
+          "bytes": 160401,
+          "sha256": "303bf87ca52d5723cad9e2215d6acce0c5e52598dc6385937cdb2388540b64c0"
+        }
+      }
+    },
+    {
+      "type": 14,
+      "name": "Full JSON Report",
+      "answers": "The older full-file format: identity, traces, accounts, guarantors.",
+      "contains": [
+        "Identity verification",
+        "Identity scrub",
+        "Accounts",
+        "Guarantors",
+        "Stakeholders"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-T4H3-0FR8-20260918",
+      "reportDate": "2026-09-18 14:17:47 EAT",
+      "contentDigest": "b4d168319a973a523633ee3d0a8dba38095fbea77eacc689dc4cd412ab48654a",
+      "accounts": 48,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918.html",
+          "bytes": 848841,
+          "sha256": "70aeb7cc00056345ba1e493119604b2dd18a75e07911c63c50e401f723817b4c"
+        },
+        "json": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918.json",
+          "bytes": 47980,
+          "sha256": "0e04ace626ac4004f4ed4d788e7dd81675e5b2d9e72da2cd134053fe5ca2abab"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918.metropol-14.json",
+          "bytes": 29293,
+          "sha256": "969d743bd9e7d4cea6ab08b8299f6d6405721eadd65d997d1048f2f694ebe3d2"
+        },
+        "csv": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918-accounts.csv",
+          "bytes": 5509,
+          "sha256": "902539861e805b0f80462cd6f3516c8f6f910e5f30695fe3a51e45ac8206eec5"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918.pdf",
+          "bytes": 482090,
+          "sha256": "46f08f3d3a1cd33ba1955683ead128fa174ff473b8654edfb12d21ff18cc3743",
+          "pages": 8
+        },
+        "thumb": {
+          "path": "/preview/samples/report-14/full-json-report-IX-T4H3-0FR8-20260918.png",
+          "bytes": 171981,
+          "sha256": "f6b9c3f9981b794e32e6315bfda709200d88a8936f5c588ec54e73d0d83d02b3"
+        }
+      }
+    },
+    {
+      "type": 16,
+      "name": "Credit Accounts Summary",
+      "answers": "Counts of mobile against generic loans, arrears, NPLs and the monthly instalment.",
+      "contains": [
+        "Mobile and generic account counts",
+        "Accounts in arrears",
+        "NPL counts",
+        "Monthly instalment on generic loans"
+      ],
+      "entitled": true,
+      "status": "captured",
+      "capture": "unwrapped",
+      "reference": "IX-JSE7-HNM6-20260915",
+      "reportDate": "2026-09-15 16:00:03 EAT",
+      "contentDigest": "256ac9a7bf1b9cf10edf76d0d9f5207bc18b5ad08721430cfc403ac1ce1012eb",
+      "accounts": 0,
+      "files": {
+        "html": {
+          "path": "/preview/samples/report-16/credit-accounts-summary-IX-JSE7-HNM6-20260915.html",
+          "bytes": 795616,
+          "sha256": "12a54c820330afaf15f91a6b7429283c8bb174b598d4382cf29743033d7a6eec"
+        },
+        "json": {
+          "path": "/preview/samples/report-16/credit-accounts-summary-IX-JSE7-HNM6-20260915.json",
+          "bytes": 4094,
+          "sha256": "352c07ac0e71aad9f446bc8cdcfe753244162c6e15e3c1aa72102cb05df8e573"
+        },
+        "bureau": {
+          "path": "/preview/samples/report-16/credit-accounts-summary-IX-JSE7-HNM6-20260915.metropol-16.json",
+          "bytes": 901,
+          "sha256": "3ea4023570e0bf75e530c1ea18d4c0deb38c4ac369081d4c8894cb48dd23bd53"
+        },
+        "pdf": {
+          "path": "/preview/samples/report-16/credit-accounts-summary-IX-JSE7-HNM6-20260915.pdf",
+          "bytes": 231253,
+          "sha256": "cfb2b80dddd666ba046ccc0ed94b594cb346c683faaecd7985e392041353a95f",
+          "pages": 2
+        },
+        "thumb": {
+          "path": "/preview/samples/report-16/credit-accounts-summary-IX-JSE7-HNM6-20260915.png",
+          "bytes": 150330,
+          "sha256": "aafecf94a098c254292b5ea54beb863922bbf4ca9d74c26ee98e0028c4cb80fb"
+        }
+      }
+    },
+    {
+      "type": 22,
+      "name": "Accounts Info (12-month history)",
+      "answers": "Month by month status of every account over the last year.",
+      "contains": [
+        "Per-account monthly history",
+        "Monthly score",
+        "Outstanding and overdue totals"
+      ],
+      "entitled": false,
+      "status": "refused"
+    }
+  ]
+}

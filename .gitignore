@@ -37,3 +37,7 @@ venv/
 # vercel / turbo
 .vercel
 .turbo
+
+# Real customer statements and other material that must never be served or
+# committed. public/ is a web root on Vercel; this is not.
+/private/

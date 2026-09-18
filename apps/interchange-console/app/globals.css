@@ -90,3 +90,86 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ── The public site ─────────────────────────────────────────────────────────
+   Same ground and signal as the vault, so signing in feels like walking further
+   into the same building rather than into a different product. */
+
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+
+.site-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.glow-signal {
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.25), 0 20px 60px -20px rgba(16, 185, 129, 0.35);
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, #ffffff 0%, #d1fae5 45%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Flip cards: the front asks the question, the back answers what it costs and
+   where the answer comes from. Hover on a pointer, tap on a phone, focus on a
+   keyboard — all three turn it. */
+.flip { perspective: 1400px; }
+.flip-inner {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.flip[data-flipped="true"] .flip-inner { transform: rotateY(180deg); }
+@media (hover: hover) {
+  .flip:hover .flip-inner { transform: rotateY(180deg); }
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back { transform: rotateY(180deg); }
+
+@keyframes sweep { to { transform: rotate(360deg); } }
+.radar-sweep { transform-origin: 50% 50%; animation: sweep 4.8s linear infinite; }
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring { transform-box: fill-box; transform-origin: center; animation: pulse-ring 2.4s ease-out infinite; }
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.6s linear infinite;
+}
+
+.prose-docs p { color: rgba(255, 255, 255, 0.66); line-height: 1.75; margin: 0 0 1rem; }
+.prose-docs h2 { scroll-margin-top: 88px; }
+.prose-docs h3 { scroll-margin-top: 88px; }
+.prose-docs code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d1fae5;
+}

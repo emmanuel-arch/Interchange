@@ -12,12 +12,20 @@
 // value had already crossed a network boundary. Sending it back with a 422 is
 // more useful than silently accepting it and quietly breaking the guarantee the
 // whole ecosystem is sold on.
+//
+// ⚠ Signed, since 17 Sep 2026. This endpoint used to take member_code from the
+// body and check nothing else, so anyone who knew a member code could write
+// consent records in that member's name. A consent is evidence a lender will
+// rely on in a dispute; it has to be provably the member's own. The signer must
+// be the member the consent is recorded against.
 // ─────────────────────────────────────────────────────────────────────────────
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { isScope, MANDATORY_SCOPES } from "@/lib/consent/scopes";
 import { isSubjectToken, SUBJECT_TOKEN_HEX_LENGTH } from "@/lib/oprf/node";
+import { verifyRequest } from "@/lib/signing";
+import { ixError, type IxCodeKey } from "@/lib/codes/interchange";
 
 /** Consent runs for a year unless the member asks for less. */
 const DEFAULT_TTL_DAYS = 365;
@@ -32,13 +40,43 @@ function looksLikeRawIdentifier(v: string): boolean {
   return false;
 }
 
+const VERIFY_CODE: Record<string, IxCodeKey> = {
+  MISSING_HEADERS: "IX001",
+  NO_REGISTERED_KEY: "IX002",
+  BAD_SIGNATURE: "IX003",
+  CLOCK_SKEW: "IX004",
+};
+
 export async function POST(request: Request) {
+  const raw = await request.text();
   let body: Record<string, unknown>;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json({ error: "Body must be JSON." }, { status: 400 });
   }
+
+  // Who is recording this consent — proved by signature, never read from the body.
+  const signer = request.headers.get("x-interchange-member") ?? "";
+  const signerMember = signer ? await prisma.member.findUnique({ where: { code: signer }, select: { publicKey: true } }) : null;
+  const verified = verifyRequest({
+    method: "POST",
+    path: "/api/consent",
+    body: raw,
+    headers: request.headers,
+    publicKeyHex: signerMember?.publicKey ?? null,
+  });
+  if (!verified.ok) {
+    const e = ixError(VERIFY_CODE[verified.failure] ?? "IX003", verified.message, { api_code_source: "interchange" });
+    return NextResponse.json(e.body, { status: e.status });
+  }
+  if (body.member_code !== undefined && String(body.member_code) !== signer) {
+    const e = ixError("IX003", "member_code does not match the signing member. A member records consent only in its own name.", {
+      api_code_source: "interchange",
+    });
+    return NextResponse.json(e.body, { status: 403 });
+  }
+  body.member_code = signer;
 
   const subjectToken = String(body.subject_token ?? "");
   const memberCode = String(body.member_code ?? "");

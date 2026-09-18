@@ -3,13 +3,25 @@
 // are the pieces that carry it into the console proper.
 import type { ReactNode } from "react";
 
+/**
+ * The Interchange mark — four nodes joined through one hub.
+ *
+ * This was a hand-drawn SVG placeholder (two emerald strokes crossing) until
+ * the real artwork landed on 18 Sep 2026. It is now the supplied logo, cut to
+ * its own content box by scripts/build-brand-assets.ts, because the delivered
+ * PNG carries 20% whitespace and a logo that shrinks itself inside its own box
+ * reads timid next to type set to the full line height.
+ *
+ * Served as an image rather than inlined as SVG: the artwork is a raster with
+ * gradients and soft joins, and tracing it to paths would be a redrawing, not
+ * a conversion. `next/image` is deliberately not used — this is a fixed-size
+ * decorative mark on every page, so the optimiser has nothing to optimise and
+ * would only add a render-blocking round trip.
+ */
 export function InterchangeMark({ className = "w-5 h-5" }: { className?: string }) {
-  // Two routes crossing without merging — the whole architecture in one glyph.
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
-      <path d="M3 8 C 9 8, 15 16, 21 16" stroke="rgb(16 185 129 / 0.85)" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M3 16 C 9 16, 15 8, 21 8" stroke="rgb(16 185 129 / 0.45)" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src="/brand/mark-192.png" alt="" aria-hidden className={`${className} select-none object-contain`} draggable={false} />
   );
 }
 

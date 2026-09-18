@@ -25,8 +25,30 @@
 import { mightContain } from "@/lib/bloom";
 import { signRequest } from "@/lib/signing";
 
-/** Per-member budget. The whole query targets p95 under 400ms. */
-export const NODE_TIMEOUT_MS = 250;
+/**
+ * Per-member budget. The whole query targets p95 under 400ms.
+ *
+ * ── 250ms ASSUMES A NODE READS ITS OWN BOOK LOCALLY ──────────────────────────
+ * In the deployed architecture a member's node answers from a database inside
+ * its own perimeter, so the read is a millisecond and the 250ms is almost
+ * entirely network between nodes.
+ *
+ * That is NOT this topology. Every node here is served by one app whose
+ * Postgres is in Ireland, so a single node read costs a round trip of roughly
+ * that budget before any work happens — and measured on the real books, ALL
+ * FOUR members timed out on every query. The broker correctly reported
+ * `partial` rather than "no exposure", which is the whole point of that
+ * distinction, but the result was a fan-out that was fast and empty.
+ *
+ * So the value is overridable. Raise it to see the real answers in a topology
+ * with a remote database; leave it at 250 to hold the real target. Moving the
+ * Registry next to its database, or deploying real member nodes, is the fix —
+ * not a bigger number, which is why the bigger number is not the default.
+ */
+export const NODE_TIMEOUT_MS = (() => {
+  const raw = Number(process.env.INTERCHANGE_NODE_TIMEOUT_MS);
+  return Number.isFinite(raw) && raw > 0 ? raw : 250;
+})();
 
 export type NodeAnswer = {
   memberCode: string;
@@ -50,6 +72,16 @@ export type ExposureResult = {
   screened: number;
   queried: number;
   responded: number;
+  /**
+   * Who did not answer, and WHY.
+   *
+   * "Partial" on its own is not actionable. A member that TIMED OUT is an
+   * outage and someone should be woken up; a member that has never published a
+   * book is a known gap in coverage and nobody should be. Collapsing the two
+   * into one boolean means every incomplete answer looks like an incident, so
+   * real incidents stop being noticed.
+   */
+  silent: { memberCode: string; reason: "timeout" | "unpublished" | "error" }[];
   lendersNamed: string[] | null;
   timings: { screenMs: number; fanoutMs: number; totalMs: number };
 };
@@ -140,13 +172,17 @@ export function screen(
   return candidates;
 }
 
+type AskResult =
+  | { ok: true; answer: NodeAnswer }
+  | { ok: false; reason: "timeout" | "unpublished" | "error" };
+
 async function askNode(
   baseUrl: string,
   callerCode: string,
   callerSecretKey: string,
   memberCode: string,
   subjectToken: string,
-): Promise<NodeAnswer | null> {
+): Promise<AskResult> {
   const path = "/api/node/exposure";
   const body = JSON.stringify({ subject_token: subjectToken, member_code: memberCode });
   const headers = signRequest({ method: "POST", path, body, memberCode: callerCode, secretKeyHex: callerSecretKey });
@@ -160,20 +196,30 @@ async function askNode(
       body,
       signal: controller.signal,
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const j = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+      // A member with no published book is a KNOWN unknown, reported as such
+      // rather than folded into "error": one is an ingest that has not been
+      // run, the other is an outage, and they call for different action.
+      if (j.error === "BOOK_NOT_PUBLISHED") return { ok: false, reason: "unpublished" };
+      return { ok: false, reason: "error" };
+    }
     const j = (await res.json()) as Record<string, unknown>;
     return {
-      memberCode: String(j.member_code),
-      hasExposure: Boolean(j.has_exposure),
-      activeLoans: j.active_loans as number | undefined,
-      outstandingBand: j.outstanding_band as string | undefined,
-      worstBucket: j.worst_bucket as string | undefined,
-      newestDisbursement: (j.newest_disbursement as string | null) ?? null,
+      ok: true,
+      answer: {
+        memberCode: String(j.member_code),
+        hasExposure: Boolean(j.has_exposure),
+        activeLoans: j.active_loans as number | undefined,
+        outstandingBand: j.outstanding_band as string | undefined,
+        worstBucket: j.worst_bucket as string | undefined,
+        newestDisbursement: (j.newest_disbursement as string | null) ?? null,
+      },
     };
-  } catch {
-    // Timeout or transport failure. Deliberately null rather than throwing —
+  } catch (e) {
+    // Timeout or transport failure. Deliberately reported rather than thrown —
     // one unreachable member degrades the answer, it does not fail it.
-    return null;
+    return { ok: false, reason: (e as Error).name === "AbortError" ? "timeout" : "error" };
   } finally {
     clearTimeout(timer);
   }
@@ -198,14 +244,23 @@ export async function queryExposure(opts: {
   const screenMs = Date.now() - t0;
 
   const t1 = Date.now();
-  const answers = await Promise.all(
-    candidates.map((code) =>
-      askNode(opts.baseUrl, opts.callerCode, opts.callerSecretKey, code, opts.subjectToken),
-    ),
+  const results = await Promise.all(
+    candidates.map(async (code) => ({
+      code,
+      r: await askNode(opts.baseUrl, opts.callerCode, opts.callerSecretKey, code, opts.subjectToken),
+    })),
   );
   const fanoutMs = Date.now() - t1;
 
-  const responded = answers.filter((a): a is NodeAnswer => a !== null);
+  const responded = results
+    .filter((x) => x.r.ok)
+    .map((x) => (x.r as { ok: true; answer: NodeAnswer }).answer);
+  const silent = results
+    .filter((x) => !x.r.ok)
+    .map((x) => ({
+      memberCode: x.code,
+      reason: (x.r as { ok: false; reason: "timeout" | "unpublished" | "error" }).reason,
+    }));
   const withExposure = responded.filter((a) => a.hasExposure);
 
   const newest = withExposure
@@ -228,10 +283,11 @@ export async function queryExposure(opts: {
     worstBucket: worstOf(withExposure.map((a) => a.worstBucket ?? "due")),
     newestDisbursement: newest,
     velocity14d,
-    partial: responded.length < candidates.length,
+    partial: silent.length > 0,
     screened: askable.length,
     queried: candidates.length,
     responded: responded.length,
+    silent,
     lendersNamed: opts.discloseLenders ? withExposure.map((a) => a.memberCode) : null,
     timings: { screenMs, fanoutMs, totalMs: Date.now() - t0 },
   };

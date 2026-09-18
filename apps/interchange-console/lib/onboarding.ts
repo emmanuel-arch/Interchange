@@ -199,7 +199,12 @@ export async function promotionCandidates(): Promise<PromotionCheck[]> {
   });
 }
 
-export async function promote(memberCode: string, decidedBy: string) {
+export async function promote(
+  memberCode: string,
+  decidedBy: string,
+  /** Why, in the decider's words. The eligibility checks above still have to pass. */
+  rationale = "Shadow period served and contribution verified.",
+) {
   const checks = await promotionCandidates();
   const check = checks.find((c) => c.memberCode === memberCode);
   if (!check) throw new Error(`${memberCode} is not in the shadow period.`);
@@ -215,7 +220,7 @@ export async function promote(memberCode: string, decidedBy: string) {
       action: "PROMOTE_FROM_SHADOW",
       memberCode,
       decidedBy,
-      rationale: "Shadow period served and contribution verified.",
+      rationale,
     },
   });
 

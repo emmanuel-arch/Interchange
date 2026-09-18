@@ -27,7 +27,15 @@
     "verify:scoring": "tsx scripts/verify-scoring.ts",
     "verify:onboarding": "tsx scripts/verify-onboarding.ts",
     "registry:status": "tsx scripts/registry-status.ts",
-    "member:register": "tsx scripts/register-member.ts"
+    "registry:bootstrap": "tsx scripts/registry-bootstrap.ts",
+    "member:register": "tsx scripts/register-member.ts",
+    "verify:reports": "tsx scripts/verify-reports.ts",
+    "report:build": "tsx scripts/build-report.ts",
+    "verify:exposure:live": "tsx scripts/verify-exposure-live.ts",
+    "brief": "tsx scripts/build-launch-brief.ts",
+    "services:sync": "tsx scripts/sync-services.ts",
+    "preview:build": "tsx scripts/build-preview.ts",
+    "preview:crunch": "tsx scripts/build-crunch-demo.ts"
   },
   "dependencies": {
     "@noble/curves": "^2.3.0",
@@ -37,8 +45,10 @@
     "framer-motion": "^13.1.1",
     "lucide-react": "^1.33.0",
     "next": "16.3.2",
+    "pdfjs-dist": "^4.10.38",
     "pg": "^8.23.0",
     "prisma": "^7.9.1",
+    "qrcode-generator": "2.0.4",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -50,6 +60,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.2",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "tsx": "^4.23.12",
     "typescript": "^5"

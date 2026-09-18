@@ -1,0 +1,652 @@
+receipt,date,time,details,direction,amount,balance,category,is_gambling,is_loan_app
+UA000028T5,2026-03-01,08:09:44,"Merchant Payment to 562431 - JUJA BUTCHERY",out,1340,1780.55,till,false,false
+UB00002EX4,2026-03-01,08:29:50,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1221,3001.55,business_in,false,false
+UC00002L13,2026-03-01,14:00:41,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1385,4386.55,business_in,false,false
+UD00002R52,2026-03-01,16:18:18,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1588,5974.55,business_in,false,false
+UE00002X91,2026-03-01,20:20:25,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,967,6941.55,business_in,false,false
+UF000033D0,2026-03-02,09:25:31,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,792,7733.55,business_in,false,false
+UG000039GZ,2026-03-02,14:42:39,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,863,8596.55,business_in,false,false
+UH00003FKY,2026-03-02,18:27:01,"Merchant Payment Online to 887444 - RUBIS ENERGY JUJA",out,445,8151.55,till,false,false
+UJ00003LOX,2026-03-03,11:15:58,"Pay Bill to 290290 - BETIKA Acc. 07******",out,661,7490.55,gambling,true,false
+UK00003RSW,2026-03-03,11:33:46,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1147,8637.55,business_in,false,false
+UL00003XWV,2026-03-03,15:03:17,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,4137.55,paybill,false,false
+UM0000440U,2026-03-03,16:36:10,"Airtime Purchase",out,99,4038.55,airtime,false,false
+UN00004A4T,2026-03-03,17:26:51,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1008,5046.55,business_in,false,false
+UP00004G8S,2026-03-03,21:03:52,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1318,6364.55,business_in,false,false
+UQ00004MCR,2026-03-04,13:25:30,"Pay Bill to 290290 - BETIKA Acc. 07******",out,191,6173.55,gambling,true,false
+UR00004SGQ,2026-03-04,17:44:22,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,546,5627.55,send_money,false,false
+US00004YKP,2026-03-04,18:25:15,"Merchant Payment to 560755 - MAMA NGINA GREENGROCERS",out,2075,3552.55,till,false,false
+UT000054OO,2026-03-05,08:05:03,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,624,4176.55,business_in,false,false
+UU00005ASN,2026-03-05,13:43:57,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,1027,3149.55,paybill,false,false
+UV00005GWM,2026-03-05,14:17:54,"Funds received from - 2547******902 GRACE WANJIRU",in,1039,4188.55,income_received,false,false
+UW00005N0L,2026-03-05,15:18:32,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,663,4851.55,business_in,false,false
+UX00005T4K,2026-03-05,16:10:30,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,745,5596.55,business_in,false,false
+UY00005Z8J,2026-03-05,20:17:09,"Pay Bill to 290290 - BETIKA Acc. 07******",out,280,5316.55,gambling,true,false
+UZ000065CI,2026-03-06,14:30:03,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,659,5975.55,business_in,false,false
+UA00006BGH,2026-03-06,15:03:26,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,397,6372.55,business_in,false,false
+UB00006HKG,2026-03-06,16:43:52,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1370,7742.55,business_in,false,false
+UC00006NOF,2026-03-06,18:24:59,"Customer Withdrawal At Agent Till 359882 - JUJA AGENCIES",out,2230,5512.55,withdraw,false,false
+UD00006TSE,2026-03-07,07:08:58,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,630,6142.55,business_in,false,false
+UE00006ZWD,2026-03-07,07:25:25,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,484,6626.55,business_in,false,false
+UF0000760C,2026-03-07,13:04:31,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,730,7356.55,business_in,false,false
+UG00007C4B,2026-03-07,15:37:53,"Airtime Purchase",out,228,7128.55,airtime,false,false
+UH00007I8A,2026-03-09,09:01:48,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,879,8007.55,business_in,false,false
+UJ00007OC9,2026-03-09,17:32:31,"Merchant Payment to 549264 - MAMA NGINA GREENGROCERS",out,2151,5856.55,till,false,false
+UK00007UG8,2026-03-10,16:35:36,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,582,6438.55,business_in,false,false
+UL000080K7,2026-03-10,20:44:19,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,416,6854.55,business_in,false,false
+UM000086O6,2026-03-11,10:06:25,"Merchant Payment Online to 812756 - RUBIS ENERGY JUJA",out,763,6091.55,till,false,false
+UN00008CS5,2026-03-11,11:03:08,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,671,6762.55,business_in,false,false
+UP00008IW4,2026-03-11,12:38:03,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,429,6333.55,send_money,false,false
+UQ00008P03,2026-03-11,16:08:26,"Pay Bill to 290290 - BETIKA Acc. 07******",out,525,5808.55,gambling,true,false
+UR00008V42,2026-03-11,17:49:47,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,428,6236.55,business_in,false,false
+US00009181,2026-03-11,18:52:28,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,634,6870.55,business_in,false,false
+UT000097C0,2026-03-12,07:31:30,"Merchant Payment to 519748 - NAIVAS SUPERMARKET THIKA RD",out,2158,4712.55,till,false,false
+UU00009DFZ,2026-03-12,08:13:30,"Pay Bill to 247247 - JUJA ACADEMY Acc. FEES",out,6679,3033.55,charge,false,false
+UV00009JJY,2026-03-12,09:52:34,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,517,3550.55,business_in,false,false
+UW00009PNX,2026-03-12,12:36:39,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,366,3916.55,business_in,false,false
+UX00009VRW,2026-03-12,17:24:21,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,850,4766.55,business_in,false,false
+UY0000A1VV,2026-03-13,16:54:52,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1175,5941.55,business_in,false,false
+UZ0000A7ZU,2026-03-14,08:25:02,"Pay Bill to 290290 - BETIKA Acc. 07******",out,239,5702.55,gambling,true,false
+UA0000AE3T,2026-03-14,09:34:04,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,846,6548.55,business_in,false,false
+UB0000AK7S,2026-03-14,14:56:05,"Merchant Payment to 592915 - QUICKMART KASARANI",out,1696,4852.55,till,false,false
+UC0000AQBR,2026-03-15,06:45:39,"Merchant Payment to 550406 - JUJA BUTCHERY",out,2051,2801.55,till,false,false
+UD0000AWFQ,2026-03-15,08:26:31,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,350,3151.55,business_in,false,false
+UE0000B2JP,2026-03-15,11:43:06,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1425,4576.55,business_in,false,false
+UF0000B8NO,2026-03-15,17:26:07,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1468,6044.55,business_in,false,false
+UG0000BERN,2026-03-16,15:22:14,"Merchant Payment to 545875 - MAMA NGINA GREENGROCERS",out,532,5512.55,till,false,false
+UH0000BKVM,2026-03-16,15:41:23,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1433,6945.55,business_in,false,false
+UJ0000BQZL,2026-03-16,18:30:47,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,926,7871.55,business_in,false,false
+UK0000BX3K,2026-03-17,11:32:56,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,539,7332.55,send_money,false,false
+UL0000C37J,2026-03-17,15:55:18,"Airtime Purchase",out,92,7240.55,airtime,false,false
+UM0000C9BI,2026-03-17,17:28:09,"Merchant Payment to 577109 - NAIVAS SUPERMARKET THIKA RD",out,997,6243.55,till,false,false
+UN0000CFFH,2026-03-18,12:11:44,"Merchant Payment to 527903 - MAMA NGINA GREENGROCERS",out,2073,4170.55,till,false,false
+UP0000CLJG,2026-03-18,18:43:13,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,615,4785.55,business_in,false,false
+UQ0000CRNF,2026-03-20,11:55:37,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1667,6452.55,business_in,false,false
+UR0000CXRE,2026-03-20,13:23:32,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1669,8121.55,business_in,false,false
+US0000D3VD,2026-03-20,18:04:19,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,572,8693.55,business_in,false,false
+UT0000D9ZC,2026-03-21,06:52:48,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,266,8959.55,business_in,false,false
+UU0000DG3B,2026-03-21,08:21:41,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1529,10488.55,business_in,false,false
+UV0000DM7A,2026-03-21,12:23:19,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,1229,9259.55,send_money,false,false
+UW0000DSB9,2026-03-21,15:29:58,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,813,10072.55,business_in,false,false
+UX0000DYF8,2026-03-21,20:05:46,"Airtime Purchase",out,222,9850.55,airtime,false,false
+UY0000E4J7,2026-03-21,21:36:42,"Merchant Payment to 527734 - MAMA NGINA GREENGROCERS",out,626,9224.55,till,false,false
+UZ0000EAN6,2026-03-22,11:19:41,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,535,8689.55,send_money,false,false
+UA0000EGR5,2026-03-22,18:24:55,"Airtime Purchase",out,132,8557.55,airtime,false,false
+UB0000EMV4,2026-03-23,06:50:29,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,866,9423.55,business_in,false,false
+UC0000ESZ3,2026-03-23,15:24:55,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,973,10396.55,business_in,false,false
+UD0000EZ32,2026-03-24,08:09:40,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1015,11411.55,business_in,false,false
+UE0000F571,2026-03-24,11:11:32,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,614,12025.55,business_in,false,false
+UF0000FBB0,2026-03-24,11:29:20,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,420,12445.55,business_in,false,false
+UG0000FHEZ,2026-03-24,11:53:22,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,1293,11152.55,send_money,false,false
+UH0000FNIY,2026-03-24,19:47:42,"Pay Bill to 290290 - BETIKA Acc. 07******",out,504,10648.55,gambling,true,false
+UJ0000FTMX,2026-03-26,13:52:57,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,488,11136.55,business_in,false,false
+UK0000FZQW,2026-03-26,17:17:44,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1191,12327.55,business_in,false,false
+UL0000G5UV,2026-03-26,18:23:11,"Merchant Payment to 569198 - JUJA BUTCHERY",out,864,11463.55,till,false,false
+UM0000GBYU,2026-03-27,08:45:56,"Customer Withdrawal At Agent Till 323911 - JUJA AGENCIES",out,1294,10169.55,withdraw,false,false
+UN0000GI2T,2026-03-27,12:52:52,"Merchant Payment to 523465 - MAMA NGINA GREENGROCERS",out,1771,8398.55,till,false,false
+UP0000GO6S,2026-03-28,08:52:41,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,661,9059.55,business_in,false,false
+UQ0000GUAR,2026-03-28,08:54:52,"OverDraft of Credit Party",in,764,9823.55,loan_in,false,true
+UR0000H0EQ,2026-03-28,10:58:57,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,491,10314.55,business_in,false,false
+US0000H6IP,2026-03-28,13:09:29,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1614,11928.55,business_in,false,false
+UT0000HCMO,2026-03-29,09:35:50,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,237,11691.55,send_money,false,false
+UU0000HIQN,2026-03-29,12:34:12,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,772,10919.55,loan_repay,false,true
+UV0000HOUM,2026-03-29,13:26:20,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1306,12225.55,business_in,false,false
+UW0000HUYL,2026-03-29,16:13:21,"Merchant Payment to 519885 - NAIVAS SUPERMARKET THIKA RD",out,839,11386.55,till,false,false
+UX0000I12K,2026-03-29,16:23:16,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1387,12773.55,business_in,false,false
+UY0000I76J,2026-03-29,18:57:58,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,635,13408.55,business_in,false,false
+UZ0000IDAI,2026-03-30,10:31:26,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1085,14493.55,business_in,false,false
+UA0000IJEH,2026-03-30,15:38:46,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1392,15885.55,business_in,false,false
+UB0000IPIG,2026-03-30,15:55:38,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,368,16253.55,business_in,false,false
+UC0000IVMF,2026-03-30,17:29:43,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,468,16721.55,business_in,false,false
+UD0000J1QE,2026-03-31,10:29:05,"Merchant Payment Online to 854881 - RUBIS ENERGY JUJA",out,821,15900.55,till,false,false
+UE0000J7UD,2026-03-31,14:01:45,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,864,16764.55,business_in,false,false
+UF0000JDYC,2026-03-31,17:06:26,"Merchant Payment to 567878 - QUICKMART KASARANI",out,1522,15242.55,till,false,false
+UG0000JK2B,2026-03-31,17:24:40,"Pay Bill to 290290 - BETIKA Acc. 07******",out,497,14745.55,gambling,true,false
+UH0000JQ6A,2026-03-31,21:50:11,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,649,15394.55,business_in,false,false
+UJ0000JWA9,2026-04-01,08:54:12,"Pay Bill to 290290 - BETIKA Acc. 07******",out,528,14866.55,gambling,true,false
+UK0000K2E8,2026-04-01,09:44:29,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1318,16184.55,business_in,false,false
+UL0000K8I7,2026-04-01,12:38:38,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,805,16989.55,business_in,false,false
+UM0000KEM6,2026-04-01,19:35:11,"Customer Transfer to - 2547******155 JOHN KAMAU",out,272,16717.55,send_money,false,false
+UN0000KKQ5,2026-04-02,07:29:18,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,740,17457.55,business_in,false,false
+UP0000KQU4,2026-04-02,08:17:25,"Merchant Payment to 535961 - MAMA NGINA GREENGROCERS",out,1195,16262.55,till,false,false
+UQ0000KWY3,2026-04-02,09:24:43,"Airtime Purchase",out,250,16012.55,airtime,false,false
+UR0000L322,2026-04-02,14:17:40,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1173,17185.55,business_in,false,false
+US0000L961,2026-04-02,19:19:16,"Merchant Payment Online to 856659 - RUBIS ENERGY JUJA",out,883,16302.55,till,false,false
+UT0000LFA0,2026-04-03,08:00:56,"Merchant Payment to 557952 - JUJA BUTCHERY",out,1797,14505.55,till,false,false
+UU0000LLDZ,2026-04-03,10:52:28,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,884,15389.55,business_in,false,false
+UV0000LRHY,2026-04-03,14:27:41,"Pay Bill to 290290 - BETIKA Acc. 07******",out,248,15141.55,gambling,true,false
+UW0000LXLX,2026-04-03,16:01:27,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,5641.55,paybill,false,false
+UX0000M3PW,2026-04-03,16:19:27,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1515,7156.55,business_in,false,false
+UY0000M9TV,2026-04-03,16:54:38,"Customer Transfer to - 2547******155 JOHN KAMAU",out,714,6442.55,send_money,false,false
+UZ0000MFXU,2026-04-03,20:45:02,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1329,7771.55,business_in,false,false
+UA0000MM1T,2026-04-04,08:32:03,"Merchant Payment to 588732 - MAMA NGINA GREENGROCERS",out,1762,6009.55,till,false,false
+UB0000MS5S,2026-04-04,13:00:12,"Airtime Purchase",out,179,5830.55,airtime,false,false
+UC0000MY9R,2026-04-04,16:05:40,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1552,7382.55,business_in,false,false
+UD0000N4DQ,2026-04-04,16:22:52,"Pay Bill to 290290 - BETIKA Acc. 07******",out,192,7190.55,gambling,true,false
+UE0000NAHP,2026-04-04,16:57:00,"Customer Transfer to - 2547******155 JOHN KAMAU",out,742,6448.55,send_money,false,false
+UF0000NGLO,2026-04-04,18:32:33,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1411,7859.55,business_in,false,false
+UG0000NMPN,2026-04-05,15:18:05,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1413,9272.55,business_in,false,false
+UH0000NSTM,2026-04-05,19:08:15,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,1165,8107.55,paybill,false,false
+UJ0000NYXL,2026-04-05,20:19:41,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1148,9255.55,business_in,false,false
+UK0000O51K,2026-04-06,09:18:06,"Pay Bill to 290290 - BETIKA Acc. 07******",out,439,8816.55,gambling,true,false
+UL0000OB5J,2026-04-06,11:51:05,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1203,10019.55,business_in,false,false
+UM0000OH9I,2026-04-06,14:50:22,"Merchant Payment to 599672 - JUJA BUTCHERY",out,925,9094.55,till,false,false
+UN0000ONDH,2026-04-06,17:32:27,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1422,10516.55,business_in,false,false
+UP0000OTHG,2026-04-06,19:49:55,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,894,11410.55,business_in,false,false
+UQ0000OZLF,2026-04-07,10:18:23,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,444,11854.55,business_in,false,false
+UR0000P5PE,2026-04-07,15:32:40,"Merchant Payment to 567116 - NAIVAS SUPERMARKET THIKA RD",out,1535,10319.55,till,false,false
+US0000PBTD,2026-04-08,09:25:44,"Merchant Payment to 599223 - JUJA BUTCHERY",out,869,9450.55,till,false,false
+UT0000PHXC,2026-04-08,10:21:40,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1699,11149.55,business_in,false,false
+UU0000PO1B,2026-04-08,13:08:20,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1428,12577.55,business_in,false,false
+UV0000PU5A,2026-04-08,14:57:22,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1463,14040.55,business_in,false,false
+UW0000Q099,2026-04-08,21:45:52,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,381,14421.55,business_in,false,false
+UX0000Q6D8,2026-04-09,09:17:32,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1362,15783.55,business_in,false,false
+UY0000QCH7,2026-04-09,12:40:34,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1227,17010.55,business_in,false,false
+UZ0000QIL6,2026-04-09,13:22:28,"Customer Withdrawal At Agent Till 373446 - JUJA AGENCIES",out,636,16374.55,withdraw,false,false
+UA0000QOP5,2026-04-10,12:23:11,"Merchant Payment to 545369 - QUICKMART KASARANI",out,1044,15330.55,till,false,false
+UB0000QUT4,2026-04-10,14:57:54,"Pay Bill to 290290 - BETIKA Acc. 07******",out,106,15224.55,gambling,true,false
+UC0000R0X3,2026-04-11,09:16:18,"Pay Bill to 290290 - BETIKA Acc. 07******",out,398,14826.55,gambling,true,false
+UD0000R712,2026-04-11,10:19:20,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,831,13995.55,send_money,false,false
+UE0000RD51,2026-04-11,11:27:14,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1010,15005.55,business_in,false,false
+UF0000RJ90,2026-04-11,15:47:46,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1466,16471.55,business_in,false,false
+UG0000RPCZ,2026-04-12,06:26:50,"Merchant Payment to 513071 - JUJA BUTCHERY",out,701,15770.55,till,false,false
+UH0000RVGY,2026-04-12,08:18:59,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,682,16452.55,business_in,false,false
+UJ0000S1KX,2026-04-12,11:53:51,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,653,17105.55,business_in,false,false
+UK0000S7OW,2026-04-13,07:03:14,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,986,18091.55,business_in,false,false
+UL0000SDSV,2026-04-13,07:50:15,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,640,18731.55,business_in,false,false
+UM0000SJWU,2026-04-13,20:37:55,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,643,19374.55,business_in,false,false
+UN0000SQ0T,2026-04-14,17:33:08,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1307,20681.55,business_in,false,false
+UP0000SW4S,2026-04-15,08:47:21,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,406,21087.55,business_in,false,false
+UQ0000T28R,2026-04-15,12:14:56,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,277,21364.55,business_in,false,false
+UR0000T8CQ,2026-04-15,16:01:13,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,792,22156.55,business_in,false,false
+US0000TEGP,2026-04-15,18:04:04,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,507,22663.55,business_in,false,false
+UT0000TKKO,2026-04-15,20:25:22,"Merchant Payment to 510620 - NAIVAS SUPERMARKET THIKA RD",out,2184,20479.55,till,false,false
+UU0000TQON,2026-04-16,21:20:15,"Pay Bill to 290290 - BETIKA Acc. 07******",out,486,19993.55,gambling,true,false
+UV0000TWSM,2026-04-17,08:49:51,"Merchant Payment to 528542 - NAIVAS SUPERMARKET THIKA RD",out,1474,18519.55,till,false,false
+UW0000U2WL,2026-04-17,17:10:01,"Pay Bill to 290290 - BETIKA Acc. 07******",out,520,17999.55,gambling,true,false
+UX0000U90K,2026-04-17,20:23:19,"Airtime Purchase",out,134,17865.55,airtime,false,false
+UY0000UF4J,2026-04-18,12:32:58,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,699,18564.55,business_in,false,false
+UZ0000UL8I,2026-04-18,14:53:52,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,1193,17371.55,send_money,false,false
+UA0000URCH,2026-04-18,20:31:36,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1229,18600.55,business_in,false,false
+UB0000UXGG,2026-04-18,21:14:58,"Merchant Payment to 579111 - NAIVAS SUPERMARKET THIKA RD",out,772,17828.55,till,false,false
+UC0000V3KF,2026-04-19,07:23:21,"Pay Bill to 290290 - BETIKA Acc. 07******",out,386,17442.55,gambling,true,false
+UD0000V9OE,2026-04-19,10:26:30,"OverDraft of Credit Party",in,763,18205.55,loan_in,false,true
+UE0000VFSD,2026-04-19,12:44:52,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,752,18957.55,business_in,false,false
+UF0000VLWC,2026-04-19,14:54:31,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,408,19365.55,business_in,false,false
+UG0000VS0B,2026-04-19,16:19:01,"Customer Withdrawal At Agent Till 345398 - JUJA AGENCIES",out,2361,17004.55,withdraw,false,false
+UH0000VY4A,2026-04-19,17:33:13,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1690,18694.55,business_in,false,false
+UJ0000W489,2026-04-19,17:54:44,"Airtime Purchase",out,93,18601.55,airtime,false,false
+UK0000WAC8,2026-04-19,19:15:10,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,889,19490.55,business_in,false,false
+UL0000WGG7,2026-04-20,11:32:55,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,771,18719.55,loan_repay,false,true
+UM0000WMK6,2026-04-20,12:13:04,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1559,20278.55,business_in,false,false
+UN0000WSO5,2026-04-20,14:02:44,"Merchant Payment to 569399 - NAIVAS SUPERMARKET THIKA RD",out,1514,18764.55,till,false,false
+UP0000WYS4,2026-04-20,17:37:00,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1310,20074.55,business_in,false,false
+UQ0000X4W3,2026-04-20,20:02:09,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,468,20542.55,business_in,false,false
+UR0000XB02,2026-04-22,10:43:11,"Merchant Payment to 595720 - NAIVAS SUPERMARKET THIKA RD",out,627,19915.55,till,false,false
+US0000XH41,2026-04-22,11:47:23,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1065,20980.55,business_in,false,false
+UT0000XN80,2026-04-22,15:36:55,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,582,21562.55,business_in,false,false
+UU0000XTBZ,2026-04-22,15:55:20,"Airtime Purchase",out,173,21389.55,airtime,false,false
+UV0000XZFY,2026-04-23,16:48:44,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1199,22588.55,business_in,false,false
+UW0000Y5JX,2026-04-23,17:28:40,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1055,23643.55,business_in,false,false
+UX0000YBNW,2026-04-23,20:09:06,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1053,24696.55,business_in,false,false
+UY0000YHRV,2026-04-24,07:41:41,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,600,25296.55,business_in,false,false
+UZ0000YNVU,2026-04-24,09:22:56,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1212,26508.55,business_in,false,false
+UA0000YTZT,2026-04-24,10:19:25,"Merchant Payment to 598951 - NAIVAS SUPERMARKET THIKA RD",out,1843,24665.55,till,false,false
+UB0000Z03S,2026-04-24,20:13:56,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,706,25371.55,business_in,false,false
+UC0000Z67R,2026-04-25,08:14:37,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1521,26892.55,business_in,false,false
+UD0000ZCBQ,2026-04-25,10:03:15,"Merchant Payment Online to 891443 - RUBIS ENERGY JUJA",out,827,26065.55,till,false,false
+UE0000ZIFP,2026-04-25,11:25:00,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1374,27439.55,business_in,false,false
+UF0000ZOJO,2026-04-25,21:43:48,"Merchant Payment to 561257 - QUICKMART KASARANI",out,1124,26315.55,till,false,false
+UG0000ZUNN,2026-04-25,21:52:39,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1321,27636.55,business_in,false,false
+UH000100RM,2026-04-26,07:39:48,"Airtime Purchase",out,220,27416.55,airtime,false,false
+UJ000106VL,2026-04-26,13:47:59,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1693,29109.55,business_in,false,false
+UK00010CZK,2026-04-26,15:49:36,"Merchant Payment to 537225 - JUJA BUTCHERY",out,2094,27015.55,till,false,false
+UL00010J3J,2026-04-26,17:09:10,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1428,28443.55,business_in,false,false
+UM00010P7I,2026-04-27,06:28:35,"Merchant Payment to 526441 - QUICKMART KASARANI",out,1177,27266.55,till,false,false
+UN00010VBH,2026-04-27,08:39:43,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,462,27728.55,business_in,false,false
+UP000111FG,2026-04-27,10:10:47,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,662,28390.55,business_in,false,false
+UQ000117JF,2026-04-27,17:37:55,"Merchant Payment Online to 850115 - RUBIS ENERGY JUJA",out,1322,27068.55,till,false,false
+UR00011DNE,2026-04-28,09:54:17,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1432,28500.55,business_in,false,false
+US00011JRD,2026-04-28,12:34:04,"Merchant Payment to 544643 - NAIVAS SUPERMARKET THIKA RD",out,1294,27206.55,till,false,false
+UT00011PVC,2026-04-28,14:29:08,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1421,28627.55,business_in,false,false
+UU00011VZB,2026-04-28,20:08:24,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1568,30195.55,business_in,false,false
+UV0001223A,2026-04-29,07:47:07,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,1024,29171.55,send_money,false,false
+UW00012879,2026-04-29,09:36:39,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1178,30349.55,business_in,false,false
+UX00012EB8,2026-04-29,14:40:06,"Airtime Purchase",out,110,30239.55,airtime,false,false
+UY00012KF7,2026-04-29,17:01:43,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1281,31520.55,business_in,false,false
+UZ00012QJ6,2026-04-30,07:58:54,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1023,32543.55,business_in,false,false
+UA00012WN5,2026-04-30,10:09:34,"Merchant Payment to 555781 - MAMA NGINA GREENGROCERS",out,1407,31136.55,till,false,false
+UB000132R4,2026-04-30,14:29:50,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,708,31844.55,business_in,false,false
+UC000138V3,2026-05-01,08:27:36,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1117,32961.55,business_in,false,false
+UD00013EZ2,2026-05-01,09:11:45,"Funds received from - 2547******902 GRACE WANJIRU",in,1673,34634.55,income_received,false,false
+UE00013L31,2026-05-01,20:38:34,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,390,35024.55,business_in,false,false
+UF00013R70,2026-05-02,07:33:09,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,307,35331.55,business_in,false,false
+UG00013XAZ,2026-05-02,11:03:01,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,732,36063.55,business_in,false,false
+UH000143EY,2026-05-03,06:32:15,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,26563.55,paybill,false,false
+UJ000149IX,2026-05-03,10:11:23,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,806,27369.55,business_in,false,false
+UK00014FMW,2026-05-03,10:59:28,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,1168,26201.55,send_money,false,false
+UL00014LQV,2026-05-03,12:01:36,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,730,26931.55,business_in,false,false
+UM00014RUU,2026-05-03,18:11:42,"Merchant Payment to 558836 - MAMA NGINA GREENGROCERS",out,1138,25793.55,till,false,false
+UN00014XYT,2026-05-03,18:14:51,"Pay Bill to 290290 - BETIKA Acc. 07******",out,378,25415.55,gambling,true,false
+UP0001542S,2026-05-03,21:39:30,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,889,26304.55,business_in,false,false
+UQ00015A6R,2026-05-04,08:08:51,"Merchant Payment to 545162 - JUJA BUTCHERY",out,822,25482.55,till,false,false
+UR00015GAQ,2026-05-04,11:10:50,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1161,26643.55,business_in,false,false
+US00015MEP,2026-05-04,14:01:18,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1102,27745.55,business_in,false,false
+UT00015SIO,2026-05-04,20:55:57,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,352,28097.55,business_in,false,false
+UU00015YMN,2026-05-05,06:32:13,"Merchant Payment to 521723 - NAIVAS SUPERMARKET THIKA RD",out,1923,26174.55,till,false,false
+UV000164QM,2026-05-05,18:23:49,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,1257,24917.55,paybill,false,false
+UW00016AUL,2026-05-06,08:45:55,"Merchant Payment to 521659 - QUICKMART KASARANI",out,426,24491.55,till,false,false
+UX00016GYK,2026-05-06,08:56:06,"Merchant Payment Online to 875470 - RUBIS ENERGY JUJA",out,1492,22999.55,till,false,false
+UY00016N2J,2026-05-06,12:09:31,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,999,23998.55,business_in,false,false
+UZ00016T6I,2026-05-06,15:31:26,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,881,24879.55,business_in,false,false
+UA00016ZAH,2026-05-06,16:54:44,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1165,26044.55,business_in,false,false
+UB000175EG,2026-05-07,07:24:25,"Merchant Payment Online to 888800 - RUBIS ENERGY JUJA",out,772,25272.55,till,false,false
+UC00017BIF,2026-05-08,13:00:53,"Airtime Purchase",out,182,25090.55,airtime,false,false
+UD00017HME,2026-05-08,14:40:26,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,258,25348.55,business_in,false,false
+UE00017NQD,2026-05-08,15:48:47,"M-Shwari Loan Disbursement",in,4280,29628.55,loan_in,false,true
+UF00017TUC,2026-05-08,17:55:56,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1362,30990.55,business_in,false,false
+UG00017ZYB,2026-05-08,20:55:15,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1517,32507.55,business_in,false,false
+UH0001862A,2026-05-09,10:20:22,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,336,32843.55,business_in,false,false
+UJ00018C69,2026-05-09,10:57:48,"Merchant Payment to 553726 - QUICKMART KASARANI",out,1143,31700.55,till,false,false
+UK00018IA8,2026-05-09,14:39:46,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,337,32037.55,business_in,false,false
+UL00018OE7,2026-05-09,14:53:13,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,342,32379.55,business_in,false,false
+UM00018UI6,2026-05-09,20:25:33,"Customer Transfer to - 2547******155 JOHN KAMAU",out,984,31395.55,send_money,false,false
+UN000190M5,2026-05-10,17:54:54,"Airtime Purchase",out,93,31302.55,airtime,false,false
+UP000196Q4,2026-05-11,12:20:56,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,406,31708.55,business_in,false,false
+UQ00019CU3,2026-05-11,17:29:47,"OverDraft of Credit Party",in,1403,33111.55,loan_in,false,true
+UR00019IY2,2026-05-11,17:34:19,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1625,34736.55,business_in,false,false
+US00019P21,2026-05-11,18:38:02,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,957,35693.55,business_in,false,false
+UT00019V60,2026-05-11,20:02:01,"Merchant Payment to 552157 - MAMA NGINA GREENGROCERS",out,1496,34197.55,till,false,false
+UU0001A19Z,2026-05-11,21:38:38,"Pay Bill to 290290 - BETIKA Acc. 07******",out,452,33745.55,gambling,true,false
+UV0001A7DY,2026-05-12,10:38:18,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,1417,32328.55,loan_repay,false,true
+UW0001ADHX,2026-05-12,11:47:34,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,374,32702.55,business_in,false,false
+UX0001AJLW,2026-05-12,21:22:04,"Merchant Payment to 527462 - JUJA BUTCHERY",out,566,32136.55,till,false,false
+UY0001APPV,2026-05-13,12:33:47,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,764,32900.55,business_in,false,false
+UZ0001AVTU,2026-05-13,13:02:59,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,730,33630.55,business_in,false,false
+UA0001B1XT,2026-05-14,10:00:43,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,334,33964.55,business_in,false,false
+UB0001B81S,2026-05-14,10:54:38,"Merchant Payment to 544427 - JUJA BUTCHERY",out,1161,32803.55,till,false,false
+UC0001BE5R,2026-05-14,15:32:06,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1638,34441.55,business_in,false,false
+UD0001BK9Q,2026-05-14,15:52:50,"Airtime Purchase",out,99,34342.55,airtime,false,false
+UE0001BQDP,2026-05-14,21:26:29,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,465,34807.55,business_in,false,false
+UF0001BWHO,2026-05-15,18:24:13,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,985,33822.55,send_money,false,false
+UG0001C2LN,2026-05-16,20:02:36,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1038,34860.55,business_in,false,false
+UH0001C8PM,2026-05-17,06:48:12,"Pay Bill to 290290 - BETIKA Acc. 07******",out,301,34559.55,gambling,true,false
+UJ0001CETL,2026-05-17,13:08:19,"Merchant Payment to 575626 - JUJA BUTCHERY",out,427,34132.55,till,false,false
+UK0001CKXK,2026-05-17,19:15:52,"Funds received from - 2547******640 BRIAN KIPROTICH",in,1347,35479.55,income_received,false,false
+UL0001CR1J,2026-05-18,14:33:36,"Customer Transfer to - 2547******155 JOHN KAMAU",out,1255,34224.55,send_money,false,false
+UM0001CX5I,2026-05-18,15:46:51,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1650,35874.55,business_in,false,false
+UN0001D39H,2026-05-18,17:25:19,"Merchant Payment to 575204 - JUJA BUTCHERY",out,2138,33736.55,till,false,false
+UP0001D9DG,2026-05-18,17:45:54,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1425,35161.55,business_in,false,false
+UQ0001DFHF,2026-05-19,16:34:01,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1090,36251.55,business_in,false,false
+UR0001DLLE,2026-05-19,17:47:14,"Funds received from - 2547******155 JOHN KAMAU",in,3074,39325.55,income_received,false,false
+US0001DRPD,2026-05-19,18:20:13,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1321,40646.55,business_in,false,false
+UT0001DXTC,2026-05-20,07:31:04,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1346,41992.55,business_in,false,false
+UU0001E3XB,2026-05-20,21:29:09,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,934,42926.55,business_in,false,false
+UV0001EA1A,2026-05-21,19:29:30,"Merchant Payment Online to 812882 - RUBIS ENERGY JUJA",out,1118,41808.55,till,false,false
+UW0001EG59,2026-05-21,21:36:30,"Pay Bill to 290290 - BETIKA Acc. 07******",out,365,41443.55,gambling,true,false
+UX0001EM98,2026-05-22,07:31:02,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,573,42016.55,business_in,false,false
+UY0001ESD7,2026-05-22,11:15:33,"OverDraft of Credit Party",in,606,42622.55,loan_in,false,true
+UZ0001EYH6,2026-05-22,12:34:37,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1020,43642.55,business_in,false,false
+UA0001F4L5,2026-05-23,09:42:09,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,612,43030.55,loan_repay,false,true
+UB0001FAP4,2026-05-23,13:06:15,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,290,43320.55,business_in,false,false
+UC0001FGT3,2026-05-23,14:55:59,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1597,44917.55,business_in,false,false
+UD0001FMX2,2026-05-24,11:40:17,"Customer Withdrawal At Agent Till 375952 - JUJA AGENCIES",out,2767,42150.55,withdraw,false,false
+UE0001FT11,2026-05-25,10:38:17,"M-Shwari Loan Repayment",out,4601,37549.55,loan_repay,false,true
+UF0001FZ50,2026-05-25,19:27:54,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,559,38108.55,business_in,false,false
+UG0001G58Z,2026-05-25,19:32:49,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1238,39346.55,business_in,false,false
+UH0001GBCY,2026-05-25,20:56:36,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,508,39854.55,business_in,false,false
+UJ0001GHGX,2026-05-26,06:34:02,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1011,40865.55,business_in,false,false
+UK0001GNKW,2026-05-27,08:06:53,"Merchant Payment to 537640 - NAIVAS SUPERMARKET THIKA RD",out,482,40383.55,till,false,false
+UL0001GTOV,2026-05-27,08:14:53,"Airtime Purchase",out,117,40266.55,airtime,false,false
+UM0001GZSU,2026-05-27,14:08:34,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1414,41680.55,business_in,false,false
+UN0001H5WT,2026-05-27,17:25:10,"Customer Withdrawal At Agent Till 389900 - JUJA AGENCIES",out,578,41102.55,withdraw,false,false
+UP0001HC0S,2026-05-27,18:56:56,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1264,42366.55,business_in,false,false
+UQ0001HI4R,2026-05-27,21:01:46,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1432,43798.55,business_in,false,false
+UR0001HO8Q,2026-05-28,10:40:21,"Merchant Payment to 561845 - NAIVAS SUPERMARKET THIKA RD",out,906,42892.55,till,false,false
+US0001HUCP,2026-05-28,13:33:43,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,338,43230.55,business_in,false,false
+UT0001I0GO,2026-05-28,14:52:31,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1362,44592.55,business_in,false,false
+UU0001I6KN,2026-05-28,21:32:25,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,798,45390.55,business_in,false,false
+UV0001ICOM,2026-05-29,07:21:44,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,1417,43973.55,send_money,false,false
+UW0001IISL,2026-05-29,09:38:40,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,695,44668.55,business_in,false,false
+UX0001IOWK,2026-05-29,13:55:12,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1700,46368.55,business_in,false,false
+UY0001IV0J,2026-05-29,13:55:44,"Merchant Payment to 585949 - JUJA BUTCHERY",out,2063,44305.55,till,false,false
+UZ0001J14I,2026-05-30,11:06:01,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,1222,43083.55,send_money,false,false
+UA0001J78H,2026-05-30,20:51:33,"Merchant Payment Online to 823437 - RUBIS ENERGY JUJA",out,578,42505.55,till,false,false
+UB0001JDCG,2026-05-30,21:56:44,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,551,43056.55,business_in,false,false
+UC0001JJGF,2026-05-31,07:19:02,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1645,44701.55,business_in,false,false
+UD0001JPKE,2026-05-31,07:49:28,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1223,45924.55,business_in,false,false
+UE0001JVOD,2026-05-31,10:36:23,"Pay Bill to 290290 - BETIKA Acc. 07******",out,457,45467.55,gambling,true,false
+UF0001K1SC,2026-05-31,13:33:04,"Airtime Purchase",out,145,45322.55,airtime,false,false
+UG0001K7WB,2026-05-31,16:44:34,"Merchant Payment to 578908 - QUICKMART KASARANI",out,1780,43542.55,till,false,false
+UH0001KE0A,2026-05-31,19:15:06,"Customer Transfer to - 2547******418 PETER OTIENO",out,980,42562.55,send_money,false,false
+UJ0001KK49,2026-06-01,10:04:13,"Customer Transfer to - 2547******418 PETER OTIENO",out,1255,41307.55,send_money,false,false
+UK0001KQ88,2026-06-01,11:08:35,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,443,41750.55,business_in,false,false
+UL0001KWC7,2026-06-01,12:42:21,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,583,42333.55,business_in,false,false
+UM0001L2G6,2026-06-01,13:26:02,"Merchant Payment to 563969 - NAIVAS SUPERMARKET THIKA RD",out,1729,40604.55,till,false,false
+UN0001L8K5,2026-06-01,18:06:06,"Customer Withdrawal At Agent Till 331484 - JUJA AGENCIES",out,2300,38304.55,withdraw,false,false
+UP0001LEO4,2026-06-02,08:04:15,"Pay Bill to 290290 - BETIKA Acc. 07******",out,150,38154.55,gambling,true,false
+UQ0001LKS3,2026-06-02,10:54:56,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,880,39034.55,business_in,false,false
+UR0001LQW2,2026-06-02,12:59:01,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,832,38202.55,send_money,false,false
+US0001LX01,2026-06-02,13:23:21,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1051,39253.55,business_in,false,false
+UT0001M340,2026-06-02,19:14:15,"Funds received from - 2547******155 JOHN KAMAU",in,1279,40532.55,income_received,false,false
+UU0001M97Z,2026-06-02,19:30:55,"Merchant Payment to 526353 - JUJA BUTCHERY",out,1930,38602.55,till,false,false
+UV0001MFBY,2026-06-03,07:58:42,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1393,39995.55,business_in,false,false
+UW0001MLFX,2026-06-03,10:15:16,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1299,41294.55,business_in,false,false
+UX0001MRJW,2026-06-03,11:44:19,"Airtime Purchase",out,138,41156.55,airtime,false,false
+UY0001MXNV,2026-06-03,12:57:03,"OverDraft of Credit Party",in,869,42025.55,loan_in,false,true
+UZ0001N3RU,2026-06-03,15:10:10,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,318,41707.55,send_money,false,false
+UA0001N9VT,2026-06-03,16:42:01,"Merchant Payment Online to 884878 - RUBIS ENERGY JUJA",out,1074,40633.55,till,false,false
+UB0001NFZS,2026-06-03,17:44:53,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,31133.55,paybill,false,false
+UC0001NM3R,2026-06-04,08:25:06,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,490,30643.55,send_money,false,false
+UD0001NS7Q,2026-06-04,18:37:26,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,666,31309.55,business_in,false,false
+UE0001NYBP,2026-06-04,19:21:11,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,878,30431.55,loan_repay,false,true
+UF0001O4FO,2026-06-04,20:55:59,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,400,30831.55,business_in,false,false
+UG0001OAJN,2026-06-05,06:47:47,"Airtime Purchase",out,245,30586.55,airtime,false,false
+UH0001OGNM,2026-06-05,10:58:18,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,675,31261.55,business_in,false,false
+UJ0001OMRL,2026-06-05,16:24:40,"Merchant Payment to 514039 - QUICKMART KASARANI",out,984,30277.55,till,false,false
+UK0001OSVK,2026-06-05,16:44:24,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,976,29301.55,paybill,false,false
+UL0001OYZJ,2026-06-05,18:18:10,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,989,30290.55,business_in,false,false
+UM0001P53I,2026-06-06,09:33:33,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1175,31465.55,business_in,false,false
+UN0001PB7H,2026-06-06,10:06:10,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1402,32867.55,business_in,false,false
+UP0001PHBG,2026-06-06,14:53:21,"Merchant Payment to 541051 - MAMA NGINA GREENGROCERS",out,1894,30973.55,till,false,false
+UQ0001PNFF,2026-06-06,15:27:28,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,584,31557.55,business_in,false,false
+UR0001PTJE,2026-06-06,15:46:36,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1557,33114.55,business_in,false,false
+US0001PZND,2026-06-07,11:46:07,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,691,32423.55,send_money,false,false
+UT0001Q5RC,2026-06-07,16:42:25,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,280,32703.55,business_in,false,false
+UU0001QBVB,2026-06-07,18:05:17,"Pay Bill to 290290 - BETIKA Acc. 07******",out,104,32599.55,gambling,true,false
+UV0001QHZA,2026-06-07,19:29:12,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,838,33437.55,business_in,false,false
+UW0001QO39,2026-06-07,20:23:17,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1585,35022.55,business_in,false,false
+UX0001QU78,2026-06-08,09:30:48,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,628,35650.55,business_in,false,false
+UY0001R0B7,2026-06-08,11:36:29,"M-Shwari Loan Disbursement",in,5374,41024.55,loan_in,false,true
+UZ0001R6F6,2026-06-08,11:42:26,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,273,41297.55,business_in,false,false
+UA0001RCJ5,2026-06-08,17:28:08,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,555,41852.55,business_in,false,false
+UB0001RIN4,2026-06-08,18:16:29,"Customer Transfer to - 2547******418 PETER OTIENO",out,747,41105.55,send_money,false,false
+UC0001ROR3,2026-06-08,20:43:10,"Merchant Payment to 550416 - NAIVAS SUPERMARKET THIKA RD",out,2055,39050.55,till,false,false
+UD0001RUV2,2026-06-09,09:52:48,"Merchant Payment to 573117 - MAMA NGINA GREENGROCERS",out,646,38404.55,till,false,false
+UE0001S0Z1,2026-06-09,09:57:50,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,889,39293.55,business_in,false,false
+UF0001S730,2026-06-09,13:12:58,"Airtime Purchase",out,160,39133.55,airtime,false,false
+UG0001SD6Z,2026-06-09,14:42:09,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,845,39978.55,business_in,false,false
+UH0001SJAY,2026-06-09,16:07:28,"Pay Bill to 290290 - BETIKA Acc. 07******",out,419,39559.55,gambling,true,false
+UJ0001SPEX,2026-06-09,20:15:28,"Customer Transfer to - 2547******155 JOHN KAMAU",out,647,38912.55,send_money,false,false
+UK0001SVIW,2026-06-10,09:06:42,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,660,39572.55,business_in,false,false
+UL0001T1MV,2026-06-10,13:04:04,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1055,40627.55,business_in,false,false
+UM0001T7QU,2026-06-10,19:01:18,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,767,41394.55,business_in,false,false
+UN0001TDUT,2026-06-11,07:33:48,"Customer Withdrawal At Agent Till 326339 - JUJA AGENCIES",out,1555,39839.55,withdraw,false,false
+UP0001TJYS,2026-06-11,13:15:27,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,864,40703.55,business_in,false,false
+UQ0001TQ2R,2026-06-11,20:34:13,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,307,41010.55,business_in,false,false
+UR0001TW6Q,2026-06-12,06:26:33,"Pay Bill to 290290 - BETIKA Acc. 07******",out,685,40325.55,gambling,true,false
+US0001U2AP,2026-06-12,07:55:28,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1142,41467.55,business_in,false,false
+UT0001U8EO,2026-06-12,08:57:20,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,736,42203.55,business_in,false,false
+UU0001UEIN,2026-06-12,15:33:01,"Merchant Payment to 562158 - MAMA NGINA GREENGROCERS",out,2026,40177.55,till,false,false
+UV0001UKMM,2026-06-12,17:19:06,"Customer Transfer to - 2547******155 JOHN KAMAU",out,793,39384.55,send_money,false,false
+UW0001UQQL,2026-06-12,17:32:47,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,598,39982.55,business_in,false,false
+UX0001UWUK,2026-06-13,07:16:51,"Customer Transfer to - 2547******418 PETER OTIENO",out,835,39147.55,send_money,false,false
+UY0001V2YJ,2026-06-13,13:31:03,"Merchant Payment to 588711 - NAIVAS SUPERMARKET THIKA RD",out,2076,37071.55,till,false,false
+UZ0001V92I,2026-06-13,13:42:01,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1477,38548.55,business_in,false,false
+UA0001VF6H,2026-06-13,13:46:34,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,316,38864.55,business_in,false,false
+UB0001VLAG,2026-06-13,15:20:40,"Pay Bill to 290290 - BETIKA Acc. 07******",out,574,38290.55,gambling,true,false
+UC0001VREF,2026-06-14,08:17:23,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1014,39304.55,business_in,false,false
+UD0001VXIE,2026-06-14,09:56:49,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1027,40331.55,business_in,false,false
+UE0001W3MD,2026-06-14,14:11:45,"Customer Transfer to - 2547******418 PETER OTIENO",out,885,39446.55,send_money,false,false
+UF0001W9QC,2026-06-14,16:56:23,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,972,40418.55,business_in,false,false
+UG0001WFUB,2026-06-14,17:28:38,"Pay Bill to 290290 - BETIKA Acc. 07******",out,107,40311.55,gambling,true,false
+UH0001WLYA,2026-06-15,08:55:45,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1471,41782.55,business_in,false,false
+UJ0001WS29,2026-06-15,10:05:22,"Funds received from - TALA KENYA LIMITED",in,7388,49170.55,loan_in,false,true
+UK0001WY68,2026-06-15,17:25:29,"Funds received from - 2547******377 MERCY ACHIENG",in,1329,50499.55,income_received,false,false
+UL0001X4A7,2026-06-15,20:47:10,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1056,51555.55,business_in,false,false
+UM0001XAE6,2026-06-16,20:08:55,"Customer Transfer to - 2547******418 PETER OTIENO",out,1135,50420.55,send_money,false,false
+UN0001XGI5,2026-06-18,15:19:59,"Customer Transfer to - 2547******418 PETER OTIENO",out,1379,49041.55,send_money,false,false
+UP0001XMM4,2026-06-19,08:21:23,"Customer Transfer to - 2547******418 PETER OTIENO",out,493,48548.55,send_money,false,false
+UQ0001XSQ3,2026-06-19,08:30:17,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1554,50102.55,business_in,false,false
+UR0001XYU2,2026-06-19,09:33:50,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1518,51620.55,business_in,false,false
+US0001Y4Y1,2026-06-19,09:58:06,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,662,52282.55,business_in,false,false
+UT0001YB20,2026-06-19,16:04:40,"OverDraft of Credit Party",in,320,52602.55,loan_in,false,true
+UU0001YH5Z,2026-06-19,17:40:36,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,667,53269.55,business_in,false,false
+UV0001YN9Y,2026-06-20,06:18:30,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,967,54236.55,business_in,false,false
+UW0001YTDX,2026-06-20,07:35:45,"Airtime Purchase",out,67,54169.55,airtime,false,false
+UX0001YZHW,2026-06-20,11:34:46,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,323,53846.55,loan_repay,false,true
+UY0001Z5LV,2026-06-20,17:22:05,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,795,54641.55,business_in,false,false
+UZ0001ZBPU,2026-06-20,17:33:44,"Merchant Payment to 597821 - MAMA NGINA GREENGROCERS",out,819,53822.55,till,false,false
+UA0001ZHTT,2026-06-20,18:22:38,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1145,54967.55,business_in,false,false
+UB0001ZNXS,2026-06-20,18:28:22,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,475,54492.55,send_money,false,false
+UC0001ZU1R,2026-06-21,10:30:33,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,351,54843.55,business_in,false,false
+UD0002005Q,2026-06-21,21:32:40,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1637,56480.55,business_in,false,false
+UE0002069P,2026-06-22,07:21:33,"Merchant Payment to 567429 - QUICKMART KASARANI",out,1265,55215.55,till,false,false
+UF00020CDO,2026-06-22,10:37:24,"Pay Bill to 851900 - TALA KENYA Acc. LOAN",out,2832,52383.55,paybill,false,true
+UG00020IHN,2026-06-22,13:13:33,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1659,54042.55,business_in,false,false
+UH00020OLM,2026-06-22,16:26:29,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1401,55443.55,business_in,false,false
+UJ00020UPL,2026-06-22,16:37:14,"Airtime Purchase",out,84,55359.55,airtime,false,false
+UK000210TK,2026-06-22,20:25:22,"Pay Bill to 290290 - BETIKA Acc. 07******",out,520,54839.55,gambling,true,false
+UL000216XJ,2026-06-23,16:19:25,"Merchant Payment to 517929 - QUICKMART KASARANI",out,842,53997.55,till,false,false
+UM00021D1I,2026-06-24,08:14:41,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,799,54796.55,business_in,false,false
+UN00021J5H,2026-06-24,10:03:25,"Merchant Payment to 554390 - NAIVAS SUPERMARKET THIKA RD",out,779,54017.55,till,false,false
+UP00021P9G,2026-06-24,16:55:45,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1137,55154.55,business_in,false,false
+UQ00021VDF,2026-06-24,20:29:28,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,839,55993.55,business_in,false,false
+UR000221HE,2026-06-25,06:32:31,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1691,57684.55,business_in,false,false
+US000227LD,2026-06-25,09:33:36,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,634,58318.55,business_in,false,false
+UT00022DPC,2026-06-25,12:54:24,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1057,59375.55,business_in,false,false
+UU00022JTB,2026-06-26,16:05:17,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,634,60009.55,business_in,false,false
+UV00022PXA,2026-06-27,12:45:41,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,378,59631.55,send_money,false,false
+UW00022W19,2026-06-27,16:18:20,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,289,59920.55,business_in,false,false
+UX00023258,2026-06-27,16:24:10,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,418,60338.55,business_in,false,false
+UY00023897,2026-06-28,06:16:50,"Merchant Payment to 548948 - NAIVAS SUPERMARKET THIKA RD",out,1841,58497.55,till,false,false
+UZ00023ED6,2026-06-28,07:13:51,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,532,59029.55,business_in,false,false
+UA00023KH5,2026-06-28,17:24:43,"M-Shwari Loan Repayment",out,5777,53252.55,loan_repay,false,true
+UB00023QL4,2026-06-28,18:23:16,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1589,54841.55,business_in,false,false
+UC00023WP3,2026-06-28,18:39:50,"Customer Transfer to - 2547******418 PETER OTIENO",out,927,53914.55,send_money,false,false
+UD000242T2,2026-06-28,18:58:49,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1251,55165.55,business_in,false,false
+UE000248X1,2026-06-28,20:38:57,"Pay Bill to 290290 - BETIKA Acc. 07******",out,556,54609.55,gambling,true,false
+UF00024F10,2026-06-29,10:14:07,"Pay Bill to 851900 - TALA KENYA Acc. LOAN",out,2832,51777.55,paybill,false,true
+UG00024L4Z,2026-06-29,11:12:15,"Merchant Payment to 562045 - NAIVAS SUPERMARKET THIKA RD",out,527,51250.55,till,false,false
+UH00024R8Y,2026-06-29,16:36:33,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1498,52748.55,business_in,false,false
+UJ00024XCX,2026-06-29,19:54:14,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,935,53683.55,business_in,false,false
+UK000253GW,2026-06-30,13:55:14,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,502,54185.55,business_in,false,false
+UL000259KV,2026-06-30,15:05:55,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1272,55457.55,business_in,false,false
+UM00025FOU,2026-06-30,15:21:12,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,362,55819.55,business_in,false,false
+UN00025LST,2026-06-30,15:31:53,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1585,57404.55,business_in,false,false
+UP00025RWS,2026-07-01,06:54:51,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1372,58776.55,business_in,false,false
+UQ00025Y0R,2026-07-01,11:30:06,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1424,60200.55,business_in,false,false
+UR0002644Q,2026-07-01,12:07:38,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,482,60682.55,business_in,false,false
+US00026A8P,2026-07-01,17:21:22,"Merchant Payment to 556914 - NAIVAS SUPERMARKET THIKA RD",out,1971,58711.55,till,false,false
+UT00026GCO,2026-07-01,17:47:01,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1230,59941.55,business_in,false,false
+UU00026MGN,2026-07-02,09:33:46,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1699,61640.55,business_in,false,false
+UV00026SKM,2026-07-02,10:47:17,"Airtime Purchase",out,238,61402.55,airtime,false,false
+UW00026YOL,2026-07-02,19:34:08,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,532,61934.55,business_in,false,false
+UX000274SK,2026-07-02,20:53:55,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,268,62202.55,business_in,false,false
+UY00027AWJ,2026-07-03,08:59:08,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,542,62744.55,business_in,false,false
+UZ00027H0I,2026-07-03,09:35:57,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,796,63540.55,business_in,false,false
+UA00027N4H,2026-07-03,09:52:24,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,54040.55,paybill,false,false
+UB00027T8G,2026-07-03,10:52:34,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,507,54547.55,business_in,false,false
+UC00027ZCF,2026-07-04,06:53:42,"Airtime Purchase",out,185,54362.55,airtime,false,false
+UD000285GE,2026-07-04,08:18:58,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,843,55205.55,business_in,false,false
+UE00028BKD,2026-07-04,14:19:17,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,882,56087.55,business_in,false,false
+UF00028HOC,2026-07-04,15:39:48,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1201,57288.55,business_in,false,false
+UG00028NSB,2026-07-04,16:24:25,"Customer Withdrawal At Agent Till 351917 - JUJA AGENCIES",out,1985,55303.55,withdraw,false,false
+UH00028TWA,2026-07-05,11:49:27,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,1049,54254.55,paybill,false,false
+UJ00029009,2026-07-05,14:25:26,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,563,54817.55,business_in,false,false
+UK00029648,2026-07-05,19:29:11,"Merchant Payment Online to 818055 - RUBIS ENERGY JUJA",out,1082,53735.55,till,false,false
+UL00029C87,2026-07-05,20:56:09,"Airtime Purchase",out,64,53671.55,airtime,false,false
+UM00029IC6,2026-07-05,21:06:40,"Customer Withdrawal At Agent Till 376308 - JUJA AGENCIES",out,1069,52602.55,withdraw,false,false
+UN00029OG5,2026-07-06,09:40:21,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1438,54040.55,business_in,false,false
+UP00029UK4,2026-07-06,13:05:04,"Merchant Payment to 525537 - MAMA NGINA GREENGROCERS",out,987,53053.55,till,false,false
+UQ0002A0O3,2026-07-06,16:57:05,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1570,54623.55,business_in,false,false
+UR0002A6S2,2026-07-06,18:05:27,"Pay Bill to 851900 - TALA KENYA Acc. LOAN",out,2832,51791.55,paybill,false,true
+US0002ACW1,2026-07-06,18:06:45,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,1087,50704.55,send_money,false,false
+UT0002AJ00,2026-07-06,20:33:09,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,250,50954.55,business_in,false,false
+UU0002AP3Z,2026-07-07,07:57:47,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1102,52056.55,business_in,false,false
+UV0002AV7Y,2026-07-07,08:20:27,"Merchant Payment to 548336 - MAMA NGINA GREENGROCERS",out,1744,50312.55,till,false,false
+UW0002B1BX,2026-07-07,09:38:22,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,954,51266.55,business_in,false,false
+UX0002B7FW,2026-07-07,15:20:17,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1697,52963.55,business_in,false,false
+UY0002BDJV,2026-07-07,21:44:49,"Pay Bill to 290290 - BETIKA Acc. 07******",out,538,52425.55,gambling,true,false
+UZ0002BJNU,2026-07-08,21:36:41,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,1330,51095.55,send_money,false,false
+UA0002BPRT,2026-07-09,07:49:40,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1168,52263.55,business_in,false,false
+UB0002BVVS,2026-07-09,08:08:27,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,320,52583.55,business_in,false,false
+UC0002C1ZR,2026-07-09,19:07:16,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,820,53403.55,business_in,false,false
+UD0002C83Q,2026-07-11,08:11:53,"Pay Bill to 290290 - BETIKA Acc. 07******",out,217,53186.55,gambling,true,false
+UE0002CE7P,2026-07-11,16:45:17,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1071,54257.55,business_in,false,false
+UF0002CKBO,2026-07-12,07:55:16,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,898,55155.55,business_in,false,false
+UG0002CQFN,2026-07-12,14:50:19,"Pay Bill to 247247 - JUJA ACADEMY Acc. FEES",out,8800,46355.55,charge,false,false
+UH0002CWJM,2026-07-12,15:40:40,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,947,47302.55,business_in,false,false
+UJ0002D2NL,2026-07-12,16:03:54,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1122,48424.55,business_in,false,false
+UK0002D8RK,2026-07-13,10:23:07,"Merchant Payment to 543576 - QUICKMART KASARANI",out,1376,47048.55,till,false,false
+UL0002DEVJ,2026-07-13,13:04:32,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,325,47373.55,business_in,false,false
+UM0002DKZI,2026-07-13,15:14:00,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1559,48932.55,business_in,false,false
+UN0002DR3H,2026-07-14,16:02:44,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,744,49676.55,business_in,false,false
+UP0002DX7G,2026-07-14,16:02:48,"Merchant Payment to 545399 - MAMA NGINA GREENGROCERS",out,1329,48347.55,till,false,false
+UQ0002E3BF,2026-07-14,16:23:59,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1378,49725.55,business_in,false,false
+UR0002E9FE,2026-07-14,17:13:34,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1500,51225.55,business_in,false,false
+US0002EFJD,2026-07-14,19:13:54,"Merchant Payment Online to 895686 - RUBIS ENERGY JUJA",out,1240,49985.55,till,false,false
+UT0002ELNC,2026-07-15,08:39:22,"Funds received from - 2547******640 BRIAN KIPROTICH",in,2491,52476.55,income_received,false,false
+UU0002ERRB,2026-07-15,14:53:13,"Pay Bill to 290290 - BETIKA Acc. 07******",out,205,52271.55,gambling,true,false
+UV0002EXVA,2026-07-16,08:24:04,"Merchant Payment to 590540 - QUICKMART KASARANI",out,881,51390.55,till,false,false
+UW0002F3Z9,2026-07-16,11:03:11,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1315,52705.55,business_in,false,false
+UX0002FA38,2026-07-16,14:28:13,"Pay Bill to 290290 - BETIKA Acc. 07******",out,431,52274.55,gambling,true,false
+UY0002FG77,2026-07-16,16:34:06,"Airtime Purchase",out,101,52173.55,airtime,false,false
+UZ0002FMB6,2026-07-16,20:43:53,"Customer Transfer to - 2547******418 PETER OTIENO",out,540,51633.55,send_money,false,false
+UA0002FSF5,2026-07-16,21:21:07,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1338,52971.55,business_in,false,false
+UB0002FYJ4,2026-07-17,17:27:04,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,620,53591.55,business_in,false,false
+UC0002G4N3,2026-07-17,20:22:53,"Customer Withdrawal At Agent Till 310759 - JUJA AGENCIES",out,2181,51410.55,withdraw,false,false
+UD0002GAR2,2026-07-17,21:46:29,"Merchant Payment to 543755 - QUICKMART KASARANI",out,1329,50081.55,till,false,false
+UE0002GGV1,2026-07-18,10:20:33,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,721,50802.55,business_in,false,false
+UF0002GMZ0,2026-07-18,14:48:36,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1171,51973.55,business_in,false,false
+UG0002GT2Z,2026-07-18,15:46:19,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,474,52447.55,business_in,false,false
+UH0002GZ6Y,2026-07-18,21:16:05,"Merchant Payment to 586978 - JUJA BUTCHERY",out,1468,50979.55,till,false,false
+UJ0002H5AX,2026-07-19,06:26:34,"Merchant Payment to 577702 - QUICKMART KASARANI",out,2096,48883.55,till,false,false
+UK0002HBEW,2026-07-19,10:07:28,"Airtime Purchase",out,147,48736.55,airtime,false,false
+UL0002HHIV,2026-07-19,11:36:08,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,988,49724.55,business_in,false,false
+UM0002HNMU,2026-07-19,20:39:32,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,761,50485.55,business_in,false,false
+UN0002HTQT,2026-07-20,11:38:33,"OverDraft of Credit Party",in,750,51235.55,loan_in,false,true
+UP0002HZUS,2026-07-20,20:48:34,"Funds received from - 2547******902 GRACE WANJIRU",in,2474,53709.55,income_received,false,false
+UQ0002I5YR,2026-07-21,11:48:48,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,758,52951.55,loan_repay,false,true
+UR0002IC2Q,2026-07-21,14:42:21,"Airtime Purchase",out,160,52791.55,airtime,false,false
+US0002II6P,2026-07-22,06:12:37,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1368,54159.55,business_in,false,false
+UT0002IOAO,2026-07-22,13:25:05,"Merchant Payment to 545861 - MAMA NGINA GREENGROCERS",out,1240,52919.55,till,false,false
+UU0002IUEN,2026-07-22,14:06:46,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,897,53816.55,business_in,false,false
+UV0002J0IM,2026-07-23,11:33:56,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1532,55348.55,business_in,false,false
+UW0002J6ML,2026-07-23,19:18:40,"Pay Bill to 290290 - BETIKA Acc. 07******",out,487,54861.55,gambling,true,false
+UX0002JCQK,2026-07-23,20:14:13,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,898,55759.55,business_in,false,false
+UY0002JIUJ,2026-07-23,21:13:55,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1244,57003.55,business_in,false,false
+UZ0002JOYI,2026-07-24,08:49:43,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1447,58450.55,business_in,false,false
+UA0002JV2H,2026-07-24,12:24:20,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,836,59286.55,business_in,false,false
+UB0002K16G,2026-07-24,16:25:46,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,659,59945.55,business_in,false,false
+UC0002K7AF,2026-07-25,16:48:11,"Merchant Payment to 510797 - JUJA BUTCHERY",out,1991,57954.55,till,false,false
+UD0002KDEE,2026-07-25,21:32:24,"Airtime Purchase",out,68,57886.55,airtime,false,false
+UE0002KJID,2026-07-26,08:36:15,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,892,58778.55,business_in,false,false
+UF0002KPMC,2026-07-26,09:28:28,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,572,59350.55,business_in,false,false
+UG0002KVQB,2026-07-26,09:49:04,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1211,60561.55,business_in,false,false
+UH0002L1UA,2026-07-26,10:16:22,"OverDraft of Credit Party",in,358,60919.55,loan_in,false,true
+UJ0002L7Y9,2026-07-26,11:39:02,"Pay Bill to 290290 - BETIKA Acc. 07******",out,524,60395.55,gambling,true,false
+UK0002LE28,2026-07-26,13:34:55,"Merchant Payment to 537810 - JUJA BUTCHERY",out,506,59889.55,till,false,false
+UL0002LK67,2026-07-27,08:22:15,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1343,61232.55,business_in,false,false
+UM0002LQA6,2026-07-27,09:16:15,"Merchant Payment to 518192 - MAMA NGINA GREENGROCERS",out,952,60280.55,till,false,false
+UN0002LWE5,2026-07-27,15:43:37,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,362,59918.55,loan_repay,false,true
+UP0002M2I4,2026-07-27,17:45:52,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,279,60197.55,business_in,false,false
+UQ0002M8M3,2026-07-28,11:00:29,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,381,60578.55,business_in,false,false
+UR0002MEQ2,2026-07-28,12:04:49,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1108,61686.55,business_in,false,false
+US0002MKU1,2026-07-28,21:28:31,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,339,62025.55,business_in,false,false
+UT0002MQY0,2026-07-29,11:23:54,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1239,63264.55,business_in,false,false
+UU0002MX1Z,2026-07-29,13:43:28,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,576,63840.55,business_in,false,false
+UV0002N35Y,2026-07-29,18:18:11,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,1481,62359.55,send_money,false,false
+UW0002N99X,2026-07-30,06:36:30,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,430,62789.55,business_in,false,false
+UX0002NFDW,2026-07-30,11:19:02,"Pay Bill to 290290 - BETIKA Acc. 07******",out,690,62099.55,gambling,true,false
+UY0002NLHV,2026-07-30,12:12:02,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1186,63285.55,business_in,false,false
+UZ0002NRLU,2026-07-30,12:15:28,"Customer Transfer to - 2547******155 JOHN KAMAU",out,1479,61806.55,send_money,false,false
+UA0002NXPT,2026-07-30,17:02:34,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1535,63341.55,business_in,false,false
+UB0002O3TS,2026-07-30,19:58:36,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,717,64058.55,business_in,false,false
+UC0002O9XR,2026-07-31,20:19:23,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1351,65409.55,business_in,false,false
+UD0002OG1Q,2026-08-01,08:55:31,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,890,66299.55,business_in,false,false
+UE0002OM5P,2026-08-01,09:16:42,"Customer Transfer to - 2547******902 GRACE WANJIRU",out,1330,64969.55,send_money,false,false
+UF0002OS9O,2026-08-01,12:55:01,"Funds received from - 2547******155 JOHN KAMAU",in,2290,67259.55,income_received,false,false
+UG0002OYDN,2026-08-01,18:54:59,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,251,67510.55,business_in,false,false
+UH0002P4HM,2026-08-01,21:36:18,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1279,68789.55,business_in,false,false
+UJ0002PALL,2026-08-02,13:24:32,"Merchant Payment to 535685 - QUICKMART KASARANI",out,697,68092.55,till,false,false
+UK0002PGPK,2026-08-02,14:52:04,"Customer Transfer to - 2547******418 PETER OTIENO",out,801,67291.55,send_money,false,false
+UL0002PMTJ,2026-08-02,16:50:06,"Pay Bill to 290290 - BETIKA Acc. 07******",out,670,66621.55,gambling,true,false
+UM0002PSXI,2026-08-02,16:53:39,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,600,67221.55,business_in,false,false
+UN0002PZ1H,2026-08-03,07:24:07,"Pay Bill to 522533 - SUNRISE APARTMENTS Acc. RENT",out,9500,57721.55,paybill,false,false
+UP0002Q55G,2026-08-03,10:09:12,"Customer Transfer to - 2547******155 JOHN KAMAU",out,971,56750.55,send_money,false,false
+UQ0002QB9F,2026-08-03,19:32:20,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,350,57100.55,business_in,false,false
+UR0002QHDE,2026-08-04,14:41:54,"Merchant Payment to 536956 - MAMA NGINA GREENGROCERS",out,2050,55050.55,till,false,false
+US0002QNHD,2026-08-04,16:53:37,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,599,54451.55,send_money,false,false
+UT0002QTLC,2026-08-04,17:52:08,"Customer Withdrawal At Agent Till 329400 - JUJA AGENCIES",out,2417,52034.55,withdraw,false,false
+UU0002QZPB,2026-08-04,20:13:54,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,949,52983.55,business_in,false,false
+UV0002R5TA,2026-08-05,14:47:07,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,814,53797.55,business_in,false,false
+UW0002RBX9,2026-08-05,15:19:33,"Merchant Payment to 529064 - JUJA BUTCHERY",out,1953,51844.55,till,false,false
+UX0002RI18,2026-08-05,16:47:01,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1321,53165.55,business_in,false,false
+UY0002RO57,2026-08-05,21:08:14,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,475,53640.55,business_in,false,false
+UZ0002RU96,2026-08-05,21:21:36,"Pay Bill to 888880 - KPLC PREPAID Acc. 37194***",out,1168,52472.55,paybill,false,false
+UA0002S0D5,2026-08-06,09:27:16,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1270,53742.55,business_in,false,false
+UB0002S6H4,2026-08-06,10:35:19,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1691,55433.55,business_in,false,false
+UC0002SCL3,2026-08-06,13:18:10,"Customer Transfer to - 2547******377 MERCY ACHIENG",out,804,54629.55,send_money,false,false
+UD0002SIP2,2026-08-07,07:16:44,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1503,56132.55,business_in,false,false
+UE0002SOT1,2026-08-07,08:29:44,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1645,57777.55,business_in,false,false
+UF0002SUX0,2026-08-07,09:58:14,"Customer Transfer to - 2547******155 JOHN KAMAU",out,698,57079.55,send_money,false,false
+UG0002T10Z,2026-08-07,16:03:12,"Pay Bill to 290290 - BETIKA Acc. 07******",out,285,56794.55,gambling,true,false
+UH0002T74Y,2026-08-08,07:57:59,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,462,57256.55,business_in,false,false
+UJ0002TD8X,2026-08-08,09:53:14,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,963,58219.55,business_in,false,false
+UK0002TJCW,2026-08-08,19:35:38,"M-Shwari Loan Disbursement",in,4422,62641.55,loan_in,false,true
+UL0002TPGV,2026-08-09,11:35:21,"Merchant Payment to 563017 - MAMA NGINA GREENGROCERS",out,1730,60911.55,till,false,false
+UM0002TVKU,2026-08-10,08:48:03,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1417,62328.55,business_in,false,false
+UN0002U1OT,2026-08-10,12:33:15,"Customer Transfer to - 2547******640 BRIAN KIPROTICH",out,482,61846.55,send_money,false,false
+UP0002U7SS,2026-08-10,12:48:22,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,963,62809.55,business_in,false,false
+UQ0002UDWR,2026-08-10,15:08:02,"Pay Bill to 290290 - BETIKA Acc. 07******",out,364,62445.55,gambling,true,false
+UR0002UK0Q,2026-08-10,16:06:20,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1435,63880.55,business_in,false,false
+US0002UQ4P,2026-08-11,11:42:47,"Merchant Payment to 588756 - MAMA NGINA GREENGROCERS",out,1719,62161.55,till,false,false
+UT0002UW8O,2026-08-11,16:12:53,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,538,62699.55,business_in,false,false
+UU0002V2CN,2026-08-11,17:39:39,"Airtime Purchase",out,111,62588.55,airtime,false,false
+UV0002V8GM,2026-08-12,08:39:30,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1207,63795.55,business_in,false,false
+UW0002VEKL,2026-08-12,19:01:17,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,991,64786.55,business_in,false,false
+UX0002VKOK,2026-08-12,19:18:08,"OverDraft of Credit Party",in,1478,66264.55,loan_in,false,true
+UY0002VQSJ,2026-08-12,19:59:36,"Merchant Payment to 547197 - QUICKMART KASARANI",out,748,65516.55,till,false,false
+UZ0002VWWI,2026-08-13,07:22:55,"Merchant Payment to 583070 - NAIVAS SUPERMARKET THIKA RD",out,872,64644.55,till,false,false
+UA0002W30H,2026-08-13,08:29:20,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,1075,65719.55,business_in,false,false
+UB0002W94G,2026-08-13,08:40:52,"Customer Transfer to - 2547******418 PETER OTIENO",out,914,64805.55,send_money,false,false
+UC0002WF8F,2026-08-13,16:54:20,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,1493,63312.55,loan_repay,false,true
+UD0002WLCE,2026-08-13,17:52:32,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1698,65010.55,business_in,false,false
+UE0002WRGD,2026-08-13,19:29:46,"OverDraft of Credit Party",in,743,65753.55,loan_in,false,true
+UF0002WXKC,2026-08-14,07:04:17,"Merchant Payment to 517377 - QUICKMART KASARANI",out,1238,64515.55,till,false,false
+UG0002X3OB,2026-08-14,12:26:59,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,750,63765.55,loan_repay,false,true
+UH0002X9SA,2026-08-15,17:04:10,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,762,64527.55,business_in,false,false
+UJ0002XFW9,2026-08-15,17:11:18,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,317,64844.55,business_in,false,false
+UK0002XM08,2026-08-15,18:28:58,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1161,66005.55,business_in,false,false
+UL0002XS47,2026-08-16,06:44:48,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1416,67421.55,business_in,false,false
+UM0002XY86,2026-08-16,19:58:19,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1351,68772.55,business_in,false,false
+UN0002Y4C5,2026-08-17,11:16:08,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,654,69426.55,business_in,false,false
+UP0002YAG4,2026-08-17,13:13:21,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,765,70191.55,business_in,false,false
+UQ0002YGK3,2026-08-17,15:13:21,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1074,71265.55,business_in,false,false
+UR0002YMO2,2026-08-17,18:35:02,"Customer Withdrawal At Agent Till 358027 - JUJA AGENCIES",out,2350,68915.55,withdraw,false,false
+US0002YSS1,2026-08-18,12:52:33,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,663,69578.55,business_in,false,false
+UT0002YYW0,2026-08-18,18:47:36,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,1636,71214.55,business_in,false,false
+UU0002Z4ZZ,2026-08-18,20:32:47,"Merchant Payment to 535676 - NAIVAS SUPERMARKET THIKA RD",out,1290,69924.55,till,false,false
+UV0002ZB3Y,2026-08-19,07:50:39,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,581,70505.55,business_in,false,false
+UW0002ZH7X,2026-08-19,10:51:42,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1040,71545.55,business_in,false,false
+UX0002ZNBW,2026-08-19,11:59:30,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,701,72246.55,business_in,false,false
+UY0002ZTFV,2026-08-19,16:34:14,"Customer Withdrawal At Agent Till 376758 - JUJA AGENCIES",out,2265,69981.55,withdraw,false,false
+UZ0002ZZJU,2026-08-19,20:04:00,"OverDraft of Credit Party",in,1388,71369.55,loan_in,false,true
+UA000305NT,2026-08-20,09:03:39,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,863,72232.55,business_in,false,false
+UB00030BRS,2026-08-20,10:51:22,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,1402,70830.55,loan_repay,false,true
+UC00030HVR,2026-08-21,07:10:08,"Airtime Purchase",out,54,70776.55,airtime,false,false
+UD00030NZQ,2026-08-21,07:30:53,"Pay Bill to 290290 - BETIKA Acc. 07******",out,644,70132.55,gambling,true,false
+UE00030U3P,2026-08-21,08:11:03,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,492,70624.55,business_in,false,false
+UF0003107O,2026-08-21,09:50:43,"Merchant Customer Payment from 2547******155 JOHN KAMAU",in,1376,72000.55,business_in,false,false
+UG000316BN,2026-08-21,10:44:16,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,994,72994.55,business_in,false,false
+UH00031CFM,2026-08-22,15:03:12,"Pay Bill to 290290 - BETIKA Acc. 07******",out,152,72842.55,gambling,true,false
+UJ00031IJL,2026-08-22,15:54:12,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,570,73412.55,business_in,false,false
+UK00031ONK,2026-08-22,16:02:33,"Merchant Payment to 548659 - QUICKMART KASARANI",out,1595,71817.55,till,false,false
+UL00031URJ,2026-08-22,18:50:32,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,979,72796.55,business_in,false,false
+UM000320VI,2026-08-23,07:05:54,"M-Shwari Loan Repayment",out,4754,68042.55,loan_repay,false,true
+UN000326ZH,2026-08-23,10:05:48,"Merchant Payment to 564672 - JUJA BUTCHERY",out,650,67392.55,till,false,false
+UP00032D3G,2026-08-23,15:23:38,"Merchant Customer Payment from 2547******418 PETER OTIENO",in,290,67682.55,business_in,false,false
+UQ00032J7F,2026-08-23,16:10:15,"Merchant Customer Payment from 2547******902 GRACE WANJIRU",in,1543,69225.55,business_in,false,false
+UR00032PBE,2026-08-23,16:13:34,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1283,70508.55,business_in,false,false
+US00032VFD,2026-08-24,14:21:02,"Merchant Payment to 510941 - MAMA NGINA GREENGROCERS",out,1754,68754.55,till,false,false
+UT000331JC,2026-08-25,07:06:04,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,1279,70033.55,business_in,false,false
+UU000337NB,2026-08-25,09:23:46,"Merchant Customer Payment from 2547******640 BRIAN KIPROTICH",in,442,70475.55,business_in,false,false
+UV00033DRA,2026-08-25,16:50:24,"Merchant Payment to 594675 - MAMA NGINA GREENGROCERS",out,1260,69215.55,till,false,false
+UW00033JV9,2026-08-26,09:14:25,"OverDraft of Credit Party",in,1074,70289.55,loan_in,false,true
+UX00033PZ8,2026-08-26,13:51:52,"Merchant Payment to 565116 - JUJA BUTCHERY",out,1096,69193.55,till,false,false
+UY00033W37,2026-08-27,09:26:01,"OD Loan Repayment to 232323 - M-PESA Overdraw",out,1085,68108.55,loan_repay,false,true
+UZ00034276,2026-08-27,09:33:32,"Airtime Purchase",out,172,67936.55,airtime,false,false
+UA000348B5,2026-08-27,12:36:23,"Merchant Customer Payment from 2547******377 MERCY ACHIENG",in,750,68686.55,business_in,false,false
+UB00034EF4,2026-08-27,14:27:58,"Customer Transfer to - 2547******418 PETER OTIENO",out,237,68449.55,send_money,false,false
+UC00034KJ3,2026-08-27,19:15:05,"Merchant Payment to 534476 - MAMA NGINA GREENGROCERS",out,1801,66648.55,till,false,false

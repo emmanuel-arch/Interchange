@@ -1,0 +1,1759 @@
+{
+  "has_error": false,
+  "api_code": null,
+  "api_code_description": null,
+  "api_version": "v1",
+  "reference": "IX-0XS5-D8QF-20260918",
+  "report": {
+    "type": 5,
+    "name": "JSON Credit Report",
+    "product": "bureau_direct"
+  },
+  "report_date": "2026-09-18 14:17:46 EAT",
+  "requested_by": {
+    "person": "Sample Analyst",
+    "organisation": "Sample Lender Limited",
+    "member_code": "KE/LENDER/SAMPLE"
+  },
+  "subject": {
+    "identity_type": {
+      "code": "001",
+      "label": "National ID"
+    },
+    "identity_number": "880000088"
+  },
+  "provenance": {
+    "provider": "Metropol Credit Reference Bureau",
+    "bureau_report_types": [
+      5
+    ],
+    "bureau_transaction_ids": [],
+    "responses": [
+      {
+        "report_type": 5,
+        "sha256": "27387502c542cf0b23f8900e8ae5b1a6c8d22e5295147abbd9da9141a35f1f6f",
+        "capture": "unwrapped"
+      }
+    ],
+    "interchange_role": "Retrieved, kept unchanged, and presented. The Interchange is not a credit reference bureau."
+  },
+  "data": {
+    "identity": {
+      "verified": null,
+      "first_name": null,
+      "other_name": null,
+      "surname": null,
+      "date_of_birth": null,
+      "date_of_death": null,
+      "gender": null,
+      "citizenship": null,
+      "marital_status": null,
+      "id_serial": null
+    },
+    "traces": {
+      "names": [
+        "Jabali Mwenda Amani",
+        "Amani Jabali Mwenda",
+        "AMANI JABALI MWENDA",
+        "AMANI  MWENDA"
+      ],
+      "phones": [],
+      "emails": [],
+      "postal_addresses": [],
+      "physical_addresses": [],
+      "employment": []
+    },
+    "score": {
+      "value": 319,
+      "as_at": null,
+      "category": null
+    },
+    "score_trend": [],
+    "ppi": {
+      "rank": "M1",
+      "index": 1.689,
+      "as_at": "2026-09-18"
+    },
+    "delinquency": {
+      "code": "004",
+      "label": "Currently delinquent",
+      "meaning": "At least one account is non-performing right now."
+    },
+    "accounts": [
+      {
+        "account_number": "25479900012320210203",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-02-03",
+        "original_amount": 436,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2021-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2021-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320210301",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-03-01",
+        "original_amount": 483,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320210405",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-04-05",
+        "original_amount": 321,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320210601",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-06-01",
+        "original_amount": 382,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320211001",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-10-01",
+        "original_amount": 488.39,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320211130",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-11-30",
+        "original_amount": 994.72,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-02-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-02-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320211213",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2021-12-13",
+        "original_amount": 1684.11,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-03-08"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-03-08",
+        "is_your_account": false
+      },
+      {
+        "account_number": "NBF4760949540391283",
+        "product_type": {
+          "id": 18,
+          "label": "Mobile Banking Loan"
+        },
+        "status": {
+          "code": "E",
+          "label": "Write-Off",
+          "finished": false,
+          "adverse": true
+        },
+        "date_opened": "2022-04-08",
+        "original_amount": 8300,
+        "current_balance": 9183.68,
+        "overdue_balance": 9183.68,
+        "overdue_date": "2022-05-08",
+        "days_in_arrears": {
+          "value": 1577,
+          "as_of": "2026-08-31"
+        },
+        "highest_days_in_arrears": 1577,
+        "last_payment": {
+          "amount": 35,
+          "date": "2022-05-08"
+        },
+        "delinquency": {
+          "code": "004",
+          "label": "Currently delinquent"
+        },
+        "reported_at": "2026-08-31",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320220730",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2022-07-30",
+        "original_amount": 140.63,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2022-08-08"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2022-08-08",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320230615",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2023-06-15",
+        "original_amount": 5985.76,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2023-07-06"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2023-07-06",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320230808",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2023-08-08",
+        "original_amount": 4505.71,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2023-09-12"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 4505.71,
+          "date": "2023-09-11"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2023-09-12",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320230908",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2023-09-08",
+        "original_amount": 5109.38,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2023-10-23"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 5109.38,
+          "date": "2023-10-22"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2023-10-23",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320231023",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2023-10-23",
+        "original_amount": 5985.42,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2023-11-10"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2023-11-10",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320231220",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2023-12-20",
+        "original_amount": 6522.52,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-04-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 6522.52,
+          "date": "2023-12-20"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-04-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240117",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-01-17",
+        "original_amount": 5800.04,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-04-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 5800.04,
+          "date": "2024-02-16"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-04-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240212",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-02-12",
+        "original_amount": 6543.13,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-04-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 6543.13,
+          "date": "2024-03-13"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-04-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "4319463776485018",
+        "product_type": {
+          "id": 18,
+          "label": "Mobile Banking Loan"
+        },
+        "status": {
+          "code": "H",
+          "label": "Active",
+          "finished": false,
+          "adverse": false
+        },
+        "date_opened": "2024-02-07",
+        "original_amount": 6000,
+        "current_balance": 7078.26,
+        "overdue_balance": 6626.52,
+        "overdue_date": "2024-03-07",
+        "days_in_arrears": {
+          "value": 32,
+          "as_of": "2024-04-09"
+        },
+        "highest_days_in_arrears": 32,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-04-09",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240315",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-03-15",
+        "original_amount": 5130.93,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-05-02"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 5130.93,
+          "date": "2024-03-15"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-05-02",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240429",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-04-29",
+        "original_amount": 5231.1,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-05-15"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 5231.1,
+          "date": "2024-05-15"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-05-15",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240514",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-05-14",
+        "original_amount": 4774.57,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-06-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 4774.57,
+          "date": "2024-06-18"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-06-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240613",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-06-13",
+        "original_amount": 3313.78,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-07-15"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3313.78,
+          "date": "2024-07-15"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-07-15",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240730",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-07-30",
+        "original_amount": 3471.49,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-08-15"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3471.49,
+          "date": "2024-08-15"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-08-15",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320240831",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-08-31",
+        "original_amount": 2279.79,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-09-13"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 2279.79,
+          "date": "2024-09-13"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-09-13",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241109",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-11-09",
+        "original_amount": 4615.47,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-11-16"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 4615.47,
+          "date": "2024-11-16"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-11-16",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241116",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-11-16",
+        "original_amount": 6325.33,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-11-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 6325.33,
+          "date": "2024-11-18"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-11-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241119",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-11-19",
+        "original_amount": 3014.18,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-11-23"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3014.18,
+          "date": "2024-11-23"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-11-23",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241123",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-11-23",
+        "original_amount": 3240.88,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-11-30"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3240.88,
+          "date": "2024-11-30"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-11-30",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241130",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-11-30",
+        "original_amount": 3106.15,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-12-01"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3106.15,
+          "date": "2024-12-01"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-12-01",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320241214",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2024-12-14",
+        "original_amount": 2780.27,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2024-12-18"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 2780.27,
+          "date": "2024-12-18"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2024-12-18",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250308",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-03-08",
+        "original_amount": 1025.63,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-03-13"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 1025.63,
+          "date": "2025-03-13"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-03-13",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250329",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-03-29",
+        "original_amount": 650.87,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-04-03"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 650.87,
+          "date": "2025-04-02"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-04-03",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250419",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-04-19",
+        "original_amount": 1176.65,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-04-28"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 1176.65,
+          "date": "2025-04-26"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-04-28",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250426",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-04-26",
+        "original_amount": 2481.36,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-09-22"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 2481.36,
+          "date": "2025-05-26"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-09-22",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250531",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-05-31",
+        "original_amount": 4257.85,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-09-22"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 4257.85,
+          "date": "2025-06-30"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-09-22",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250816",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-08-16",
+        "original_amount": 2144.55,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-08-21"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 2144.55,
+          "date": "2025-08-20"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-08-21",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250820",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-08-20",
+        "original_amount": 470.03,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-08-23"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 470.03,
+          "date": "2025-08-23"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-08-23",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320250823",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2025-08-23",
+        "original_amount": 4026.25,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2025-08-26"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 4026.25,
+          "date": "2025-08-26"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2025-08-26",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260210",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-02-10",
+        "original_amount": 525.19,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-02-11"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 525.19,
+          "date": "2026-02-11"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-02-11",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260301",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-03-01",
+        "original_amount": 3079.91,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-03-03"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 3079.91,
+          "date": "2026-03-03"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-03-03",
+        "is_your_account": false
+      },
+      {
+        "account_number": "TE281832199",
+        "product_type": {
+          "id": 14,
+          "label": "Personal Loan"
+        },
+        "status": {
+          "code": "H",
+          "label": "Active",
+          "finished": false,
+          "adverse": false
+        },
+        "date_opened": "2026-01-31",
+        "original_amount": 14000,
+        "current_balance": 14325,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-09-11"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 88,
+          "date": "2026-08-31"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-09-11",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260330",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-03-30",
+        "original_amount": 2990.24,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-04-06"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 2990.24,
+          "date": "2026-04-06"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-04-06",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260406",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-04-06",
+        "original_amount": 744.34,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-04-07"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 744.34,
+          "date": "2026-04-07"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-04-07",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260407",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-04-07",
+        "original_amount": 6240.28,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-04-08"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 6240.28,
+          "date": "2026-04-08"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-04-08",
+        "is_your_account": false
+      },
+      {
+        "account_number": "221927",
+        "product_type": {
+          "id": 10,
+          "label": "Business Expansion Loan"
+        },
+        "status": {
+          "code": "H",
+          "label": "Active",
+          "finished": false,
+          "adverse": false
+        },
+        "date_opened": "2026-06-15",
+        "original_amount": 17040,
+        "current_balance": 8520,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-07-09"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 0,
+          "date": null
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-07-09",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260731",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-07-31",
+        "original_amount": 1759.88,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-08-06"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 1759.88,
+          "date": "2026-08-05"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-08-06",
+        "is_your_account": false
+      },
+      {
+        "account_number": "6883716697398",
+        "product_type": {
+          "id": 14,
+          "label": "Personal Loan"
+        },
+        "status": {
+          "code": "H",
+          "label": "Active",
+          "finished": false,
+          "adverse": false
+        },
+        "date_opened": "2026-03-25",
+        "original_amount": 20000,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-08-07"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 1034,
+          "date": "2026-07-28"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-08-07",
+        "is_your_account": false
+      },
+      {
+        "account_number": "3237527208640",
+        "product_type": {
+          "id": 14,
+          "label": "Personal Loan"
+        },
+        "status": {
+          "code": "H",
+          "label": "Active",
+          "finished": false,
+          "adverse": false
+        },
+        "date_opened": "2026-06-03",
+        "original_amount": 100000,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-08-07"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 5042,
+          "date": "2026-07-28"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-08-07",
+        "is_your_account": false
+      },
+      {
+        "account_number": "25479900012320260831",
+        "product_type": {
+          "id": 7,
+          "label": "Overdraft"
+        },
+        "status": {
+          "code": "A",
+          "label": "Closed",
+          "finished": true,
+          "adverse": false
+        },
+        "date_opened": "2026-08-31",
+        "original_amount": 708,
+        "current_balance": 0,
+        "overdue_balance": 0,
+        "overdue_date": null,
+        "days_in_arrears": {
+          "value": 0,
+          "as_of": "2026-09-03"
+        },
+        "highest_days_in_arrears": 0,
+        "last_payment": {
+          "amount": 708,
+          "date": "2026-09-02"
+        },
+        "delinquency": {
+          "code": "003",
+          "label": "No delinquency"
+        },
+        "reported_at": "2026-09-03",
+        "is_your_account": false
+      }
+    ],
+    "sectors": [
+      {
+        "sector": {
+          "code": "sector_bank",
+          "label": "Banks"
+        },
+        "total": 44,
+        "non_performing": 1,
+        "performing_with_default_history": 0,
+        "performing_clean": 43
+      },
+      {
+        "sector": {
+          "code": "sector_other",
+          "label": "Other lenders"
+        },
+        "total": 4,
+        "non_performing": 0,
+        "performing_with_default_history": 0,
+        "performing_clean": 4
+      }
+    ],
+    "windows": {
+      "enquiries": {
+        "last3": 0,
+        "last6": 0,
+        "last12": 0
+      },
+      "credit_applications": {
+        "last3": 0,
+        "last6": 0,
+        "last12": 0
+      },
+      "bounced_cheques": {
+        "last3": 0,
+        "last6": 0,
+        "last12": 0
+      }
+    },
+    "income_estimate": null,
+    "accounts_summary": null,
+    "guarantors": [],
+    "stakeholders": [],
+    "has_fraud": false,
+    "is_guarantor": false
+  },
+  "reading": {
+    "live_exposure": {
+      "accounts": 4,
+      "outstanding": 39106.94,
+      "definition": "open and carrying a balance"
+    },
+    "open_with_nil_balance": 2,
+    "closed": 42,
+    "adverse_accounts": 1,
+    "overdue_total": 15810.2,
+    "worst_days_in_arrears": 1577,
+    "worst_days_in_arrears_ever": 1577,
+    "opened_last_6_months": 8,
+    "opened_last_12_months": 11,
+    "figure_age_days": {
+      "freshest": 7,
+      "stalest": 2046
+    },
+    "score_band": {
+      "label": "High risk",
+      "basis": "market reading, not a bureau cut-off"
+    },
+    "notes": [
+      "The oldest account figures were last reported to the bureau 2046 days ago. Arrears counts are as of that date, not today.",
+      "2 accounts are reported open with a nil balance — settled but not yet re-flagged by the lender. They are excluded from live exposure.",
+      "The bureau reports no enquiries in 12 months, yet 11 accounts were opened in that window. Metropol's enquiry counters are not real-time and should not be read as shopping behaviour.",
+      "No account on this file is flagged as the requesting lender's own, including where the lender has an active loan. Treat `is_your_account` as unreliable for reconciliation."
+    ]
+  },
+  "notices": {
+    "regulation_40_1": "Disclaimer: According to the Banking (Credit Reference Bureau Regulations, 2020 Regulation 40 (1), A customer's credit score shall not be used solely to deny the customer a loan, credit facility, or any other financial service. However, it shall be used as one of the factors to inform the decision-making when determining the customer's application for a loan, credit facility, or any other financial service.",
+    "bureau_disclaimer": [
+      "The information provided in this report is for the purposes of decision making as stipulated in the Banking (Credit Reference Bureau) Regulations, 2020 only.",
+      "It is not in any way METROPOL CREDIT REFERENCE BUREAU's opinion of the financial capability, solvency, integrity or intentions of any persons mentioned herein.",
+      "It therefore cannot be used to inform any level of decision making, positive or adverse, on any and all persons mentioned herein, whether regarding current or potential credit lines.",
+      "All parties given access to this information are bound to keep any and all information,whether intentionally or accidentally accessed, strictly confidential.",
+      "METROPOL CREDIT REFERENCE BUREAU does not warrant or guarantee any use of the information contained herein."
+    ],
+    "interchange": "The credit information in this document was supplied by Metropol Credit Reference Bureau, a credit reference bureau licensed by the Central Bank of Kenya. The Interchange did not create, alter or verify that information. The Interchange is a technology intermediary: it is not a credit reference bureau and it gives no credit opinion. It retrieves the bureau's response, keeps it unchanged (the original response and its SHA-256 fingerprint are held under the reference on this document), and presents it in a form a lending decision can use. Where this document shows totals, orderings, charts or flags, they are marked as the Interchange's reading of the bureau's data and are not the bureau's statement. Questions or disputes about the underlying data must be raised with Metropol Credit Reference Bureau, which holds the record. This document is confidential to the requesting organisation and may be used only for the purposes permitted by the Banking (Credit Reference Bureau) Regulations, 2020."
+  },
+  "verify": {
+    "url": "https://interchange.servicesuitecloud.com/verify/IX-0XS5-D8QF-20260918",
+    "content_sha256": "df7fbcb207ad0821128035aff4ac74d37beb2ece362b0934579b2f671aea69a7"
+  },
+  "sample": true
+}

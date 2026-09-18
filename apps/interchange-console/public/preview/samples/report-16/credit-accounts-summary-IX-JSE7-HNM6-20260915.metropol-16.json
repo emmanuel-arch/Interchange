@@ -1,0 +1,35 @@
+{
+  "api_code": null,
+  "api_code_description": null,
+  "credit_info": {
+    "average_principal_mobile_loans_active": 7150,
+    "average_principal_mobile_loans_closed": 0,
+    "generic_account_count": 4,
+    "generic_account_count_closed": 48,
+    "generic_account_in_arrears_count": 0,
+    "generic_account_npa_count": 0,
+    "mobile_account_count_active": 2,
+    "mobile_account_count_closed": 0,
+    "mobile_account_in_arrears_count": 1,
+    "mobile_account_npa_count": 1,
+    "total_monthly_instalment_generic": 9535
+  },
+  "has_error": false,
+  "identity_number": "880000088",
+  "identity_type": "001",
+  "phone_number": [
+    "254799000123"
+  ],
+  "reported_name": [
+    "Jabali Mwenda Amani",
+    "Amani Jabali Mwenda",
+    "AMANI JABALI MWENDA",
+    "AMANI JABALI MWENDA",
+    "AMANI  MWENDA"
+  ],
+  "verified_name": {
+    "first_name": null,
+    "other_name": null,
+    "surname": null
+  }
+}
