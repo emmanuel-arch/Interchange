@@ -64,6 +64,69 @@ export const LETTERHEAD: Letterhead = {
   odpcRegistration: process.env.INTERCHANGE_ODPC_REG ?? null,
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// WHOSE ADDRESS PRINTS ON A REPORT.
+//
+// The block in the top-right corner used to be the OPERATOR's, always: BirgenAI
+// Hub's registered name, address, KRA PIN and website on every document the
+// network rendered, whoever had asked for it and whoever was going to read it.
+//
+// That is the wrong party. A bureau report is pulled BY a lender, ABOUT their
+// applicant, and it is filed in that lender's credit file and shown to that
+// lender's risk committee. The letterhead is read as "who is telling me this",
+// and the honest answer is the lender who requested it — the Interchange is the
+// rail the request travelled on, and it says so in the body, on the source line
+// and in the notice at the foot of the document.
+//
+// ── PER MEMBER, NOT A CONSTANT ───────────────────────────────────────────────
+// The obvious shortcut — swap the operator's details for Micromart's — would put
+// Micromart's registered address on a report Axe Capital pulled about Axe's own
+// applicant. One lender's letterhead on a competitor's credit file is not a
+// cosmetic mistake. So the requesting member's code selects the block, and a
+// member whose details have not been recorded falls back to the operator's,
+// which is exactly what every report printed before this existed.
+//
+// Nothing is guessed. Micromart's registration number and KRA PIN are NOT in
+// this repository, so those lines are null and simply do not print — a letterhead
+// that invents a plausible-looking company number on a regulated document is
+// worse than a letterhead with one fewer line.
+// ─────────────────────────────────────────────────────────────────────────────
+const MEMBER_LETTERHEADS: Record<string, Letterhead> = {
+  // Both Micromart entities — 3002 (Micromart Africa) and 3005 (Fintech) — are
+  // one company at one address; the entity distinguishes the book, not the
+  // premises. As supplied by the founder on 19 September 2026.
+  micromart: {
+    name: "Micromart Africa",
+    legalName: "MICROMART AFRICA LIMITED",
+    addressLines: ["Casamia, Ngong Road, Nairobi", "P.O. Box 1864-00100 Nairobi"],
+    phone: "+254 20 2 736 622",
+    email: "info@micromartafrica.com",
+    website: "micromartafrica.com",
+    companyRegistration: null,
+    kraPin: null,
+    incorporatedOn: null,
+    odpcRegistration: null,
+  },
+};
+
+/** Member code → the key in MEMBER_LETTERHEADS. */
+const MEMBER_LETTERHEAD_KEY: Record<string, string> = {
+  "KE/LENDER/3002": "micromart",
+  "KE/LENDER/3005": "micromart",
+};
+
+/**
+ * The letterhead for a document requested by this member.
+ *
+ * Falls back to the operator's when the member is unknown or unnamed, so a new
+ * member joining the network gets a correct document on day one rather than a
+ * blank corner.
+ */
+export function letterheadFor(memberCode: string | null | undefined): Letterhead {
+  const key = memberCode ? MEMBER_LETTERHEAD_KEY[memberCode.trim().toUpperCase()] : undefined;
+  return (key && MEMBER_LETTERHEADS[key]) || LETTERHEAD;
+}
+
 /** The service's own address, distinct from the company's postal one. */
 export const SERVICE_HOST = PUBLIC_ORIGIN.replace(/^https?:\/\//, "");
 

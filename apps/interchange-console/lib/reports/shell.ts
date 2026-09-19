@@ -33,7 +33,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { PAPER, TYPE, PAGE, STATE, esc } from "./theme";
-import { LETTERHEAD, brandArtwork } from "../brand";
+import { LETTERHEAD, letterheadFor, brandArtwork } from "../brand";
 import {
   REGULATION_40_NOTICE,
   BUREAU_DISCLAIMER_LINES,
@@ -498,9 +498,14 @@ export function resolveMeta(m: ReportMeta): ReportMeta & { reference: string; re
   return { ...m, reference, reportDate: m.reportDate ?? m.generatedAt };
 }
 
-function letterheadHtml(): string {
+/**
+ * The corner block. `memberCode` is the member who REQUESTED the document, and
+ * it selects whose registered details print — see letterheadFor() in ../brand
+ * for why that is the requesting lender rather than the network operator.
+ */
+function letterheadHtml(memberCode?: string | null): string {
   const art = brandArtwork();
-  const lh = LETTERHEAD;
+  const lh = letterheadFor(memberCode);
   // The drawn mark stands in only if the artwork cannot be read from disk —
   // a rendering fault, not the normal path.
   const left = art.lockup ?? `<div class="brandline">${mark(24)}<span class="name">${esc(lh.name)}</span></div>`;
@@ -603,7 +608,7 @@ ${marginCss(m.reference, !!m.sample)}
 </head>
 <body>
 ${m.sample ? `<div class="sample-mark" aria-hidden="true">SAMPLE · ANONYMISED</div>` : ""}
-${letterheadHtml()}
+${letterheadHtml(m.member.code)}
 ${bureau ? `<div class="regnotice">${esc(REGULATION_40_NOTICE)}</div>` : ""}
 ${m.sample ? `<div class="sample-strip">${esc(sampleNotice)}</div>` : ""}
 

@@ -29,7 +29,7 @@ import {
   DRIVER_LABEL, INCOME_BASIS_LABEL, METHOD_LABEL, MONTHS_BASIS_LABEL, policyDiff,
 } from "../statement/policy";
 import { REGISTRY_STATS } from "../statement/lenders";
-import { LETTERHEAD, SERVICE_HOST } from "../brand";
+import { letterheadFor, SERVICE_HOST } from "../brand";
 import { esc } from "./theme";
 import { qrSvg, verifyUrl } from "./reference";
 import { INTERCHANGE_STATEMENT_NOTICE } from "./notices";
@@ -789,6 +789,9 @@ function scorePage(r: CashflowReport): TheatrePage {
 // ── Page 8 · method ──────────────────────────────────────────────────────────
 
 function methodPage(r: CashflowReport, meta: CashflowDocMeta): TheatrePage {
+  // Whose details stand behind this document — the member who requested it, not
+  // the network operator. See letterheadFor() in ../brand.
+  const lh = letterheadFor(meta.requestedBy.memberCode);
   const diff = policyDiff(r.policy);
   const qr = qrSvg(verifyUrl(meta.reference), 22, "#E8EDEA");
 
@@ -866,12 +869,12 @@ function methodPage(r: CashflowReport, meta: CashflowDocMeta): TheatrePage {
     <div class="panel tight" style="margin-top:4mm">
       <div class="eyebrow muted">Issued by</div>
       <p style="font-size:8.2pt;line-height:1.55;margin:0">
-        <strong>${esc(LETTERHEAD.legalName ?? LETTERHEAD.name)}</strong><br>
-        ${LETTERHEAD.addressLines.map(esc).join("<br>")}<br>
-        ${esc(LETTERHEAD.phone ?? "")} · ${esc(LETTERHEAD.email ?? "")}<br>
-        ${esc(LETTERHEAD.website)}<br>
+        <strong>${esc(lh.legalName ?? lh.name)}</strong><br>
+        ${lh.addressLines.map(esc).join("<br>")}<br>
+        ${esc(lh.phone ?? "")} · ${esc(lh.email ?? "")}<br>
+        ${esc(lh.website)}<br>
         <span style="color:${T.inkMuted}">
-          Reg. ${esc(LETTERHEAD.companyRegistration ?? "—")}${LETTERHEAD.kraPin ? ` · KRA PIN ${esc(LETTERHEAD.kraPin)}` : ""}${LETTERHEAD.incorporatedOn ? `<br>Incorporated ${esc(LETTERHEAD.incorporatedOn)}` : ""}
+          Reg. ${esc(lh.companyRegistration ?? "—")}${lh.kraPin ? ` · KRA PIN ${esc(lh.kraPin)}` : ""}${lh.incorporatedOn ? `<br>Incorporated ${esc(lh.incorporatedOn)}` : ""}
         </span>
       </p>
     </div>
