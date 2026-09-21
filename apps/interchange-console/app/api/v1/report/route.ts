@@ -214,7 +214,13 @@ export async function POST(request: Request) {
         // The bureau's own code passes through untouched — E017 means a thin
         // file to every parser written against the bureau, and it must keep
         // meaning that here. Only a refusal with no bureau code becomes IX402.
-        if (!upstream) return refuse("IX402", refusal?.message ?? undefined, { report_type: reportType, subject_token: subjectToken });
+        //
+        // IX402 carries the NODE's own sentence when it gave one. Without it a
+        // relay that was simply offline reached the officer as "the bureau
+        // answered with an error" — which sent everybody looking at Metropol
+        // for a failure that never left the lender's building (22 Sep 2026).
+        const why = refusal?.message ?? answer.pulls.find((p) => !p.ok && p.message)?.message ?? undefined;
+        if (!upstream) return refuse("IX402", why, { report_type: reportType, subject_token: subjectToken });
         return NextResponse.json(
           {
             has_error: true,
