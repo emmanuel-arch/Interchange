@@ -27,13 +27,14 @@
 //      themselves can go and get one — the point is that they do not have to.
 //
 // ── ON THE PRICES BELOW ──────────────────────────────────────────────────────
-// `bureauCost` is INDICATIVE. Metropol's commercial tariff sheet is still not
-// in the vault — it is an outstanding item, not an oversight — so these carry
-// the market's shape (identity checks are cents, the full file is the expensive
-// one) and not a quoted price. `tariffSource` on a quote says which it is, and
-// every surface that shows a number must show that flag beside it. The moment
-// the sheet arrives it is typed in once and every projection re-prices itself.
+// `bureauCost` is Metropol's price for the report set, NET, from their rate card
+// ("MICROMART API Rate Card – V2", lib/codes/metropol-rate-card.ts) — derived
+// from each entry's own `bureauReports`, never typed beside it. 16% VAT and 10%
+// excise come on top (grossOf). Report 16 is not on the card, so a bundle that
+// includes it is priced WITHOUT it and says so rather than guessing.
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { cardCost } from "@/lib/codes/metropol-rate-card";
 
 export type ReportSource =
   /** Computed from members' live books. No third party, no marginal cost. */
@@ -86,7 +87,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["kyc.verify"],
     bureauReports: [1],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 10,
+    bureauCost: cardCost([1]).net,
     interchangeFee: 2,
     live: true,
   },
@@ -99,7 +100,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["ecosystem.exposure"],
     bureauReports: [],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 0,
+    bureauCost: cardCost([]).net,
     interchangeFee: 0,
     live: true,
     edge: "Live from member books, where the bureau's equivalent is a monthly submission cycle behind.",
@@ -113,7 +114,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["ecosystem.exposure", "mpesa.crunch", "model.train"],
     bureauReports: [3],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 25,
+    bureauCost: cardCost([3]).net,
     interchangeFee: 5,
     live: false,
     edge: "Reason codes from SHAP, and a model trained on outcomes the bureau never sees — including loans other members declined.",
@@ -127,7 +128,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["mpesa.crunch"],
     bureauReports: [11],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 65,
+    bureauCost: cardCost([11]).net,
     interchangeFee: 10,
     live: false,
     edge: "M-Pesa statement features computed from the rail itself, not a bureau's income model.",
@@ -146,7 +147,7 @@ export const REPORTS: InterchangeReport[] = [
     // which is the question most officer reviews actually turn on.
     bureauReports: [8],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 40,
+    bureauCost: cardCost([8]).net,
     interchangeFee: 10,
     live: true,
     edge:
@@ -163,7 +164,7 @@ export const REPORTS: InterchangeReport[] = [
     // score that 12 omits; 11 carries income; 16 carries the instalment load.
     bureauReports: [12, 8, 11, 16],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 215,
+    bureauCost: cardCost([12, 8, 11, 16]).net,
     interchangeFee: 35,
     live: true,
     edge:
@@ -178,7 +179,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["ecosystem.exposure"],
     bureauReports: [],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 0,
+    bureauCost: cardCost([]).net,
     interchangeFee: 0,
     live: true,
     edge: "No bureau can sell this. It is answered from live books in under half a second, and it is free at the point of use.",
@@ -192,7 +193,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["ecosystem.exposure"],
     bureauReports: [],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 0,
+    bureauCost: cardCost([]).net,
     interchangeFee: 0,
     live: false,
     edge: "Applications across members in the last 30 days, approved and declined. A bureau sees neither.",
@@ -206,7 +207,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["collections.contact"],
     bureauReports: [],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 0,
+    bureauCost: cardCost([]).net,
     interchangeFee: 0,
     live: false,
     edge:
@@ -221,7 +222,7 @@ export const REPORTS: InterchangeReport[] = [
     requiredScopes: ["ecosystem.exposure", "model.train"],
     bureauReports: [],
     formats: ["json", "pdf", "html", "bundle"],
-    bureauCost: 0,
+    bureauCost: cardCost([]).net,
     interchangeFee: 0,
     live: false,
   },
@@ -261,7 +262,9 @@ export function quote(type: number, opts: { contributing: boolean; tariffLoaded?
     interchangeFee: free ? 0 : r.interchangeFee,
     total: free ? 0 : r.bureauCost + r.interchangeFee,
     freeAtPointOfUse: free,
-    tariffSource: opts.tariffLoaded ? "metropol" : "indicative",
+    // "metropol" whenever the rate card prices every report in the set; a bundle
+    // holding an unpriced one (16) is flagged rather than quoted as though whole.
+    tariffSource: opts.tariffLoaded || cardCost(r.bureauReports).unpriced.length === 0 ? "metropol" : "indicative",
     currency: "KES",
   };
 }
