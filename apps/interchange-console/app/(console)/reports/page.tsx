@@ -9,6 +9,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import { PageHeader, Panel, Pill, Empty, Num } from "@/components/chrome";
 import { REPORTS, quote } from "@/lib/reports/catalogue";
+import { RATE_CARD, cardCost } from "@/lib/codes/metropol-rate-card";
 import { prisma } from "@/lib/prisma";
 import { chromiumPath } from "@/lib/reports/render";
 import { replayDir, contractHolder } from "@/lib/reports/source";
@@ -88,6 +89,11 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
                   <td className="py-3 text-white/55">{SOURCE_LABEL[r.source]}</td>
                   <td className="py-3 text-right font-mono tabular-nums text-white/55">
                     {r.bureauCost ? r.bureauCost.toLocaleString() : "—"}
+                    {cardCost(r.bureauReports).unpriced.length ? (
+                      <span className="text-amber-300/70" title={`Report ${cardCost(r.bureauReports).unpriced.join(", ")} is not on the rate card and is not included`}>
+                        {" "}+{cardCost(r.bureauReports).unpriced.join(",")}
+                      </span>
+                    ) : null}
                   </td>
                   <td className="py-3 text-right font-mono tabular-nums text-white/55">
                     {r.interchangeFee ? r.interchangeFee.toLocaleString() : "—"}
@@ -107,10 +113,13 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
             })}
           </tbody>
         </table>
-        <div className="px-5 py-3.5 border-t border-white/[0.06] text-[11px] text-amber-300/70 leading-relaxed">
-          Bureau costs are <strong>indicative</strong>. Metropol&apos;s commercial tariff sheet is not in the vault yet, so
-          these carry the market&apos;s shape rather than a quoted price. Every figure re-prices itself the moment the
-          sheet is entered — no code change.
+        <div className="px-5 py-3.5 border-t border-white/[0.06] text-[11px] text-white/45 leading-relaxed">
+          Bureau costs are Metropol&apos;s <strong className="text-white/70">{RATE_CARD.title}</strong>, per request, net —
+          the bureau&apos;s invoice adds {RATE_CARD.excisePct}% excise and {RATE_CARD.vatPct}% VAT on top.{" "}
+          <span className="text-amber-300/70">
+            A figure marked +16 includes report 16, which the card does not price; it is quoted without it rather than
+            guessed.
+          </span>
         </div>
       </Panel>
 
