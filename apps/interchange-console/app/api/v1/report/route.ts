@@ -44,8 +44,10 @@ import { reportByType, quote, type ReportFormat } from "@/lib/reports/catalogue"
 import { buildFile } from "@/lib/reports/bureau";
 import { bureauCreditFile, exposureReport } from "@/lib/reports/documents";
 import { renderReportHtml } from "@/lib/reports/shell";
-import { htmlToPdf, chromiumPath, RenderUnavailable } from "@/lib/reports/render";
+import { htmlToPdf, canRenderPdf, rendererKind, RenderUnavailable } from "@/lib/reports/render";
 import { pullFromContractHolder, pullFromReplay, replayDir, BureauUnavailable } from "@/lib/reports/source";
+import { freshPull, recordPull } from "@/lib/reports/store";
+import type { BureauFile } from "@/lib/reports/bureau";
 import { IX_CODES, ixError, type IxCodeKey } from "@/lib/codes/interchange";
 import { normaliseApiCode } from "@/lib/codes/metropol";
 
@@ -193,9 +195,73 @@ export async function POST(request: Request) {
   let billedPulls = 0;
   let sourceLabel = "";
   let replayed = false;
+  /** Set when the answer came out of the store rather than off the wire. */
+  let servedFromStore = false;
+  /** Filled by a LIVE pull, written to the store after the log entry exists —
+   *  so a stored pull carries the receipt that proves it. */
+  let toStore: { wire: Record<string, unknown>; file: BureauFile; trxIds: string[] } | null = null;
 
   try {
     if (def.bureauReports.length > 0) {
+      // ── THE STORE, BEFORE THE BUREAU ────────────────────────────────────
+      // An answer already bought for this subject, by this caller, still inside
+      // its retention window IS the answer. Not a cache: two officers opening
+      // the same customer an hour apart must see the same file, because the
+      // decision was made against this one. It is dated when the BUREAU gave
+      // it, and the document says on its face that it was re-served.
+      //
+      // The gate has already run, so a re-serve is still consented, still
+      // metered and still logged. Only the BILL and the bureau round trip are
+      // skipped — which is the entire point.
+      const stored = await freshPull({
+        subjectToken,
+        reportType,
+        callerId: caller!.id,
+        fresh: body.fresh === true,
+      });
+      const storedParts = stored
+        ? Object.entries(stored.wire)
+            .map(([k, v]) => ({ reportType: Number(k), payload: (v ?? {}) as Record<string, unknown> }))
+            .filter((x) => Number.isFinite(x.reportType) && x.payload && typeof x.payload === "object")
+        : [];
+
+      if (stored && storedParts.length > 0) {
+        servedFromStore = true;
+        billedPulls = 0;
+        const ageDays = Math.floor((Date.now() - stored.pulledAt.getTime()) / 86_400_000);
+        sourceLabel =
+          `Stored Metropol file · pulled ${stored.pulledAt.toISOString().slice(0, 10)}` +
+          ` (${ageDays === 0 ? "today" : `${ageDays} day${ageDays === 1 ? "" : "s"} ago`}) · not re-billed`;
+
+        const file = buildFile(storedParts);
+        const doc = bureauCreditFile(
+          file,
+          {
+            member: { code: caller!.code, name: caller!.name },
+            subjectToken,
+            consentRef,
+            // The pull's own date, not today's. A report that re-dates itself
+            // every time it is opened cannot be produced in a dispute.
+            generatedAt: stored.pulledAt.toISOString().replace("T", " ").slice(0, 19) + " UTC",
+            environment: null,
+            source: sourceLabel,
+          },
+          { reportType: def.type, title: def.name },
+        );
+        documentJson = {
+          ...structuredJson(doc.meta, reportType),
+          file,
+          quote: quote(reportType, { contributing: true }),
+          stored: {
+            pulled_at: stored.pulledAt.toISOString(),
+            expires_at: stored.expiresAt.toISOString(),
+            original_receipt: { seq: stored.logSeq, hash: stored.logHash },
+            trx_ids: stored.trxIds,
+          },
+        };
+        if (format !== "json") html = renderReportHtml(doc);
+      } else {
+
       const answer = replayDir()
         ? ((replayed = true), await pullFromReplay(def.bureauReports))
         : await pullFromContractHolder({
@@ -252,6 +318,20 @@ export async function POST(request: Request) {
 
       documentJson = { ...structuredJson(doc.meta, reportType), file, quote: quote(reportType, { contributing: true }) };
       if (format !== "json") html = renderReportHtml(doc);
+
+      // A REPLAY is never stored. It is a captured answer being re-played for a
+      // demo, and putting it in the store would make the next real pull serve a
+      // fixture to somebody making a lending decision.
+      if (!replayed) {
+        toStore = {
+          // Keyed by the bureau's own report number, and kept VERBATIM — the
+          // body exactly as Metropol sent it, not a restructured version.
+          wire: Object.fromEntries(ok.map((x) => [String(x.reportType), x.payload!])),
+          file,
+          trxIds: file.trxIds ?? [],
+        };
+      }
+      }
     } else {
       // ── Ecosystem-native ────────────────────────────────────────────────
       // The Registry does NOT fan out. The calling node does, against filters
@@ -337,12 +417,51 @@ export async function POST(request: Request) {
     callerSignature: verified.signature,
   });
 
+  // ── 6. KEEP IT ────────────────────────────────────────────────────────────
+  // After the log entry, never before: a stored pull carries the receipt that
+  // proves it, and a row written ahead of the chain could point at an entry that
+  // was never appended.
+  //
+  // It is AWAITED rather than fired and forgotten, because a serverless function
+  // is frozen the moment it returns and a floating promise there is a write that
+  // silently does not happen. It cannot throw — recordPull returns its failure —
+  // so a bookkeeping fault can never cost a member a report they have paid for.
+  if (toStore) {
+    const kept = await recordPull({
+      subjectToken,
+      callerId: caller!.id,
+      callerCode: caller!.code,
+      reportType,
+      bureauReports: def.bureauReports,
+      consentRef,
+      billedPulls,
+      latencyMs,
+      logSeq: entry.seq,
+      logHash: entry.hash,
+      trxIds: toStore.trxIds,
+      wire: toStore.wire,
+      normalised: toStore.file as unknown,
+      facet: { kind: "credit", file: toStore.file },
+    });
+    if (!kept.ok) {
+      // Loud, because the next officer to open this customer will be billed for
+      // bytes we already had — which is a cost, not a crash, and so is exactly
+      // the kind of fault that goes unnoticed without a line in the log.
+      console.error(`[report] pull not stored (type ${reportType}, caller ${caller!.code}): ${kept.error}`);
+    }
+  }
+
   const headers: Record<string, string> = {
     "x-interchange-log-seq": entry.seq.toString(),
     "x-interchange-log-hash": entry.hash,
     "x-interchange-response-digest": responseDigest,
     "x-interchange-billed-pulls": String(billedPulls),
     "x-interchange-latency-ms": String(latencyMs),
+    "x-interchange-renderer": rendererKind(),
+    // Whether the caller paid for this answer or was handed one already bought.
+    // A member reconciling an invoice against their own call log needs this on
+    // the response, not inferred from a zero in the billing column.
+    "x-interchange-served-from": servedFromStore ? "store" : replayed ? "replay" : "bureau",
   };
 
   if (format === "json") {
@@ -358,7 +477,11 @@ export async function POST(request: Request) {
   // caller is a server, not a browser: it stores one and streams the other, and
   // multipart parsing on both sides would buy nothing.
   if (format === "bundle") {
-    if (!chromiumPath()) {
+    // `canRenderPdf()`, not `chromiumPath()`: a serverless deployment inflates a
+    // browser at runtime and has no local binary, so asking for one was asking a
+    // narrower question than this branch needed — and the refusal it produced
+    // read to an officer as a fault in their own work (23 Sep 2026).
+    if (!canRenderPdf()) {
       return refuse("IX603", "PDF rendering is not available on this deployment, so a bundle cannot be assembled. Request format=json.", {
         report_type: reportType,
         formats_available: ["json", "html"],
@@ -380,10 +503,11 @@ export async function POST(request: Request) {
     );
   }
 
-  // PDF. The renderer needs a browser binary, which a serverless deployment does
-  // not have — so this answers 503 with the reason rather than a broken file.
-  if (!chromiumPath()) {
-    return refuse("IX603", "PDF rendering is not available on this deployment (no headless browser). Request format=html, or call the engine host.", {
+  // PDF. The renderer uses whatever browser this host can reach — one already
+  // installed, or one the serverless path inflates on a cold start. Only a host
+  // with neither answers 503, and it says which knob is missing.
+  if (!canRenderPdf()) {
+    return refuse("IX603", "PDF rendering is not available on this deployment (no headless browser, and the serverless renderer is switched off). Request format=html, or call the engine host.", {
       report_type: reportType,
       formats_available: ["json", "html"],
     });

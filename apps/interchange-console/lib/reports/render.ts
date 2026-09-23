@@ -6,13 +6,33 @@
 // both would still be driving the same Chromium that is already installed. So
 // the renderer shells out to the browser's own print pipeline and nothing else.
 //
-// ── THIS DOES NOT RUN ON VERCEL ──────────────────────────────────────────────
-// A serverless function has no browser binary and no writable spawn. That is
-// not a gap to paper over: the API answers JSON and HTML everywhere, and PDF
-// only where `chromiumPath()` resolves. A member who needs a PDF from a
-// serverless deployment gets a clear 503 naming the reason, not a broken file.
-// The durable fix is a small render worker beside the Registry — the same shape
-// as the CRB relay, for the same kind of reason.
+// ── TWO RENDERERS, ONE FUNCTION ──────────────────────────────────────────────
+// This file used to end with "THIS DOES NOT RUN ON VERCEL", and for a year that
+// was the honest answer: a serverless function has no browser binary, so the
+// API answered JSON and HTML everywhere and PDF only where `chromiumPath()`
+// resolved. What that meant in practice, on 23 Sep 2026, is that an officer in
+// the LMS console pressed "Request CRB report" on a real customer and was told
+// "PDF rendering is not available on this deployment, so a bundle cannot be
+// assembled" — a sentence about our hosting, in the middle of their work.
+//
+// So there are now two paths, and `htmlToPdf` picks between them:
+//
+//   LOCAL       A Chromium the host already has, driven through its own
+//               `--print-to-pdf` pipeline. No driver, no download, and it is
+//               what every build script in scripts/ uses. Preferred whenever a
+//               binary exists, because it is faster and has no cold start.
+//
+//   SERVERLESS  @sparticuz/chromium-min + puppeteer-core. The browser is not in
+//               the deployment — the -min package downloads a Brotli pack on
+//               first use, unpacks it to /tmp and reuses it for the life of the
+//               container. That is why the pack URL is configuration and not a
+//               constant: it has to be somewhere fast and close to the region,
+//               and a member running their own node will want their own copy.
+//
+// The RESULT of the two must be the same document, so the flag lists below are
+// deliberately kept in step, and the font check at the bottom of this file is
+// run against both — a serverless render that silently fell back to Times would
+// be a worse outcome than the 503 it replaced.
 //
 // ── THE TRAPS, ALL OF THEM LEARNED THE HARD WAY ──────────────────────────────
 //   · `--print-to-pdf` needs an ABSOLUTE path or it fails with access denied,
@@ -62,11 +82,61 @@ export function chromiumPath(): string | null {
   return CANDIDATES.find((p) => existsSync(p)) ?? null;
 }
 
+/**
+ * The Brotli pack the -min package inflates on a cold start.
+ *
+ * Defaulted rather than required, because a deployment that has to be told an
+ * environment variable before it can render is a deployment that renders
+ * nothing on the day it is first needed — which is precisely the failure this
+ * whole path exists to remove. The default is the upstream release matching the
+ * installed `@sparticuz/chromium-min`; the two MUST be bumped together, since
+ * the package refuses a pack it did not expect.
+ *
+ * Point CHROMIUM_PACK_URL at your own copy (S3, R2, a Vercel Blob) to take the
+ * cold start off the public internet. A member running their own node should.
+ */
+const PACK_VERSION = "v153.0.0";
+export const chromiumPackUrl = () =>
+  process.env.CHROMIUM_PACK_URL?.trim() ||
+  `https://github.com/Sparticuz/chromium/releases/download/${PACK_VERSION}/chromium-${PACK_VERSION}-pack.x64.tar`;
+
+/**
+ * Is this a serverless runtime, where the -min path is the only one available?
+ *
+ * Vercel and Lambda both set their own marker. The explicit opt-out exists
+ * because the fallback downloads ~50MB on a cold start, and an operator who
+ * would rather answer 503 than pay that latency is making a legitimate choice.
+ */
+function serverless(): boolean {
+  if (process.env.INTERCHANGE_PDF_SERVERLESS === "off") return false;
+  return Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.INTERCHANGE_PDF_SERVERLESS === "on");
+}
+
+/**
+ * Can this deployment produce a PDF at all?
+ *
+ * The one predicate every caller should ask. `chromiumPath()` is still exported
+ * for the build scripts, which genuinely do want to know whether there is a
+ * LOCAL browser — but a route that used it as "can I render?" was answering a
+ * narrower question than it was asking, and that is exactly how the refusal in
+ * the header came to be shown on a host that could in fact render.
+ */
+export function canRenderPdf(): boolean {
+  return Boolean(chromiumPath()) || serverless();
+}
+
+/** Which renderer a call would take right now. Reported in diagnostics. */
+export function rendererKind(): "local" | "serverless" | "none" {
+  if (chromiumPath()) return "local";
+  return serverless() ? "serverless" : "none";
+}
+
 export class RenderUnavailable extends Error {
   constructor() {
     super(
-      "No headless Chromium on this host, so PDF cannot be rendered here. Set CHROMIUM_PATH, or request format=html " +
-        "and print it, or call a deployment that has one.",
+      "No headless Chromium on this host and the serverless renderer is switched off, so PDF cannot be rendered " +
+        "here. Set CHROMIUM_PATH to a local browser, or INTERCHANGE_PDF_SERVERLESS=on to inflate one at runtime, " +
+        "or request format=html and print it.",
     );
     this.name = "RenderUnavailable";
   }
@@ -81,7 +151,10 @@ export class RenderUnavailable extends Error {
  */
 export async function htmlToPdf(html: string, opts: { timeoutMs?: number } = {}): Promise<Buffer> {
   const browser = chromiumPath();
-  if (!browser) throw new RenderUnavailable();
+  if (!browser) {
+    if (!serverless()) throw new RenderUnavailable();
+    return htmlToPdfServerless(html, opts);
+  }
 
   const dir = await mkdtemp(join(tmpdir(), "interchange-report-"));
   const htmlPath = join(dir, "report.html");
@@ -119,6 +192,67 @@ export async function htmlToPdf(html: string, opts: { timeoutMs?: number } = {})
     return await readFile(pdfPath);
   } finally {
     await rm(dir, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
+/**
+ * The serverless renderer.
+ *
+ * Imported dynamically for a reason worth stating: these two packages are the
+ * heaviest things this repo depends on, and a static import would pull them
+ * into every build that merely touches the reports module — including the CLI
+ * scripts, which run on a workstation that has a real browser and needs neither.
+ * The import only happens on a host that has already decided it has no browser.
+ *
+ * ── THE FLAGS ARE NOT THE LOCAL ONES, AND SHOULD NOT BE ──────────────────────
+ * `chromium.args` from the -min package is a maintained list for exactly this
+ * environment — the single-process, no-sandbox, no-dev-shm set that a Lambda
+ * filesystem actually needs. Pasting the local `--print-to-pdf` flags in here
+ * would fight it. What DOES carry over is the intent behind two of them:
+ * headers and footers off (puppeteer's default, and asserted anyway), and
+ * backgrounds on, without which every fill in the report prints white.
+ */
+async function htmlToPdfServerless(html: string, opts: { timeoutMs?: number } = {}): Promise<Buffer> {
+  const [{ default: chromium }, puppeteer] = await Promise.all([
+    import("@sparticuz/chromium-min"),
+    import("puppeteer-core"),
+  ]);
+
+  // A report is a static document — no WebGL, no canvas 3D — and the graphics
+  // stack costs a swiftshader extraction on every cold start to serve it.
+  chromium.setGraphicsMode = false;
+
+  const executablePath = await chromium.executablePath(chromiumPackUrl());
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    executablePath,
+    headless: true,
+    // The pack download is the cold start, and it is measured in tens of
+    // seconds on a cold container. The route's maxDuration is 120s.
+    timeout: opts.timeoutMs ?? 60_000,
+  });
+
+  try {
+    const page = await browser.newPage();
+    // setContent, not a data: URL or a temp file: the document carries its own
+    // embedded fonts as data URIs, so there is nothing to fetch and nothing to
+    // wait for beyond layout. `networkidle0` would sit out its own timeout on a
+    // page that never makes a request.
+    await page.setContent(html, { waitUntil: "load", timeout: opts.timeoutMs ?? 60_000 });
+    // The faces are data URIs, but the decode still has to finish before the
+    // first paint or the PDF embeds the fallback — the same failure the WOFF2
+    // note at the top of this file describes, arriving by a different road.
+    await page.evaluateHandle("document.fonts.ready");
+    const pdf = await page.pdf({
+      // The document sets `@page { size: A4; margin: … }` in lib/reports/shell.ts,
+      // and that is the size the whole layout is measured in millimetres against.
+      preferCSSPageSize: true,
+      printBackground: true,
+      displayHeaderFooter: false,
+    });
+    return Buffer.from(pdf);
+  } finally {
+    await browser.close().catch(() => {});
   }
 }
 
