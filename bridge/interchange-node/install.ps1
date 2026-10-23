@@ -198,6 +198,14 @@ if ($Runner) {
     Ok "Runner service already registered"
   } else {
     if (-not $RunnerToken) { No "Pass -RunnerToken: GitHub -> emmanuel-arch/Interchange -> Settings -> Actions -> Runners -> New self-hosted runner (Windows). It lasts one hour."; exit 2 }
+    # A registration that reached GitHub but failed to install its service (wrong
+    # password: two -Runner runs at once each reset it) leaves .runner behind, and
+    # config.cmd then refuses with "already configured". With no service there is
+    # nothing to keep: clear it and register again with --replace.
+    foreach ($f in ".runner", ".credentials", ".credentials_rsaparams") {
+      $p = Join-Path $runnerDir $f
+      if (Test-Path $p) { Remove-Item $p -Force; Note "cleared a half-finished registration ($f)" }
+    }
     Push-Location $runnerDir
     try {
       $code = Invoke-Native (Join-Path $runnerDir "config.cmd") @("--unattended", "--url", $Repo, "--token", $RunnerToken, "--name", $RunnerName, "--labels", $RunnerLabel, "--work", "_work", "--replace", "--runasservice", "--windowslogonaccount", ".\$DeployUser", "--windowslogonpassword", $pw)
