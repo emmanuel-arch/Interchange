@@ -1,0 +1,73 @@
+name: Interchange node (Nairobi)
+
+# Builds the standalone Registry on GitHub's Windows machines, then the
+# self-hosted runner on servicesuite-in puts it live
+# (bridge/interchange-node/deploy.ps1, installed at C:\Interchange). The build
+# never touches a database; secrets live only on the node, in
+# C:\Interchange\interchange.env.
+#
+# OFF until the repository variable INTERCHANGE_NODE_DEPLOY is "on".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: interchange-node
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: vars.INTERCHANGE_NODE_DEPLOY == 'on'
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: apps/interchange-console
+    env:
+      BUILD_STANDALONE: "1"
+      NEXT_TELEMETRY_DISABLED: "1"
+      # prisma generate needs a URL that parses; nothing connects at build time.
+      DATABASE_URL: postgresql://build:build@127.0.0.1:1/build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: apps/interchange-console/package-lock.json
+      - run: npm ci
+      - name: Build (type-checks the app)
+        run: npm run build
+      - name: Package
+        shell: pwsh
+        run: ../../bridge/interchange-node/pack.ps1 -Out "interchange-${{ github.sha }}.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: interchange-${{ github.sha }}
+          path: apps/interchange-console/interchange-${{ github.sha }}.zip
+          retention-days: 7
+          compression-level: 0
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted, windows, interchange-node]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: interchange-${{ github.sha }}
+          path: ${{ runner.temp }}\interchange
+      - name: Put it live
+        shell: powershell
+        run: |
+          & C:\Interchange\deploy.ps1 -Package "${{ runner.temp }}\interchange\interchange-${{ github.sha }}.zip" -Release "${{ github.sha }}"
+          exit $LASTEXITCODE
+      - name: Clean up
+        if: always()
+        shell: powershell
+        run: Remove-Item "${{ runner.temp }}\interchange" -Recurse -Force -ErrorAction SilentlyContinue
