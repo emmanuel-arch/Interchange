@@ -42,15 +42,20 @@ import { PrismaPg } from "@prisma/adapter-pg";
 const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
 
 /**
- * Is this a database on this machine, or one across the public internet?
+ * Is this a database on this machine (or on the tailnet), or one across the
+ * public internet?
  *
- * Local development runs PGlite on 127.0.0.1 and speaks no TLS at all; anything
+ * The node on servicesuite-in reaches its Registry on 127.0.0.1:2020, and that
+ * Postgres runs with ssl off. So does every admin script run from a PC on the
+ * tailnet (100.64.0.0/10), where WireGuard already encrypts the hop. Anything
  * else is a hop the Registry's data should never make in the clear.
  */
 function isLocal(connectionString: string): boolean {
   try {
     const host = new URL(connectionString).hostname.toLowerCase();
-    return host === "localhost" || host === "127.0.0.1" || host === "::1" || host.endsWith(".localhost");
+    if (host === "localhost" || host === "127.0.0.1" || host === "::1" || host.endsWith(".localhost")) return true;
+    const m = host.match(/^100\.(\d+)\.\d+\.\d+$/);
+    return !!m && Number(m[1]) >= 64 && Number(m[1]) <= 127;
   } catch {
     return false; // unparseable ⇒ treat as remote, which is the safe direction
   }
