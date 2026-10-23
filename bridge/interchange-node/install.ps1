@@ -150,7 +150,7 @@ if ($Runner) {
   if (Get-LocalUser -Name $DeployUser -ErrorAction SilentlyContinue) {
     Set-LocalUser -Name $DeployUser -Password $secure
   } else {
-    New-LocalUser -Name $DeployUser -Password $secure -PasswordNeverExpires -UserMayNotChangePassword -Description "Deploys the Interchange from GitHub Actions (C:\Interchange)" | Out-Null
+    New-LocalUser -Name $DeployUser -Password $secure -PasswordNeverExpires -UserMayNotChangePassword -Description "Deploys the Interchange (C:\Interchange)" | Out-Null
   }
   Ok "Local user $DeployUser (not an administrator)"
 
