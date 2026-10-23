@@ -179,9 +179,17 @@ if ($Runner) {
     if (-not $RunnerZip) {
       $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/actions/runner/releases/latest" -TimeoutSec 30
       $asset = $rel.assets | Where-Object { $_.name -match '^actions-runner-win-x64-[\d.]+\.zip$' } | Select-Object -First 1
+      # Reuse a complete earlier download (99 MB over this link is minutes), and
+      # write to .part first so a half-written file is never mistaken for one.
       $RunnerZip = Join-Path $env:TEMP $asset.name
-      Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $RunnerZip -UseBasicParsing
-      Ok "Downloaded $($asset.name)"
+      if ((Test-Path $RunnerZip) -and (Get-Item $RunnerZip).Length -eq $asset.size) {
+        Ok "Reusing $($asset.name) already downloaded"
+      } else {
+        $part = "$RunnerZip.part"
+        Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $part -UseBasicParsing
+        Move-Item $part $RunnerZip -Force
+        Ok "Downloaded $($asset.name)"
+      }
     }
     & tar.exe -xf $RunnerZip -C $runnerDir
     if ($LASTEXITCODE -ne 0) { No "Could not unpack $RunnerZip"; exit 1 }
