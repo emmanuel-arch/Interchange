@@ -37,11 +37,14 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { Client } from "pg";
 
+// Every model in schema.prisma — the report store (24 Sep 2026) included.
 const REGISTRY_TABLES = [
   "Member", "Service", "Subscription", "Consent", "ConsentEvent", "AuditEntry",
   "MessageLogEntry", "OprfIssuance", "MemberHolding", "MemberFilter", "LedgerEvent",
   "Decision", "ModelVersion", "ShadowScore", "MemberApplication", "GovernanceAction",
-  "Operator", "OperatorAudit",
+  "Operator", "OperatorAudit", "MemberPolicy",
+  "ReportPull", "ReportCreditFile", "ReportCreditLine", "ReportCashflow",
+  "ReportCashflowMonth", "ReportIdentity", "ReportExposure",
 ];
 
 const arg = (name: string) => {
@@ -59,10 +62,18 @@ function connectionString(): { url: string; source: string } {
   throw new Error("No connection string: set REGISTRY_ADMIN_URL, DIRECT_URL or DATABASE_URL.");
 }
 
-/** Same rule as lib/prisma.ts: TLS for every non-local host, whatever the URL says. */
+/**
+ * TLS for every host that is not already on a secure link, whatever the URL says.
+ *
+ * Local is secure, and so is the tailnet (100.64.0.0/10): servicesuite-in's
+ * Postgres runs with ssl off on purpose because WireGuard already encrypts the
+ * hop, so demanding TLS there refuses the one connection that is safe.
+ */
 function isLocal(url: string): boolean {
   const host = new URL(url).hostname.toLowerCase();
-  return host === "localhost" || host === "127.0.0.1" || host === "::1";
+  if (host === "localhost" || host === "127.0.0.1" || host === "::1") return true;
+  const m = host.match(/^100\.(\d+)\.\d+\.\d+$/);
+  return !!m && Number(m[1]) >= 64 && Number(m[1]) <= 127;
 }
 
 /** Never print a password. User, host and port are enough to know which door this is. */
