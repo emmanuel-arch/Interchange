@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { InterchangeMark } from "@/components/chrome";
+import { lenderDoorForMember } from "@/lib/lenders";
+import { readSession, SESSION_COOKIE } from "@/lib/session";
 
 // The console shell. Everything behind the gate lives in this route group.
 //
@@ -26,7 +29,13 @@ const NAV = [
 ];
 
 // A route group adds no path segment, so typegen resolves this layout to "/".
-export default function ConsoleLayout({ children }: LayoutProps<"/">) {
+export default async function ConsoleLayout({ children }: LayoutProps<"/">) {
+  // A founding partner's staff keep their own logo beside ours once inside, so
+  // the console they reached from Axe's launcher still says it is Axe's. Read
+  // from the verified session — the member it acts for — not from the door.
+  const session = readSession((await cookies()).get(SESSION_COOKIE)?.value);
+  const lender = lenderDoorForMember(session?.member);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#040605]">
       <div
@@ -46,6 +55,12 @@ export default function ConsoleLayout({ children }: LayoutProps<"/">) {
             <span className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-white/80 group-hover:text-white transition-colors">
               Interchange
             </span>
+            {lender && (
+              <span className="h-7 px-2 rounded-md bg-white flex items-center" style={{ boxShadow: `0 0 18px ${lender.glow}33` }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={lender.logo} alt={lender.name} className="h-5 w-auto" />
+              </span>
+            )}
           </Link>
 
           <nav className="flex items-center gap-1">

@@ -50,14 +50,36 @@ const CONNECTED_SYSTEMS = [
 // deterministic on purpose — a random value here would be a hydration mismatch.
 const STILL_HEX = "7F3A9C21E4B806D5A17C4E92FB380D6C";
 
+/** A founding partner's door (lib/lenders.ts), as far as the gate needs to see it. */
+export type GateLender = {
+  slug: string;
+  name: string;
+  logo: string;
+  glow: string;
+  line: string;
+  memberHint: string;
+};
+
 /**
  * `still` renders the gate in its settled state with no enter animations, so
  * the page is fully legible from the server alone. It drives `?still=1` for
  * screenshots and visual review, and it is also the honest fallback: without
  * it, framer-motion ships its `initial` styles as opacity:0 in the HTML, and
  * anyone whose JS is slow or blocked sees a black screen on a login page.
+ *
+ * `lender` dresses the same gate as that partner's door (/axe, /micromart): their
+ * logo beside the mark and their colour in the light. The authentication is
+ * untouched — the same two endpoints, the same session.
  */
-export default function MemberGate({ still = false, next = "/directory" }: { still?: boolean; next?: string }) {
+export default function MemberGate({
+  still = false,
+  next = "/directory",
+  lender = null,
+}: {
+  still?: boolean;
+  next?: string;
+  lender?: GateLender | null;
+}) {
   const router = useRouter();
   const [method, setMethod] = useState<Method | null>(null);
   const [memberId, setMemberId] = useState("");
@@ -224,13 +246,17 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
           count is a loop you start watching instead of signing in.
 
           `still` kills it outright, along with every other enter animation, so
-          the screenshot path and the no-JS path both render a legible page. */}
+          the screenshot path and the no-JS path both render a legible page.
+
+          At a partner's door their colour takes the two cyan blooms — the tile
+          they clicked was in their console, so the room is lit in their light —
+          and the emerald stays, because the security chrome is still ours. */}
       <div aria-hidden className="absolute inset-0 pointer-events-none overflow-hidden">
         {[
-          { c: "#0891b2", x: "78%", y: "12%", s: 620, o: 0.22, d: 23 },
+          { c: lender?.glow ?? "#0891b2", x: "78%", y: "12%", s: 620, o: lender ? 0.2 : 0.22, d: 23 },
           { c: "#10b981", x: "18%", y: "82%", s: 560, o: 0.16, d: 29 },
           { c: "#0e7490", x: "8%", y: "10%", s: 480, o: 0.14, d: 31 },
-          { c: "#22d3ee", x: "88%", y: "88%", s: 440, o: 0.10, d: 37 },
+          { c: lender?.glow ?? "#22d3ee", x: "88%", y: "88%", s: 440, o: lender ? 0.12 : 0.10, d: 37 },
         ].map((b, i) => (
           <motion.div
             key={i}
@@ -306,7 +332,7 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
         <div className="flex items-center gap-3 min-w-0">
           <Shield className="w-4 h-4 text-emerald-500/70 shrink-0" />
           <span className="inst text-[9px] text-white/25 whitespace-nowrap">
-            The Interchange — Member Authentication
+            {lender ? `${lender.name} · ` : ""}The Interchange — Member Authentication
           </span>
           <span className="font-mono text-[7px] text-white/[0.08] hidden md:inline tracking-wider truncate">
             {hexStream}
@@ -338,11 +364,20 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
           className="w-full max-w-md"
         >
           <div className="relative border border-white/[0.07] rounded-2xl px-8 py-10 backdrop-blur-sm bg-white/[0.012] overflow-hidden">
-            {/* Corner brackets */}
-            <div aria-hidden className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-emerald-500/20 rounded-tl-2xl" />
-            <div aria-hidden className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-emerald-500/20 rounded-tr-2xl" />
-            <div aria-hidden className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-emerald-500/20 rounded-bl-2xl" />
-            <div aria-hidden className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-emerald-500/20 rounded-br-2xl" />
+            {/* Corner brackets — in the partner's colour at their door */}
+            {[
+              "top-0 left-0 border-t-2 border-l-2 rounded-tl-2xl",
+              "top-0 right-0 border-t-2 border-r-2 rounded-tr-2xl",
+              "bottom-0 left-0 border-b-2 border-l-2 rounded-bl-2xl",
+              "bottom-0 right-0 border-b-2 border-r-2 rounded-br-2xl",
+            ].map((corner) => (
+              <div
+                key={corner}
+                aria-hidden
+                className={`absolute w-6 h-6 ${corner} ${lender ? "" : "border-emerald-500/20"}`}
+                style={lender ? { borderColor: `${lender.glow}59` } : undefined}
+              />
+            ))}
 
             {authState === "authenticating" && (
               <motion.div
@@ -360,7 +395,23 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
               transition={{ delay: 0.8 }}
               className="text-center mb-8"
             >
-              <div className="flex items-center justify-center mb-3">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                {/* The partner's logo, on a white plate because both partners' artwork
+                    is drawn for paper: Axe's black X and Micromart's grey name vanish
+                    into this ground. In the same row as our mark, not above it, so a
+                    partner's door is no taller than ours on a 768-pixel laptop. */}
+                {lender && (
+                  <>
+                    <div
+                      className="h-12 px-3 rounded-lg bg-white flex items-center shrink-0"
+                      style={{ boxShadow: `0 0 32px ${lender.glow}40` }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element -- a 6 KB PNG; next/image adds nothing here */}
+                      <img src={lender.logo} alt={lender.name} className="h-10 w-auto" />
+                    </div>
+                    <span aria-hidden className="font-mono text-xs text-white/25">×</span>
+                  </>
+                )}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
@@ -376,7 +427,9 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
               <h1 className="font-mono font-bold text-xl uppercase tracking-[0.3em] text-white/90 mb-1">
                 Interchange
               </h1>
-              <p className="inst text-[9px] text-white/25">Consent-Gated Exchange</p>
+              <p className="inst text-[9px] text-white/25">
+                {lender ? `Consent-Gated Exchange · ${lender.name}` : "Consent-Gated Exchange"}
+              </p>
             </motion.div>
 
             <AnimatePresence mode="wait">
@@ -529,7 +582,7 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
                           onChange={(e) => setMemberId(e.target.value)}
                           onKeyDown={(e) => e.key === "Enter" && handleCertificate()}
                           disabled={busy}
-                          placeholder="KE/LENDER/0000"
+                          placeholder={lender?.memberHint ?? "KE/LENDER/0000"}
                           className="flex-1 bg-transparent font-mono text-sm text-white/80 placeholder:text-white/15 outline-none tracking-[0.1em]"
                           autoComplete="off"
                           spellCheck={false}
@@ -645,7 +698,7 @@ export default function MemberGate({ still = false, next = "/directory" }: { sti
         className="text-center pb-5 pt-3 relative z-10 px-4"
       >
         <span className="font-mono text-[8px] uppercase tracking-[0.28em] text-white/15">
-          interchange.servicesuitecloud.com · Every query consented, signed and logged
+          interchange.servicesuitecloud.com{lender ? `/${lender.slug}` : ""} · Every query consented, signed and logged
         </span>
       </motion.footer>
     </div>
