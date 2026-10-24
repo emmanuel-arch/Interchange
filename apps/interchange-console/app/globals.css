@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./estate.css";
 
 /* ── The Interchange — design tokens ─────────────────────────────────────────
    The console is a SECURE FACILITY, not a dashboard. Members are competitors

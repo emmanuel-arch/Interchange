@@ -35,7 +35,7 @@ export default async function GovernancePage() {
           { v: String(byStatus("SUSPENDED")), l: "Suspended" },
           { v: String(eligible), l: "Ready to promote" },
         ].map((s) => (
-          <div key={s.l} className="bg-[#070a09] px-4 py-4">
+          <div key={s.l} className="bg-[color:var(--tile)] px-4 py-4">
             <div className="font-mono text-2xl font-bold tabular-nums text-emerald-400 leading-none mb-2">{s.v}</div>
             <div className="font-mono text-[8px] uppercase tracking-[0.14em] text-white/35">{s.l}</div>
           </div>

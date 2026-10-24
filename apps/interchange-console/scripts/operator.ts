@@ -7,6 +7,7 @@
 //   npm run operator -- recode --name "Emmanuel Kiplet" --code 7788
 //   npm run operator -- disable --name "Desk Analyst"
 //   npm run operator -- unlock  --name "Desk Analyst"
+//   npm run operator -- email   --name "Geoffrey Njane" --email geoffrey@micromartafrica.com
 //
 // `create` is IDEMPOTENT on (name, member): running it twice re-codes the same
 // operator rather than producing a second one with the same name and a different
@@ -19,7 +20,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 import "dotenv/config";
 import { prisma } from "../lib/prisma";
-import { hashCode, isWellFormedCode, validateGrant, verifyCode } from "../lib/operator";
+import { hashCode, isWellFormedCode, normaliseEmail, validateGrant, verifyCode } from "../lib/operator";
 import { effectiveRights, expandForDisplay, isRight, WILDCARD } from "../lib/rights";
 
 const G = (s: string) => "\x1b[32m" + s + "\x1b[0m";
@@ -179,6 +180,20 @@ async function setStatus(status: "ACTIVE" | "DISABLED") {
   console.log(G("✓ " + op.name + " is now " + status));
 }
 
+/** The work email the door asks for beside the code (24 Oct 2026). */
+async function setEmail() {
+  const name = arg("name") ?? die("--name is required");
+  const email = normaliseEmail(arg("email") ?? die("--email is required"));
+  if (!email) die("--email is not a complete email address.");
+  const op = await prisma.operator.findFirst({ where: { name } });
+  if (!op) die('No operator named "' + name + '".');
+  const holder = await prisma.operator.findFirst({ where: { email, id: { not: op.id } }, select: { name: true } });
+  if (holder) die(email + ' already belongs to "' + holder.name + '".');
+  await prisma.operator.update({ where: { id: op.id }, data: { email } });
+  await prisma.operatorAudit.create({ data: { operatorId: op.id, action: "EMAIL_SET", detail: email } });
+  console.log(G("✓ " + op.name + " signs in as " + email));
+}
+
 async function unlock() {
   const name = arg("name") ?? die("--name is required");
   const op = await prisma.operator.findFirst({ where: { name } });
@@ -196,6 +211,7 @@ async function main() {
     case "disable": return setStatus("DISABLED");
     case "enable": return setStatus("ACTIVE");
     case "unlock": return unlock();
+    case "email": return setEmail();
     default:
       console.log(
         [

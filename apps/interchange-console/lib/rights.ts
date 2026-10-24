@@ -39,6 +39,8 @@ export const RIGHTS = {
   "reports:read": "See the report catalogue and past report calls",
   "reports:run": "Request a report, including billable bureau reports",
 
+  "usage:read": "See bureau readings and what each month costs",
+
   // Consent — the gate everything else depends on
   "consent:read": "See consent records and their events",
   "consent:capture": "Capture a consent on a borrower's behalf",
@@ -102,6 +104,7 @@ export const ROLE_RIGHTS: Record<string, readonly string[]> = {
   SUPER_ADMIN: [WILDCARD],
 
   MEMBER_ADMIN: [
+    "usage:read",
     "directory:read",
     "exposure:query",
     "exposure:read",
@@ -142,6 +145,7 @@ export const ROLE_RIGHTS: Record<string, readonly string[]> = {
   ],
 
   AUDITOR: [
+    "usage:read",
     "directory:read",
     "reports:read",
     "consent:read",
@@ -188,6 +192,8 @@ export function expandForDisplay(rights: readonly string[]): Right[] {
 // points at can never disagree about who may open it.
 
 export const ROUTE_RIGHTS: Record<string, Right> = {
+  "/search": "reports:read",
+  "/usage": "usage:read",
   "/directory": "directory:read",
   "/exposure": "exposure:read",
   "/reports": "reports:read",

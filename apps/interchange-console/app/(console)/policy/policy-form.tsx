@@ -272,7 +272,7 @@ export function PolicyForm({
         </div>
       </Section>
 
-      <div className="sticky bottom-0 -mx-1 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-[#070a09]/95 px-5 py-4 backdrop-blur">
+      <div className="sticky bottom-0 -mx-1 flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-[color:var(--tile)] px-5 py-4 backdrop-blur">
         <div className="min-w-0 text-[12.5px]">
           {state.kind === "ok" ? <span className="text-emerald-300">{state.message}</span>
             : state.kind === "error" ? <span className="text-red-300">{state.message}</span>

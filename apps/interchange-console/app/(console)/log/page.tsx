@@ -25,7 +25,7 @@ export default async function LogPage() {
       />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.07] border border-white/[0.07] rounded-xl overflow-hidden mb-7">
-        <div className="bg-[#070a09] px-4 py-4">
+        <div className="bg-[color:var(--tile)] px-4 py-4">
           <div className="font-mono text-2xl font-bold tabular-nums text-emerald-400 leading-none mb-2">
             {total.toLocaleString()}
           </div>
@@ -33,7 +33,7 @@ export default async function LogPage() {
             Entries in chain
           </div>
         </div>
-        <div className="bg-[#070a09] px-4 py-4">
+        <div className="bg-[color:var(--tile)] px-4 py-4">
           <div
             className={`font-mono text-2xl font-bold leading-none mb-2 ${
               report.ok ? "text-emerald-400" : "text-red-400"
@@ -45,7 +45,7 @@ export default async function LogPage() {
             Chain integrity
           </div>
         </div>
-        <div className="bg-[#070a09] px-4 py-4">
+        <div className="bg-[color:var(--tile)] px-4 py-4">
           <div className="font-mono text-2xl font-bold tabular-nums text-emerald-400 leading-none mb-2">
             {report.checked.toLocaleString()}
           </div>
@@ -53,7 +53,7 @@ export default async function LogPage() {
             Hashes re-derived
           </div>
         </div>
-        <div className="bg-[#070a09] px-4 py-4">
+        <div className="bg-[color:var(--tile)] px-4 py-4">
           <div
             className={`font-mono text-2xl font-bold tabular-nums leading-none mb-2 ${
               unstamped > 0 ? "text-amber-400" : "text-emerald-400"

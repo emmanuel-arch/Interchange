@@ -107,12 +107,29 @@ const MEMBER_LETTERHEADS: Record<string, Letterhead> = {
     incorporatedOn: null,
     odpcRegistration: null,
   },
+  // Both Axe books — Boresha (AXE-3003) and Stawi (AXE-3004) — are one company.
+  // As supplied by the founder on 24 October 2026, from Axe's own website
+  // footer. Registration number and KRA PIN were not given, so they do not print.
+  axe: {
+    name: "Axe Micro-Enterprise Ltd.",
+    legalName: "Axe Micro-Enterprise Ltd.",
+    addressLines: ["Nairobi, Kenya"],
+    phone: "+254 707 632 578",
+    email: "info@axemicroenterprise.co.ke",
+    website: "axemicroenterprise.com",
+    companyRegistration: null,
+    kraPin: null,
+    incorporatedOn: null,
+    odpcRegistration: null,
+  },
 };
 
 /** Member code → the key in MEMBER_LETTERHEADS. */
 const MEMBER_LETTERHEAD_KEY: Record<string, string> = {
   "KE/LENDER/3002": "micromart",
   "KE/LENDER/3005": "micromart",
+  "KE/LENDER/AXE-3003": "axe",
+  "KE/LENDER/AXE-3004": "axe",
 };
 
 /**

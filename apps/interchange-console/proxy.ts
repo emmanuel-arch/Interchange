@@ -27,6 +27,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { readSession, SESSION_COOKIE } from "@/lib/session";
 import { can, rightForPath, ROUTE_RIGHTS } from "@/lib/rights";
+import { DOOR_COOKIE, lenderDoor } from "@/lib/lenders";
 
 export { SESSION_COOKIE };
 
@@ -46,7 +47,9 @@ export function proxy(request: NextRequest) {
     // Send them to the gate, remembering where they were going, so signing in
     // lands them on the page they asked for rather than dumping them at the root.
     const url = request.nextUrl.clone();
-    url.pathname = "/signin";
+    // Their own door when this browser has one (interchange.…/axe), else the platform's.
+    const door = lenderDoor(request.cookies.get(DOOR_COOKIE)?.value);
+    url.pathname = door ? `/${door.slug}` : "/signin";
     url.searchParams.set("next", pathname);
     const redirect = NextResponse.redirect(url);
     // Clear a cookie that failed verification — expired, tampered, or minted
@@ -88,6 +91,8 @@ export function proxy(request: NextRequest) {
 // gated route and forgets this array.
 // ─────────────────────────────────────────────────────────────────────────────
 const MATCHER = [
+  "/search/:path*",
+  "/usage/:path*",
   "/directory/:path*",
   "/exposure/:path*",
   "/reports/:path*",
@@ -121,6 +126,8 @@ const MATCHER = [
 
 export const config = {
   matcher: [
+    "/search/:path*",
+    "/usage/:path*",
     "/directory/:path*",
     "/exposure/:path*",
     "/reports/:path*",

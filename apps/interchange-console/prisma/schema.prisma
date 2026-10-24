@@ -96,6 +96,9 @@ model Member {
   callsMade     AuditEntry[]   @relation("caller")
   /// Every report this member has bought. The spine of the report store.
   pulls         ReportPull[]   @relation("pulls")
+  /// Every bureau reading this member was metered for — see UsageMeter.
+  meter         UsageMeter[]
+  statements    UsageStatement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -154,6 +157,7 @@ enum ConsentChannel {
   LMS_CONSOLE // captured by staff in the lending console
   MEMBER_API // a bridged member POSTed it from their own onboarding
   FIELD_OFFICER
+  INTERCHANGE_CONSOLE // attested by a member's operator in the Interchange console
 }
 
 enum ConsentEventKind {
@@ -632,6 +636,11 @@ model Operator {
   /// Null ⇒ platform operator, not scoped to any single member.
   memberId String?
 
+  /// The work email this person signs in to the rest of the estate with,
+  /// lower-cased. Half of the door's credential: the door asks for it with the
+  /// access code, so a code is tried against ONE operator rather than all.
+  email String? @unique
+
   /// scrypt(code, codeSalt). The plaintext code is never stored, never logged
   /// and never returned by any route.
   codeHash String
@@ -1086,4 +1095,109 @@ model ReportExposure {
   silent    Json?
 
   pull ReportPull @relation(fields: [pullId], references: [id], onDelete: Cascade)
+}
+
+// ── Usage metering ───────────────────────────────────────────────────────────
+//
+// EVERY BUREAU READING IS A METER ROW (founder, 24 Oct 2026): "make sure no
+// reading goes through without being metered and billed". Every call to the
+// bureau passes through the Interchange — the Lending Console's Risk stage and
+// Customer 360, its older "Run CRB check", the ServiceSuite bridge, and the
+// Interchange console itself — so this table is the one place a lender's spend
+// can be read: per organisation, per channel, per person, per month.
+//
+// The row is opened PENDING after the gate grants and BEFORE the bureau is
+// asked, and settled when the answer is in. A pull whose process dies between
+// the two is still on the meter, priced as billed, rather than silently free.
+
+enum MeterChannel {
+  /// The member's own Lending Console — Risk stage, Customer 360, Run CRB check.
+  LENDING_CONSOLE
+  /// The Interchange console, by one of its operators.
+  INTERCHANGE
+  /// A lender system calling through its node (the ServiceSuite bridge, a script).
+  SYSTEM
+}
+
+enum MeterState {
+  /// Granted and sent to the bureau; the answer is not in yet. Billed until settled.
+  PENDING
+  /// The bureau answered and charged.
+  BILLED
+  /// Re-served from the store inside retention: metered, not charged again.
+  RESERVED
+  /// The bureau charged nothing — a refusal, an outage, a replay.
+  NOT_BILLED
+}
+
+/// One bureau reading, metered. Never deleted, never edited after its month locks.
+model UsageMeter {
+  id String @id @default(cuid())
+  at DateTime @default(now())
+  /// Calendar month in Nairobi time, "2026-10". The bill this row belongs to.
+  period String
+
+  memberId   String
+  memberCode String
+
+  /// The Interchange report type, and the bureau report numbers it is made of.
+  reportType    Int
+  reportName    String
+  bureauReports Int[]
+
+  channel MeterChannel
+  /// "operator" (Interchange console), "staff" (an LMS user), "system".
+  actorKind  String
+  actorName  String?
+  actorEmail String?
+  /// Operator id, LMS user id, or the system's name.
+  actorRef   String?
+  /// Which screen or process asked — "customer-360", "risk-stage", "servicesuite".
+  surface    String?
+
+  state       MeterState @default(PENDING)
+  /// bureau | store | replay — where the answer came from.
+  servedFrom  String?
+  billedPulls Int        @default(0)
+  /// Net KES, from the rate card the pull was priced on. Zero unless BILLED/PENDING.
+  bureauKes   Int        @default(0)
+  feeKes      Int        @default(0)
+  totalKes    Int        @default(0)
+
+  /// OPRF output. Never an ID — the meter is a bill, not a borrower record.
+  subjectToken String
+  consentRef   String?
+  /// The message-log receipt and the stored pull, once settled.
+  logSeq       BigInt?
+  pullId       String?
+  detail       String?
+  settledAt    DateTime?
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Restrict)
+
+  @@index([period, memberId])
+  @@index([memberId, at])
+  @@index([state])
+}
+
+/// A closed month. Written once, on the first reading after the month ends (or
+/// when the usage page is opened then), from the meter rows of that month. The
+/// digest covers every row id and amount, so a statement that no longer matches
+/// its rows is detectable.
+model UsageStatement {
+  id         String   @id @default(cuid())
+  memberId   String
+  memberCode String
+  period     String
+  lockedAt   DateTime @default(now())
+  readings   Int
+  billedPulls Int
+  totalKes   Int
+  /// { LENDING_CONSOLE: { readings, totalKes }, ... }
+  byChannel  Json
+  digest     String
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Restrict)
+
+  @@unique([memberId, period])
 }

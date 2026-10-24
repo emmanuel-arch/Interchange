@@ -1,24 +1,16 @@
-import MemberGate from "../member-gate";
+import StaffDoor from "@/components/door/StaffDoor";
 
-// Server component. `searchParams` is async in Next 16 — see
-// node_modules/next/dist/docs/01-app/02-guides/upgrading/version-16.md.
-//
-// ?still=1 renders the gate settled, with no enter animations, so the whole
-// screen is legible from the server HTML alone. Used for screenshots and
-// visual review, and it is the graceful path when JS has not arrived yet.
+// The platform's door — no lender on the URL, so the Interchange's own colours.
+// A lender's staff normally arrive at /<lender> from their launcher instead.
 //
 // ?next=/exposure is set by proxy.ts when it turns someone away, so signing in
-// returns them to the page they actually asked for. It is validated HERE rather
-// than trusted in the client: an attacker-supplied `next` that left the origin
-// would turn the sign-in screen into an open redirect, and one that pointed at
-// an external host would do it while the browser was holding a fresh session
-// cookie.
+// returns them to the page they asked for. It is validated HERE rather than
+// trusted in the client: an off-origin `next` on the screen that sets the
+// session cookie would be an open redirect holding a fresh credential.
 export default async function Page({ searchParams }: PageProps<"/signin">) {
   const sp = await searchParams;
-  const still = sp.still === "1";
-
   const raw = typeof sp.next === "string" ? sp.next : "";
-  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/directory";
+  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/search";
 
-  return <MemberGate still={still} next={next} />;
+  return <StaffDoor lender={null} next={next} />;
 }

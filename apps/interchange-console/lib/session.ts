@@ -36,6 +36,8 @@ export type ConsoleSession = {
   kind: "operator" | "member";
   name: string;
   role: string;
+  /** The work email an operator signed in with. Absent on node-signed sessions. */
+  email?: string | null;
   /** Member code this session acts for. Null for a platform operator. */
   member: string | null;
   /** Effective rights, wildcard unexpanded. */

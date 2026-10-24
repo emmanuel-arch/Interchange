@@ -215,7 +215,7 @@ x-interchange-signature:  Ed25519 over METHOD\\nPATH\\nSHA256(body)\\nts\\nnonce
                   className="bg-black/30 border border-white/[0.09] rounded-lg px-3 py-2.5 font-mono text-sm text-white/85 outline-none"
                 >
                   {live.map((r) => (
-                    <option key={r.type} value={r.type} className="bg-[#0b0f0e]">
+                    <option key={r.type} value={r.type} className="bg-[color:var(--tile)]">
                       {r.type} · {r.name}
                     </option>
                   ))}
@@ -245,7 +245,7 @@ x-interchange-signature:  Ed25519 over METHOD\\nPATH\\nSHA256(body)\\nts\\nnonce
                     </a>
                   ))}
                 </div>
-                <div className="rounded-lg overflow-hidden border border-white/[0.08] bg-white">
+                <div className="rounded-lg overflow-hidden border border-white/[0.08] bg-[#fff]">
                   <iframe
                     key={`${previewId}-${previewType}`}
                     src={`/api/dev/report-preview?id=${encodeURIComponent(previewId)}&type=${previewType}&format=html`}

@@ -62,7 +62,7 @@ export default async function DirectoryPage() {
           { v: totals.borrowers.toLocaleString(), l: "Borrowers reachable" },
           { v: totals.loans.toLocaleString(), l: "Loans reachable" },
         ].map((s) => (
-          <div key={s.l} className="bg-[#070a09] px-4 py-4">
+          <div key={s.l} className="bg-[color:var(--tile)] px-4 py-4">
             <div className="font-mono text-2xl font-bold tabular-nums text-emerald-400 leading-none mb-2">
               {s.v}
             </div>
